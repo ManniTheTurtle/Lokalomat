@@ -23,16 +23,20 @@ namespace EigeneKlassen
     [Serializable]
     public class MyUiElement
     {
-        public enum Klasse { GridColumn, GridView, GridControl, SimpleButton, TextEdit, CheckEdit, ComboBoxEdit, TabbedControlGroup, LayoutControlGroup, LayoutItem, DataLayoutControl, LayoutGroup, XtraTabPage, LayoutControl, ButtonEdit, ImageEdit, GroupControl, DateEdit }
+        public enum Klasse { GridColumn, GridView, GridControl, SimpleButton, TextEdit, CheckEdit, ComboBoxEdit, TabbedControlGroup, LayoutControlGroup, 
+                             LayoutControlItem, DataLayoutControl, LayoutGroup, XtraTabPage, LayoutControl, ButtonEdit, ImageEdit, GroupControl, DateEdit,
+                             DropDownButton, GridLookUpEdit, GridColumnView, ImageComboboxEdit, ListBoxControl, PictureEdit, CheckedListBoxControl}
+
         public Klasse ObjektTyp { get; set; }
         public string Name { get; set; }
         public string Text { get; set; }
         public string Originaltext { get; set; }
         public string XtraDokument { get; set; }
-        public string Assembly { get; set; }
         public string Parent { get; set; }
         public string Other { get; set; }
         public string TopLevelControl { get; set; }
-        public string FullName { get; set; }
+
+        public string Stylecontroller { get; set; }
+        public string OwnedControl { get; set; }
     }
 }

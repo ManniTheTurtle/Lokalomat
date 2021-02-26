@@ -23,6 +23,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using EigeneKlassen;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraRichEdit;
 
 namespace Lokalomat
 {
@@ -33,16 +34,18 @@ namespace Lokalomat
             InitializeComponent();
             WindowState = FormWindowState.Maximized;
         }
-
+        
         public XtraForm xtraForm = new XtraForm();
 
         public MyXtraDocument xtra_Document = new MyXtraDocument();
 
         public static Dictionary<Object, Object> dictionary = new Dictionary<Object, Object>();
 
-        public string Verzeichnis = @"C:\Archiv\Gits\Tutorials\DevExpress_TestApp2\DevExpress_Controls_MusterApp\bin\Debug";
+        public string AssemblyFilePath;
 
-        public string filepath = @"C:\Users\Manni\Desktop\Objekte\";
+        public string SerializationFilePath;
+
+        public string DeserializationFilePath;
 
         public string DocumentName = "leer";
 
@@ -52,6 +55,8 @@ namespace Lokalomat
 
         public Assembly ChosenAssembly;
 
+        public bool WhichComboBoxListIsActive;
+
 
         // Sonstige Listen:
         public List<MyUiElement> AllControlsAsUIelements = new List<MyUiElement>();
@@ -59,52 +64,56 @@ namespace Lokalomat
         public List<MyXtraDocument> DeserializedXtraDocsList = new List<MyXtraDocument>();
         public Dictionary<string, MyXtraDocument> XtraDocumentsDict = new Dictionary<string, MyXtraDocument>();
         public Dictionary<string, MyXtraDocument> DeserializedXtraDocsDict = new Dictionary<string, MyXtraDocument>();
-
-        // Listen als Zwischenspeicher
-        List<MyXtraDocument> NewActiveDocumentsList = new List<MyXtraDocument>();
-        List<MyUiElement> NewActiveUiElements = new List<MyUiElement>();
-        List<MyUiElement> MySavedUiElements = new List<MyUiElement>();
+        public Dictionary<string, MyUiElement> ActiveUIsDict = new Dictionary<string, MyUiElement>();
+        public Dictionary<string, MyUiElement> SavedUIsDict = new Dictionary<string, MyUiElement>();
 
         // Container Listen:
         public List<Assembly> assemblyList = new List<Assembly>();
         public List<Type> typesList = new List<Type>();
         public List<XtraForm> xtraFormslist = new List<XtraForm>();
         public List<XtraUserControl> xtraUserControlList = new List<XtraUserControl>();
-        public List<Control> controlslist = new List<Control>();
-        public List<LayoutControl> layoutControlslist = new List<LayoutControl>();
 
         // finale Listen:
-        public List<Object> otherControlTypes = new List<object>();
+        public List<object> otherControlTypes = new List<object>();
+        public List<GroupControl> groupControlslist = new List<GroupControl>();
+        public List<LayoutControl> layoutControlslist = new List<LayoutControl>();
+        public List<DataLayoutControl> dataLayoutControlslist = new List<DataLayoutControl>();
         public List<LayoutControlItem> layoutControlItemslist = new List<LayoutControlItem>();
         public List<LayoutControlGroup> layoutControlGroupslist = new List<LayoutControlGroup>();
+        public List<TabbedControlGroup> tabbedControlGroupslist = new List<TabbedControlGroup>();
         public List<GridControl> gridControlslist = new List<GridControl>();
         public List<GridColumn> gridColumnslist = new List<GridColumn>();
+        public List<ColumnView> gridColumnsViewlist = new List<ColumnView>();
         public List<TextEdit> textEditslist = new List<TextEdit>();
-        public List<TabbedControlGroup> tabbedControlGroupslist = new List<TabbedControlGroup>();
         public List<SimpleButton> simpleButtonslist = new List<SimpleButton>();
         public List<CheckEdit> checkEditslist = new List<CheckEdit>();
         public List<ComboBoxEdit> comboBoxEditslist = new List<ComboBoxEdit>();
-        public List<XtraTabPage> tabPageslist = new List<XtraTabPage>();
+        public List<XtraTabPage> xtraTabPageslist = new List<XtraTabPage>();
         public List<XtraTabControl> xtraTabControlslist = new List<XtraTabControl>();
         public List<LayoutGroup> layoutGroupslist = new List<LayoutGroup>();
-        public List<DataLayoutControl> dataLayoutControlslist = new List<DataLayoutControl>();
         public List<ButtonEdit> buttonEditslist = new List<ButtonEdit>();
         public List<ImageEdit> imageEditslist = new List<ImageEdit>();
         public List<DateEdit> dateEditslist = new List<DateEdit>();
-        public List<GroupControl> groupControlslist = new List<GroupControl>();
+        public List<DropDownButton> DropDownButtonslist = new List<DropDownButton>();
+        public List<GridLookUpEdit> GridLookUpEditslist = new List<GridLookUpEdit>();
+        public List<CheckedListBoxControl> checkedListBoxControlslist = new List<CheckedListBoxControl>();
+        public List<PictureEdit> pictureEditslist = new List<PictureEdit>();
+        public List<ListBoxControl> listBoxControlslist = new List<ListBoxControl>();
+        public List<ImageComboBoxEdit> imageComboBoxEditslist = new List<ImageComboBoxEdit>();
+        
+        //------------------------------------------------------------------------------------|
 
-
-        // --> Automatisch Verzeichnis wählen
-        private void autoToolStripMenuItem_Click(object sender, EventArgs e)
+        // --> Verzeichnis durchsuchen nach passenden Assemblies
+        private void ladeAsseblies()
         {
-            assemblyList = NutzeMethode.LadeAssemblies(Verzeichnis);
+            assemblyList = NutzeMethode.LadeAssemblies(AssemblyFilePath);
 
             listBox1.Items.Add($"Assemblies Count: {assemblyList.Count}");
 
             BefuelleComboBox1();
         }
 
-        // --> Assembly wurde gewählt
+        // --> Xtra Dokumente aus Assembly extrahieren und Controls hinzufügen
         private void SucheNachDokumenten()
         {
             typesList = NutzeMethode.LadeTypes(ChosenAssembly, typesList);
@@ -117,322 +126,461 @@ namespace Lokalomat
             listBox1.Items.Add($"XtraUserControls Count: {xtraUserControlList.Count}");
 
             // -------------------------------->>> XtraForms
-            if (xtraFormslist.Count > 0)
+            if (xtraFormslist != null && xtraFormslist.Count > 0)
             {
                 foreach (var item in xtraFormslist)
                 {
-                    MyXtraDocument xtra_Document = new MyXtraDocument();
-                    xtra_Document.Name = item.Name;
-                    xtra_Document.ObjektTyp = MyXtraDocument.Klasse.XtraForm;
-
-                    if (!String.IsNullOrWhiteSpace(ChosenAssembly.FullName))
+                    if (item != null)
                     {
-                        AssemblyFileName = ChosenAssembly.Location.Split('\\').Last();
-                        AssemblyFileName = AssemblyFileName.Split('.')[0];
+                        MyXtraDocument xtra_Document = new MyXtraDocument();
+                        xtra_Document.Name = item.Name;
+                        xtra_Document.ObjektTyp = MyXtraDocument.Klasse.XtraForm;
 
+                        if (ChosenAssembly != null)
+                        {
+                            AssemblyFileName = ChosenAssembly.Location.Split('\\').Last();
+                            AssemblyFileName = AssemblyFileName.Split('.')[0];
+                        }
+                        else
+                        {
+                            AssemblyFileName = "leer";
+                        }
                         xtra_Document.Assembly = AssemblyFileName;
+
+                        xtra_Document.Projekt = item.CompanyName;
+
+                        if (item.Controls != null && item.Controls.Count > 0)
+                        {
+                            foreach (var control in item.Controls)
+                            {
+                                SucheUndUnterscheideKindElemente(control);
+                            }
+                        }
+
+                        DocumentName = item.Name;
+
+                        dictionary.Clear();
+                        ListeAlleErgebnisse();
+
+                        xtra_Document.MyUiElementsList.AddRange(AllControlsAsUIelements);
+
+                        xtra_Document.Filename = SerializationFilePath + "\\" + AssemblyFileName + "_" + xtra_Document.ObjektTyp + "_" + xtra_Document.Name + ".json";
+
+                        XtraDocumentsList.Add(xtra_Document);
+
+                        AllControlsAsUIelements.Clear();
                     }
-
-                    xtra_Document.Projekt = item.CompanyName;
-
-                    controlslist.Clear();
-                    controlslist = NutzeMethode.LadeControlsundLayoutControls(item);
-
-                    foreach (var control in controlslist)
-                    {
-                        SucheUndUnterscheideKindElemente(control);
-                    }
-
-                    DocumentName = item.Name;
-
-                    dictionary.Clear();
-                    ListeAlleErgebnisse();
-
-                    xtra_Document.MyUiElementsList.AddRange(AllControlsAsUIelements);
-
-                    xtra_Document.Filename = filepath + "\\" + AssemblyFileName + "_" + xtra_Document.ObjektTyp + "_" + xtra_Document.Name + ".json";
-
-                    XtraDocumentsList.Add(xtra_Document);
-
-                    AllControlsAsUIelements.Clear();
                 }
             }
 
             // -------------------------------->>> XtraUserControls
-            if (xtraUserControlList.Count > 0)
+            if (xtraUserControlList != null && xtraUserControlList.Count > 0)
             {
                 foreach (var item in xtraUserControlList)
                 {
-                    MyXtraDocument xtra_Document = new MyXtraDocument();
-                    xtra_Document.Name = item.Name;
-                    xtra_Document.ObjektTyp = MyXtraDocument.Klasse.XtraUserControl;
-                    
-                    if (!String.IsNullOrWhiteSpace(ChosenAssembly.FullName))
+                    if (item != null)
                     {
-                        AssemblyFileName = ChosenAssembly.Location.Split('\\').Last();
-                        AssemblyFileName = AssemblyFileName.Split('.')[0];
+                        MyXtraDocument xtra_Document = new MyXtraDocument();
+                        xtra_Document.Name = item.Name;
+                        xtra_Document.ObjektTyp = MyXtraDocument.Klasse.XtraUserControl;
 
+                        if (ChosenAssembly != null)
+                        {
+                            AssemblyFileName = ChosenAssembly.Location.Split('\\').Last();
+                            AssemblyFileName = AssemblyFileName.Split('.')[0];
+                        }
+                        else
+                        {
+                            AssemblyFileName = "leer";
+                        }
                         xtra_Document.Assembly = AssemblyFileName;
+
+                        xtra_Document.Projekt = item.CompanyName;
+
+                        foreach (var control in item.Controls)
+                        {
+                            SucheUndUnterscheideKindElemente(control);
+                        }
+
+                        DocumentName = item.Name;
+
+                        dictionary.Clear();
+                        ListeAlleErgebnisse();
+
+                        xtra_Document.MyUiElementsList.AddRange(AllControlsAsUIelements);
+
+                        xtra_Document.Filename = SerializationFilePath + "\\" + AssemblyFileName + "_" + xtra_Document.ObjektTyp + "_" + xtra_Document.Name + ".json";
+
+                        XtraDocumentsList.Add(xtra_Document);
+
+                        AllControlsAsUIelements.Clear();
                     }
-
-                    xtra_Document.Projekt = item.CompanyName;
-
-                    controlslist.Clear();
-                    controlslist = NutzeMethode.LadeControlsundLayoutControls(item);
-
-                    foreach (var control in controlslist)
-                    {
-                        SucheUndUnterscheideKindElemente(control);
-                    }
-
-                    DocumentName = item.Name;
-
-                    dictionary.Clear();
-                    ListeAlleErgebnisse();
-
-                    xtra_Document.MyUiElementsList.AddRange(AllControlsAsUIelements);
-
-                    xtra_Document.Filename = filepath + "\\" + AssemblyFileName + "_" + xtra_Document.ObjektTyp + "_" + xtra_Document.Name + ".json";
-
-                    XtraDocumentsList.Add(xtra_Document);
-
-                    AllControlsAsUIelements.Clear();
                 }
             }
 
             listBox1.Items.Add($"XtraDocuments Count: {XtraDocumentsList.Count}");
 
-            BefuelleComboBox2();
+            WhichComboBoxListIsActive = false;
+            BefuelleComboBox2(XtraDocumentsList);
+            comboBoxEdit2.BackColor = Color.DeepSkyBlue;
+
+            gridControl1.DataSource = null;
+            gridControl1.DataSource = XtraDocumentsList;
 
             typesList.Clear();
             xtraFormslist.Clear();
             xtraUserControlList.Clear();
-            layoutControlslist.Clear();
-
         }
 
         // --> Switch Case Methode
         public void SucheUndUnterscheideKindElemente(Object item)
         {
-            if (!dictionary.ContainsKey(item))
+            if (item != null)
             {
-                switch (item)
+                if (!dictionary.ContainsKey(item))
                 {
+                    switch (item)
+                    {
 
-                    case GroupControl lc when typeof(GroupControl).IsAssignableFrom(item.GetType()):
-                        groupControlslist.Add(lc);
-                        if (lc.HasChildren)
-                        {
-                            foreach (var lc_control in lc.Controls)
+                        case GroupControl lc when typeof(GroupControl).IsAssignableFrom(item.GetType()):
+                            groupControlslist.Add(lc);
+                            if (lc.HasChildren)
                             {
-                                SucheUndUnterscheideKindElemente(lc_control);
+                                foreach (var lc_control in lc.Controls)
+                                {
+                                    SucheUndUnterscheideKindElemente(lc_control);
+                                }
                             }
-                        }
-                        break;
+                            break;
 
-                    case DataLayoutControl lc when typeof(DataLayoutControl).IsAssignableFrom(item.GetType()):
-                        dataLayoutControlslist.Add(lc);
+                        case DataLayoutControl lc when typeof(DataLayoutControl).IsAssignableFrom(item.GetType()):
+                            dataLayoutControlslist.Add(lc);
 
-                        if (lc.HasChildren)
-                        {
-                            foreach (var lc_item in lc.Items)
+                            if (lc.HasChildren)
                             {
-                                SucheUndUnterscheideKindElemente(lc_item);
+                                foreach (var lc_item in lc.Items)
+                                {
+                                    SucheUndUnterscheideKindElemente(lc_item);
+                                }
+                                foreach (var lc_control in lc.Controls)
+                                {
+                                    SucheUndUnterscheideKindElemente(lc_control);
+                                }
                             }
-                            foreach (var lc_control in lc.Controls)
+                            break;
+
+                        case LayoutControl lc when typeof(LayoutControl).IsAssignableFrom(item.GetType()):
+                            layoutControlslist.Add(lc);
+
+                            if (lc.HasChildren)
                             {
-                                SucheUndUnterscheideKindElemente(lc_control);
+                                foreach (var lc_item in lc.Items)
+                                {
+                                    SucheUndUnterscheideKindElemente(lc_item);
+                                }
+                                foreach (var lc_control in lc.Controls)
+                                {
+                                    SucheUndUnterscheideKindElemente(lc_control);
+                                }
                             }
-                        }
-                        break;
+                            break;
 
-                    case LayoutControl lc when typeof(LayoutControl).IsAssignableFrom(item.GetType()):
-                        layoutControlslist.Add(lc);
+                        case LayoutGroup lc when typeof(LayoutGroup).IsAssignableFrom(item.GetType()):
+                            layoutGroupslist.Add(lc);
+                            break;
 
-                        if (lc.HasChildren)
-                        {
-                            foreach (var lc_item in lc.Items)
+                        case LayoutControlGroup lc when typeof(LayoutControlGroup).IsAssignableFrom(lc.GetType()):
+                            layoutControlGroupslist.Add(lc);
+
+                            if (lc.Items.Count > 0)
                             {
-                                SucheUndUnterscheideKindElemente(lc_item);
+                                foreach (var i in lc.Items)
+                                {
+                                    SucheUndUnterscheideKindElemente(i);
+                                }
                             }
-                            foreach (var lc_control in lc.Controls)
+                            break;
+
+                        case LayoutControlItem lc when typeof(LayoutControlItem).IsAssignableFrom(lc.GetType()):
+                            layoutControlItemslist.Add(lc);
+                            break;
+
+                        case TabbedControlGroup lc when typeof(TabbedControlGroup).IsAssignableFrom(item.GetType()):
+                            tabbedControlGroupslist.Add(lc);
+
+                            if (lc.TabPages.Count > 0)
                             {
-                                SucheUndUnterscheideKindElemente(lc_control);
+                                foreach (var i in lc.TabPages)
+                                {
+                                    SucheUndUnterscheideKindElemente(i);
+                                }
                             }
-                        }
-                        break;
+                            break;
 
-                    case LayoutGroup lc when typeof(LayoutGroup).IsAssignableFrom(item.GetType()):
-                        layoutGroupslist.Add(lc);
-                        break;
-
-                    case LayoutControlGroup lc when typeof(LayoutControlGroup).IsAssignableFrom(lc.GetType()):
-                        layoutControlGroupslist.Add(lc);
-
-                        if (lc.Items.Count > 0)
-                        {
-                            foreach (var i in lc.Items)
+                        case XtraTabControl lc when typeof(XtraTabControl).IsAssignableFrom(item.GetType()):
+                            xtraTabControlslist.Add(lc);
+                            if (lc.HasChildren)
                             {
-                                SucheUndUnterscheideKindElemente(i);
+                                foreach (var lc_item in lc.TabPages)
+                                {
+                                    SucheUndUnterscheideKindElemente(lc_item);
+                                }
+                                foreach (var lc_control in lc.Controls)
+                                {
+                                    SucheUndUnterscheideKindElemente(lc_control);
+                                }
                             }
-                        }
-                        break;
+                            break;
 
-                    case LayoutControlItem lc when typeof(LayoutControlItem).IsAssignableFrom(lc.GetType()):
-                        layoutControlItemslist.Add(lc);
-                        break;
+                        case GridControl i when typeof(GridControl).IsAssignableFrom(item.GetType()):
+                            gridControlslist.Add(i);
 
-                    case TabbedControlGroup lc when typeof(TabbedControlGroup).IsAssignableFrom(item.GetType()):
-                        tabbedControlGroupslist.Add(lc);
-                        
-                        if (lc.TabPages.Count > 0)
-                        {
-                            foreach (var i in lc.TabPages)
-                            {
-                                SucheUndUnterscheideKindElemente(i);
-                            }
-                        }
-                        break;           
+                            GridView y = i.MainView as GridView;
+                            GridColumnCollection z = y.Columns;
 
-                    case XtraTabControl lc when typeof(XtraTabControl).IsAssignableFrom(item.GetType()):
-                        xtraTabControlslist.Add(lc);
-                        if (lc.HasChildren)
-                        {
-                            foreach (var lc_item in lc.TabPages)
-                            {
-                                SucheUndUnterscheideKindElemente(lc_item);
-                            }
-                            foreach (var lc_control in lc.Controls)
-                            {
-                                SucheUndUnterscheideKindElemente(lc_control);
-                            }
-                        }
-                        break;
+                            gridColumnslist.AddRange(z.Cast<GridColumn>().ToList());
+                            gridColumnsViewlist.AddRange(z.Cast<ColumnView>().ToList());
+                            break;
 
-                    case GridControl i when typeof(GridControl).IsAssignableFrom(item.GetType()):
-                        gridControlslist.Add(i);
+                        case XtraTabPage lc when typeof(XtraTabPage).IsAssignableFrom(item.GetType()):
+                            xtraTabPageslist.Add(lc);
+                            break;
 
-                        GridView y = i.MainView as GridView;
-                        GridColumnCollection z = y.Columns;
+                        case CheckEdit i when typeof(CheckEdit).IsAssignableFrom(item.GetType()):
+                            checkEditslist.Add(i);
+                            break;
 
-                        gridColumnslist = z.Cast<GridColumn>().ToList();
-                        break;
+                        case DropDownButton i when typeof(DropDownButton).IsAssignableFrom(item.GetType()):
+                            DropDownButtonslist.Add(i);
+                            break;
 
-                    case XtraTabPage lc when typeof(XtraTabPage).IsAssignableFrom(item.GetType()):
-                        tabPageslist.Add(lc);
-                        break;
+                        case GridLookUpEdit i when typeof(GridLookUpEdit).IsAssignableFrom(item.GetType()):
+                            GridLookUpEditslist.Add(i);
 
-                    case CheckEdit i when typeof(CheckEdit).IsAssignableFrom(item.GetType()):
-                        checkEditslist.Add(i);
-                        break;
+                            GridColumnCollection x = i.Properties.PopupView.Columns;
+                            gridColumnslist.AddRange(x.Cast<GridColumn>().ToList());
+                            gridColumnsViewlist.AddRange(x.Cast<ColumnView>().ToList());
+                            break;
 
-                    case SimpleButton i when typeof(SimpleButton).IsAssignableFrom(item.GetType()):
-                        simpleButtonslist.Add(i);
-                        break;
+                        case DateEdit i when typeof(DateEdit).IsAssignableFrom(item.GetType()):
+                            dateEditslist.Add(i);
+                            break;
 
-                    case DateEdit i when typeof(DateEdit).IsAssignableFrom(item.GetType()):
-                        dateEditslist.Add(i);
-                        break;
+                        case ImageEdit i when typeof(ImageEdit).IsAssignableFrom(item.GetType()):
+                            imageEditslist.Add(i);
+                            break;
 
-                    case ImageEdit i when typeof(ImageEdit).IsAssignableFrom(item.GetType()):
-                        imageEditslist.Add(i);
-                        break;
+                        case ButtonEdit i when typeof(ButtonEdit).IsAssignableFrom(item.GetType()):
+                            buttonEditslist.Add(i);
+                            break;
 
-                    case ButtonEdit i when typeof(ButtonEdit).IsAssignableFrom(item.GetType()):
-                        buttonEditslist.Add(i);
-                        break;
+                        case SimpleButton i when typeof(SimpleButton).IsAssignableFrom(item.GetType()):
+                            simpleButtonslist.Add(i);
+                            break;
 
-                    case ComboBoxEdit i when typeof(ComboBoxEdit).IsAssignableFrom(item.GetType()):
-                        comboBoxEditslist.Add(i);
-                        break;
+                        case ComboBoxEdit i when typeof(ComboBoxEdit).IsAssignableFrom(item.GetType()):
+                            comboBoxEditslist.Add(i);
+                            break;
 
-                    case TextEdit i when typeof(TextEdit).IsAssignableFrom(item.GetType()):
-                        textEditslist.Add(i);
-                        break;
+                        case TextEdit i when typeof(TextEdit).IsAssignableFrom(item.GetType()):
+                            textEditslist.Add(i);
+                            break;
 
-                    default:
-                        otherControlTypes.Add(item);
-                        break;
+                        case CheckedListBoxControl i when typeof(CheckedListBoxControl).IsAssignableFrom(item.GetType()):
+                            checkedListBoxControlslist.Add(i);
+                            break;
+
+                        case PictureEdit i when typeof(PictureEdit).IsAssignableFrom(item.GetType()):
+                            pictureEditslist.Add(i);
+                            break;
+
+                        case ListBoxControl i when typeof(ListBoxControl).IsAssignableFrom(item.GetType()):
+                            listBoxControlslist.Add(i);
+                            break;
+
+                        case ImageComboBoxEdit i when typeof(ImageComboBoxEdit).IsAssignableFrom(item.GetType()):
+                            imageComboBoxEditslist.Add(i);
+                            break;
+
+                        default:
+                            otherControlTypes.Add(item);
+                            break;
+                    }
+                    dictionary.Add(item, item);
                 }
-                dictionary.Add(item, item);
-            }
+            }  
         }
 
-        // List<MyUiElement> füllen
+        // --> List<MyUiElement> füllen
         public void ListeAlleErgebnisse()
         {
             AllControlsAsUIelements.Clear();
             
             foreach (var item in gridControlslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.GridControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.GridControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name
+                });
             }
             foreach (var item in gridColumnslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.GridColumn, Name = item.Name, Text = item.Caption, XtraDokument = DocumentName, Other = item.FieldName, Parent = item.Container == null ? "nicht verfügbar" : item.Container.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.GridColumn, Name = item.Name, Text = item.Caption, XtraDokument = DocumentName, 
+                    Other = item.FieldName, Parent = item.Container == null ? "nicht verfügbar" : item.Container.ToString()
+                });
             }
             foreach (var item in textEditslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TextEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TextEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString()
+                });
             }
             foreach (var item in simpleButtonslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.SimpleButton, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.SimpleButton, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString()
+                });
             }
             foreach (var item in checkEditslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.CheckEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.CheckEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString()
+                });
             }
             foreach (var item in comboBoxEditslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.ComboBoxEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.ComboBoxEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString()
+                });
             }
             foreach (var item in layoutControlItemslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.LayoutItem, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.LayoutControlItem, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, OwnedControl = item.Control == null ? "nicht verfügbar" : item.Control.Name
+                });
             }
             foreach (var item in layoutControlGroupslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.LayoutControlGroup, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.LayoutControlGroup, Name = item.Name, Text = item.Text, XtraDokument = DocumentName,
+                    Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name});
             }
             foreach (var item in tabbedControlGroupslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TabbedControlGroup, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TabbedControlGroup, Name = item.Name, Text = item.Text, XtraDokument = DocumentName,
+                    Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name });
             }
             foreach (var item in dataLayoutControlslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.DataLayoutControl, Name = item.Name, XtraDokument = DocumentName, Text = item.Text, TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.DataLayoutControl, Name = item.Name, XtraDokument = DocumentName, Text = item.Text, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString()
+                });
             }
             foreach (var item in layoutGroupslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.LayoutGroup, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.LayoutGroup, Name = item.Name, Text = item.Text, XtraDokument = DocumentName,
+                    Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name }); 
             }
             foreach (var item in layoutControlslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.LayoutControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.LayoutControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString()
+                });
             }
-            foreach (var item in tabPageslist)
+            foreach (var item in xtraTabPageslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.XtraTabPage, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.XtraTabPage, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name 
+                });
             }
             foreach (var item in buttonEditslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.ButtonEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.ButtonEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString()
+                });
             }
             foreach (var item in imageEditslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.ImageEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.ImageEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString()
+                });
             }
             foreach (var item in groupControlslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.GroupControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.GroupControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name 
+                });
             }
             foreach (var item in dateEditslist)
             {
-                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.DateEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.ToString() });
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.DateEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString()
+                });
+            }
+            foreach (var item in DropDownButtonslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.DropDownButton, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString() 
+                });
+            }
+            foreach (var item in GridLookUpEditslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.GridLookUpEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString() 
+                });
+            }
+            foreach (var item in gridColumnsViewlist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.GridColumnView, Name = item.Name, Other = item.ViewCaption, XtraDokument = DocumentName, 
+                    Parent = item.Container == null ? "nicht verfügbar" : item.Container.ToString()
+                });
+            }
+            foreach (var item in checkedListBoxControlslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.CheckedListBoxControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString() 
+                });
+            }
+            foreach (var item in pictureEditslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.PictureEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString() 
+                });
+            }
+            foreach (var item in listBoxControlslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.ListBoxControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString() 
+                });
+            }
+            foreach (var item in imageComboBoxEditslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.ImageComboboxEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString() 
+                });
             }
 
-
+            checkedListBoxControlslist.Clear();
+            pictureEditslist.Clear();
+            listBoxControlslist.Clear();
+            imageComboBoxEditslist.Clear();
+            gridColumnsViewlist.Clear();
+            DropDownButtonslist.Clear();
+            GridLookUpEditslist.Clear();
+            layoutControlslist.Clear();
             layoutControlItemslist.Clear();
             layoutControlGroupslist.Clear();
             gridControlslist.Clear();
@@ -442,7 +590,7 @@ namespace Lokalomat
             simpleButtonslist.Clear();
             checkEditslist.Clear();
             comboBoxEditslist.Clear();
-            tabPageslist.Clear();
+            xtraTabPageslist.Clear();
             layoutGroupslist.Clear();
             dataLayoutControlslist.Clear();
             buttonEditslist.Clear();
@@ -451,57 +599,17 @@ namespace Lokalomat
             groupControlslist.Clear();
         }
 
-        // Serialisiere alles aus einer Assembly
-        private void serializeToJsonToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog folderDlg = new FolderBrowserDialog();
-            if (folderDlg.ShowDialog() == DialogResult.OK)
-            {
-                filepath = folderDlg.SelectedPath;
-            }
-
-            AssemblyFileName = "leer";
-
-            if (ChosenAssembly != null)
-            {
-                AssemblyFileName = ChosenAssembly.Location.Split('\\').Last();
-                AssemblyFileName = AssemblyFileName.Split('.')[0];
-            }
-
-            foreach (var item in XtraDocumentsList)
-            {
-                if (File.Exists(item.Filename))
-                {
-                    listBox1.Items.Add("Datei updated: " + item.Name);
-                }
-                else
-                {
-                    listBox1.Items.Add("Neue Datei: " + item.Name);
-                }
-
-                string jsonstring = JsonConvert.SerializeObject(item, Formatting.Indented);
-                File.WriteAllText(item.Filename, jsonstring);
-            }
-
-            listBox1.Items.Add("Assembly Datei serialized: " + AssemblyFileName);
-        }
-
-        // Serialisiere nur neue aktive Elemente aus einer Assembly 
-        private void serialisiereNeueControlsToolStripMenuItem_Click(object sender, EventArgs e)
+        // --> Serialisiere alle neuen Elemente aus einer Assembly 
+        private void serialisiereAlleneuenControls()
         {
             int count = 0;
 
-            DeserializedXtraDocsList = NutzeMethode.DeserializeAllFilesFromActiveFolder(filepath);
+            DeserializedXtraDocsList = NutzeMethode.DeserializeAllFilesFromActiveFolder(SerializationFilePath);
 
             listBox1.Items.Add("XtraDokumente deserialisiert Count: " + DeserializedXtraDocsList.Count);
 
-            
             XtraDocumentsDict = XtraDocumentsList.ToDictionary(x => x.Name, x => x);
-
             DeserializedXtraDocsDict = DeserializedXtraDocsList.ToDictionary(x => x.Name, x => x);
-
-            Dictionary<string, MyUiElement> ActiveUIsDict = new Dictionary<string, MyUiElement>();
-            Dictionary<string, MyUiElement> SavedUIsDict = new Dictionary<string, MyUiElement>();
 
             // Comparer 1
             foreach (var item in XtraDocumentsDict)
@@ -531,13 +639,13 @@ namespace Lokalomat
                         saveditem.Value.MyUiElementsList = SavedUIsDict.Values.ToList();
                         listBox1.Items.Add("Neue UiElemente Count: " + count);
                         count = 0;
+                        SavedUIsDict.Clear();
                     }
                 }
+                ActiveUIsDict.Clear();
             }
 
             DeserializedXtraDocsList = DeserializedXtraDocsDict.Values.ToList();
-
-            
 
             foreach (var item in DeserializedXtraDocsList)
             {
@@ -545,24 +653,42 @@ namespace Lokalomat
                 {
                     listBox1.Items.Add("Neue Datei erstellt: " + item.Name);
                 }
+                else
+                {
+                    listBox1.Items.Add("Datei updated: " + item.Name);
+                }
 
                 string jsonstring = JsonConvert.SerializeObject(item, Formatting.Indented);
                 File.WriteAllText(item.Filename, jsonstring);
             }
 
             listBox1.Items.Add("Assembly Datei updated: " + AssemblyFileName);
+
+            WhichComboBoxListIsActive = true;
+            BefuelleComboBox2(DeserializedXtraDocsList);
+            comboBoxEdit2.BackColor = Color.LightGreen;
+
+            gridControl1.DataSource = null;
+            gridControl1.DataSource = DeserializedXtraDocsList;
         }
 
-        // Deserialisiere alle Json Dateien
-        private void deserializeFromJsonToolStripMenuItem_Click(object sender, EventArgs e)
+        // --> Deserialisiere Json Dateien
+        private void deserialisiereDateien()
         {
-            DeserializedXtraDocsList = NutzeMethode.DeserializeAllFilesFromActiveFolder(filepath);
+            DeserializedXtraDocsList = NutzeMethode.DeserializeAllFilesFromActiveFolder(DeserializationFilePath);
 
             listBox1.Items.Add("XtraDokumente deserialisiert Count: " + DeserializedXtraDocsList.Count);
+
+            WhichComboBoxListIsActive = true;
+            BefuelleComboBox2(DeserializedXtraDocsList);
+            comboBoxEdit2.BackColor = Color.LightGreen;
+
+            gridControl1.DataSource = null;
+            gridControl1.DataSource = DeserializedXtraDocsList;
         }
 
-        // Ersetze Texte
-        private void compareToolStripMenuItem_Click(object sender, EventArgs e)
+        // --> Ersetze Texte
+        private void ersetzeTexteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (XtraDocumentsList != null && DeserializedXtraDocsList != null)
             {
@@ -602,38 +728,72 @@ namespace Lokalomat
             }
         }
 
-        // Alle Dateien Löschen
-        private void dateienLöschenToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DirectoryInfo di = new DirectoryInfo(@"C:\Users\Manni\Desktop\Objekte\");
+        //------------------------------------------------------------------------------------|
 
-            foreach (FileInfo file in di.GetFiles())
+        // Testing
+        private void testeLINQToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var ListOfEqualXtraDocuments = XtraDocumentsList.Where(x => DeserializedXtraDocsList.Any(y => y.Name == x.Name && y.Projekt == x.Projekt)).ToList();
+
+            var CollectionOfEqualXtraDocuments2 = XtraDocumentsList.Select(x => x.Name).Intersect(DeserializedXtraDocsList.Select(x => x.Name));
+
+            foreach (var item in XtraDocumentsList.Where(x => ListOfEqualXtraDocuments.Any(y => y.Name.Contains(x.Name))))
             {
-                file.Delete();
             }
-            foreach (DirectoryInfo dir in di.GetDirectories())
+
+            //.AddRange(from x in XtraDocumentsList[0].MyUiElementsList select x);
+
+            //.AddRange(DeserializedXtraDocsList.SelectMany(x => x.MyUiElementsList)
+            //.Where(y => y.Name.Contains("")));
+
+
+            // if (NewActiveUiElements.Any(x => MySavedUiElements.Any(y => y.Name == x.Name)))
             {
-                dir.Delete(true);
             }
+
+
+
+            // olditem.MyUiElementsList.AddRange(newitem.MyUiElementsList.Where(x => olditem.MyUiElementsList.Any(y => !y.Name.Contains(x.Name))));
+
+            if (XtraDocumentsList.Any(x => DeserializedXtraDocsList.Any(y => y.Name != x.Name)))
+
+                DeserializedXtraDocsList.AddRange(XtraDocumentsList.Where(x => DeserializedXtraDocsList.Any(y => y.Name != x.Name)));
         }
 
-        // Clear All
-        private void speicherLeerenToolStripMenuItem_Click(object sender, EventArgs e)
+        private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AssemblyFileName = "leer";
-            DocumentName = "leer";
-
-            assemblyList.Clear();
-
-            AllControlsAsUIelements.Clear();
-            XtraDocumentsList.Clear();
-            DeserializedXtraDocsList.Clear();
-
-            XtraDocumentsDict.Clear();
-            DeserializedXtraDocsDict.Clear();
+            
         }
 
-        // Verzeichnis auswählen
+        //------------------------------------------------------------------------------------|
+
+        // Verzeichnis auswählen für Assemblies
+        private void verzeichnisWählenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    string[] files = Directory.GetFiles(fbd.SelectedPath);
+
+                    AssemblyFilePath = fbd.SelectedPath;
+                }
+            }
+
+            ladeAsseblies();
+        }
+
+        // Verzeichnis automatisch auswählen für Assemblies
+        private void autoVerzeichnisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AssemblyFilePath = @"C:\Archiv\Gits\Tutorials\CommonControlsTestUI\CommonControlsTestUI\bin\Debug";
+
+            ladeAsseblies();
+        }
+
+        // Verzeichnis auswählen zum Serialisieren
         private void wähleVerzeichnisToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var fbd = new FolderBrowserDialog())
@@ -644,69 +804,53 @@ namespace Lokalomat
                 {
                     string[] files = Directory.GetFiles(fbd.SelectedPath);
 
-                    Verzeichnis = fbd.SelectedPath;
+                    SerializationFilePath = fbd.SelectedPath;
                 }
             }
+
+            serialisiereAlleneuenControls();
         }
 
-        // Testing
-        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        // Verzeichnis automatisch auswählen zum Serialisieren
+        private void autoVerzeichnisToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            var ListOfEqualXtraDocuments = XtraDocumentsList.Where(x => DeserializedXtraDocsList.Any(y => y.Name == x.Name && y.Projekt == x.Projekt)).ToList();
+            SerializationFilePath = @"C:\Users\Manni\Desktop\Objekte\";
 
-            var CollectionOfEqualXtraDocuments2 = XtraDocumentsList.Select(x => x.Name).Intersect(DeserializedXtraDocsList.Select(x => x.Name));
+            serialisiereAlleneuenControls();
+        }
 
-            foreach (var item in XtraDocumentsList.Where(x => ListOfEqualXtraDocuments.Any(y => y.Name.Contains(x.Name))))
+        // Verzeichnis auswählen zum Deserialisieren
+        private void wähleVerzeichnisToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new FolderBrowserDialog())
             {
-            }
+                DialogResult result = fbd.ShowDialog();
 
-            NewActiveUiElements.AddRange(from x in XtraDocumentsList[0].MyUiElementsList select x);
-
-            MySavedUiElements.AddRange(DeserializedXtraDocsList.SelectMany(x => x.MyUiElementsList)
-                                                               .Where(y => y.Name.Contains("")));
-
-
-            if (NewActiveUiElements.Any(x => MySavedUiElements.Any(y => y.Name == x.Name)))
-            {
-            }
-
-            foreach (var newitem in XtraDocumentsList)
-            {
-                foreach (var olditem in DeserializedXtraDocsList)
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    if (olditem.Name == newitem.Name)
-                    {
-                        foreach (var newUIitem in newitem.MyUiElementsList)
-                        {
-                            foreach (var oldUIitem in olditem.MyUiElementsList)
-                            {
-                                if (oldUIitem.Name == newUIitem.Name)
-                                {
-                                    if (oldUIitem.Originaltext != newUIitem.Text)
-                                    {
-                                        oldUIitem.Originaltext = newUIitem.Text;
-                                    }
-                                    MySavedUiElements.Add(oldUIitem);
-                                }
-                            }
-                            NewActiveUiElements.Add(newUIitem);
-                        }
-                        int check = olditem.MyUiElementsList.Count();
+                    string[] files = Directory.GetFiles(fbd.SelectedPath);
 
-                        olditem.MyUiElementsList.AddRange(newitem.MyUiElementsList.Where(x => olditem.MyUiElementsList.Any(y => !y.Name.Contains(x.Name))));
-
-                        if (XtraDocumentsList.Any(x => DeserializedXtraDocsList.Any(y => y.Name != x.Name)))
-                            listBox1.Items.Add("Neue UiElemente Count: " + (olditem.MyUiElementsList.Count() - check));
-                    }
+                    DeserializationFilePath = fbd.SelectedPath;
                 }
             }
 
-            DeserializedXtraDocsList.AddRange(XtraDocumentsList.Where(x => DeserializedXtraDocsList.Any(y => y.Name != x.Name)));
+            deserialisiereDateien();
         }
+
+        // Verzeichnis automatisch auswählen zum Deserialisieren
+        private void autoVerzeichnisToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            DeserializationFilePath = @"C:\Users\Manni\Desktop\Objekte\";
+
+            deserialisiereDateien();
+        }
+
+        //------------------------------------------------------------------------------------|
 
         // Comboboxen
         private void BefuelleComboBox1()
         {
+            comboBoxEdit1.Controls.Clear();
             ComboBoxItemCollection coll = comboBoxEdit1.Properties.Items;
             coll.BeginUpdate();
             coll.Clear();
@@ -725,14 +869,15 @@ namespace Lokalomat
             comboBoxEdit1.BackColor = Color.DeepSkyBlue;
         }
 
-        private void BefuelleComboBox2()
+        private void BefuelleComboBox2(List<MyXtraDocument> ChosenList)
         {
+            comboBoxEdit2.Controls.Clear();
             ComboBoxItemCollection coll = comboBoxEdit2.Properties.Items;
             coll.BeginUpdate();
             coll.Clear();
             try
             {
-                foreach (var item in XtraDocumentsList)
+                foreach (var item in ChosenList)
                 {
                     coll.Add(item.Name);
                 }
@@ -742,18 +887,17 @@ namespace Lokalomat
                 coll.EndUpdate();
             }
             comboBoxEdit2.SelectedIndex = -1;
-            comboBoxEdit2.BackColor = Color.DeepSkyBlue;
         }
 
         private void comboBoxEdit1_SelectedIndexChanged(object sender, EventArgs e)
         {
             XtraDocumentsList.Clear();
 
-            if (assemblyList.Count() > 0)
+            if (assemblyList != null && assemblyList.Count() > 0)
             {
                 foreach (var item in assemblyList)
                 {
-                    if (comboBoxEdit1.SelectedItem.ToString() == item.Location)
+                    if (comboBoxEdit1.SelectedItem != null && comboBoxEdit1.SelectedItem.ToString() == item.Location)
                     {
                         ChosenAssembly = item;
                         gridControl1.DataSource = null;
@@ -766,21 +910,89 @@ namespace Lokalomat
 
         private void comboBoxEdit2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (XtraDocumentsList != null)
+            if (WhichComboBoxListIsActive == true)
             {
-                foreach (var item in XtraDocumentsList)
+                if (DeserializedXtraDocsList != null)
                 {
-                    if (comboBoxEdit2.SelectedItem != null && comboBoxEdit2.SelectedItem.ToString() == item.Name)
+                    foreach (var item in DeserializedXtraDocsList)
                     {
-                        gridControl1.DataSource = null;
-                        gridControl1.DataSource = item.MyUiElementsList;
+                        if (comboBoxEdit2.SelectedItem != null && comboBoxEdit2.SelectedItem.ToString() == item.Name)
+                        {
+                            gridControl1.DataSource = null;
+                            gridControl1.DataSource = item.MyUiElementsList;
 
-                        listBox1.Items.Add($"Dokument Controls Count: {item.MyUiElementsList.Count}");
+                            listBox1.Items.Add($"Dokument Controls Count: {item.MyUiElementsList.Count}");
+                        }
                     }
                 }
             }
+            else if (WhichComboBoxListIsActive == false)
+            {
+                if (XtraDocumentsList != null)
+                {
+                    foreach (var item in XtraDocumentsList)
+                    {
+                        if (comboBoxEdit2.SelectedItem != null && comboBoxEdit2.SelectedItem.ToString() == item.Name)
+                        {
+                            gridControl1.DataSource = null;
+                            gridControl1.DataSource = item.MyUiElementsList;
+
+                            listBox1.Items.Add($"Dokument Controls Count: {item.MyUiElementsList.Count}");
+                        }
+                    }
+                }
+            }
+            
         }
 
+        //------------------------------------------------------------------------------------|
+
+        // Clear All
+        private void speicherLeerenToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            AssemblyFileName = "leer";
+            DocumentName = "leer";
+
+            assemblyList.Clear();
+
+            AllControlsAsUIelements.Clear();
+            XtraDocumentsList.Clear();
+            DeserializedXtraDocsList.Clear();
+
+            XtraDocumentsDict.Clear();
+            DeserializedXtraDocsDict.Clear();
+        }
+
+        // Alle Dateien Löschen
+        private void löscheAlleDateienToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DirectoryInfo di = new DirectoryInfo(@"C:\Users\Manni\Desktop\Objekte\");
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+        }
+
+        // Show all unpicked Controls
+        private void zeigeUnsortierteControlsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<Control> showableControls = new List<Control>();
+
+            foreach (var item in otherControlTypes)
+            {
+                if (item != null && typeof(Control).IsAssignableFrom(item.GetType()))
+                {
+                    showableControls.Add((Control)item);
+                }
+            }
+            gridControl1.DataSource = null;
+            gridControl1.DataSource = showableControls;
+        }
 
     }
 }

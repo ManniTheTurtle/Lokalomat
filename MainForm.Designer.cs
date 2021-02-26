@@ -37,15 +37,23 @@ namespace Lokalomat
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.wähleVerzeichnisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.verzeichnisWählenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.autoVerzeichnisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.speicherLeerenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.manuellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.serializeToJsonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deserializeFromJsonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.compareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dateienLöschenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.speicherLeerenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wähleVerzeichnisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.autoVerzeichnisToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.zeigeUnsortierteControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lokalisierungToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wähleVerzeichnisToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.autoVerzeichnisToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ersetzeTexteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.löscheAlleDateienToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testeLINQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sucheToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -53,10 +61,7 @@ namespace Lokalomat
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.serialisiereNeueControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sucheToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.inDateienToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.inAktivenControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zeigeUnsortierteControlsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit2.Properties)).BeginInit();
@@ -169,10 +174,9 @@ namespace Lokalomat
             this.menuStrip1.BackColor = System.Drawing.Color.LightSkyBlue;
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.wähleVerzeichnisToolStripMenuItem,
             this.autoToolStripMenuItem,
             this.manuellToolStripMenuItem,
-            this.sucheToolStripMenuItem,
+            this.lokalisierungToolStripMenuItem,
             this.testToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(12, 12);
             this.menuStrip1.Name = "menuStrip1";
@@ -180,78 +184,141 @@ namespace Lokalomat
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // wähleVerzeichnisToolStripMenuItem
-            // 
-            this.wähleVerzeichnisToolStripMenuItem.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.wähleVerzeichnisToolStripMenuItem.Name = "wähleVerzeichnisToolStripMenuItem";
-            this.wähleVerzeichnisToolStripMenuItem.Size = new System.Drawing.Size(145, 31);
-            this.wähleVerzeichnisToolStripMenuItem.Text = "-> Wähle Verzeichnis <-";
-            this.wähleVerzeichnisToolStripMenuItem.Click += new System.EventHandler(this.wähleVerzeichnisToolStripMenuItem_Click);
-            // 
             // autoToolStripMenuItem
             // 
+            this.autoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.verzeichnisWählenToolStripMenuItem,
+            this.autoVerzeichnisToolStripMenuItem,
+            this.speicherLeerenToolStripMenuItem1,
+            this.zeigeUnsortierteControlsToolStripMenuItem1});
             this.autoToolStripMenuItem.Margin = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.autoToolStripMenuItem.Name = "autoToolStripMenuItem";
-            this.autoToolStripMenuItem.Size = new System.Drawing.Size(138, 31);
-            this.autoToolStripMenuItem.Text = "-> Lade Assemblies <-";
-            this.autoToolStripMenuItem.Click += new System.EventHandler(this.autoToolStripMenuItem_Click);
+            this.autoToolStripMenuItem.Size = new System.Drawing.Size(128, 31);
+            this.autoToolStripMenuItem.Text = "-> Finde Controls <-";
+            // 
+            // verzeichnisWählenToolStripMenuItem
+            // 
+            this.verzeichnisWählenToolStripMenuItem.Name = "verzeichnisWählenToolStripMenuItem";
+            this.verzeichnisWählenToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.verzeichnisWählenToolStripMenuItem.Text = "Verzeichnis wählen";
+            this.verzeichnisWählenToolStripMenuItem.Click += new System.EventHandler(this.verzeichnisWählenToolStripMenuItem_Click);
+            // 
+            // autoVerzeichnisToolStripMenuItem
+            // 
+            this.autoVerzeichnisToolStripMenuItem.Name = "autoVerzeichnisToolStripMenuItem";
+            this.autoVerzeichnisToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.autoVerzeichnisToolStripMenuItem.Text = "Auto Verzeichnis";
+            this.autoVerzeichnisToolStripMenuItem.Click += new System.EventHandler(this.autoVerzeichnisToolStripMenuItem_Click);
+            // 
+            // speicherLeerenToolStripMenuItem1
+            // 
+            this.speicherLeerenToolStripMenuItem1.Name = "speicherLeerenToolStripMenuItem1";
+            this.speicherLeerenToolStripMenuItem1.Size = new System.Drawing.Size(211, 22);
+            this.speicherLeerenToolStripMenuItem1.Text = "Speicher leeren";
+            this.speicherLeerenToolStripMenuItem1.Click += new System.EventHandler(this.speicherLeerenToolStripMenuItem1_Click);
             // 
             // manuellToolStripMenuItem
             // 
             this.manuellToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.serializeToJsonToolStripMenuItem,
-            this.serialisiereNeueControlsToolStripMenuItem,
-            this.deserializeFromJsonToolStripMenuItem,
-            this.compareToolStripMenuItem,
-            this.dateienLöschenToolStripMenuItem,
-            this.speicherLeerenToolStripMenuItem});
+            this.wähleVerzeichnisToolStripMenuItem,
+            this.autoVerzeichnisToolStripMenuItem2,
+            this.zeigeUnsortierteControlsToolStripMenuItem});
             this.manuellToolStripMenuItem.Margin = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.manuellToolStripMenuItem.Name = "manuellToolStripMenuItem";
-            this.manuellToolStripMenuItem.Size = new System.Drawing.Size(114, 31);
-            this.manuellToolStripMenuItem.Text = "-> Lokalisation <-";
+            this.manuellToolStripMenuItem.Size = new System.Drawing.Size(106, 31);
+            this.manuellToolStripMenuItem.Text = "-> Serialisiere <-";
             // 
-            // serializeToJsonToolStripMenuItem
+            // wähleVerzeichnisToolStripMenuItem
             // 
-            this.serializeToJsonToolStripMenuItem.Name = "serializeToJsonToolStripMenuItem";
-            this.serializeToJsonToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.serializeToJsonToolStripMenuItem.Text = "Serialisiere alles";
-            this.serializeToJsonToolStripMenuItem.Click += new System.EventHandler(this.serializeToJsonToolStripMenuItem_Click);
+            this.wähleVerzeichnisToolStripMenuItem.Name = "wähleVerzeichnisToolStripMenuItem";
+            this.wähleVerzeichnisToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.wähleVerzeichnisToolStripMenuItem.Text = "Wähle Verzeichnis";
+            this.wähleVerzeichnisToolStripMenuItem.Click += new System.EventHandler(this.wähleVerzeichnisToolStripMenuItem_Click);
             // 
-            // deserializeFromJsonToolStripMenuItem
+            // autoVerzeichnisToolStripMenuItem2
             // 
-            this.deserializeFromJsonToolStripMenuItem.Name = "deserializeFromJsonToolStripMenuItem";
-            this.deserializeFromJsonToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.deserializeFromJsonToolStripMenuItem.Text = "Deserialize Json";
-            this.deserializeFromJsonToolStripMenuItem.Click += new System.EventHandler(this.deserializeFromJsonToolStripMenuItem_Click);
+            this.autoVerzeichnisToolStripMenuItem2.Name = "autoVerzeichnisToolStripMenuItem2";
+            this.autoVerzeichnisToolStripMenuItem2.Size = new System.Drawing.Size(211, 22);
+            this.autoVerzeichnisToolStripMenuItem2.Text = "Auto Verzeichnis";
+            this.autoVerzeichnisToolStripMenuItem2.Click += new System.EventHandler(this.autoVerzeichnisToolStripMenuItem2_Click);
             // 
-            // compareToolStripMenuItem
+            // zeigeUnsortierteControlsToolStripMenuItem
             // 
-            this.compareToolStripMenuItem.Name = "compareToolStripMenuItem";
-            this.compareToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.compareToolStripMenuItem.Text = "Compare";
-            this.compareToolStripMenuItem.Click += new System.EventHandler(this.compareToolStripMenuItem_Click);
+            this.zeigeUnsortierteControlsToolStripMenuItem.Name = "zeigeUnsortierteControlsToolStripMenuItem";
+            this.zeigeUnsortierteControlsToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.zeigeUnsortierteControlsToolStripMenuItem.Text = "Zeige unsortierte Controls";
+            this.zeigeUnsortierteControlsToolStripMenuItem.Click += new System.EventHandler(this.zeigeUnsortierteControlsToolStripMenuItem_Click);
             // 
-            // dateienLöschenToolStripMenuItem
+            // lokalisierungToolStripMenuItem
             // 
-            this.dateienLöschenToolStripMenuItem.Name = "dateienLöschenToolStripMenuItem";
-            this.dateienLöschenToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.dateienLöschenToolStripMenuItem.Text = "Dateien Löschen";
-            this.dateienLöschenToolStripMenuItem.Click += new System.EventHandler(this.dateienLöschenToolStripMenuItem_Click);
+            this.lokalisierungToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.wähleVerzeichnisToolStripMenuItem1,
+            this.autoVerzeichnisToolStripMenuItem1,
+            this.ersetzeTexteToolStripMenuItem,
+            this.löscheAlleDateienToolStripMenuItem});
+            this.lokalisierungToolStripMenuItem.Margin = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.lokalisierungToolStripMenuItem.Name = "lokalisierungToolStripMenuItem";
+            this.lokalisierungToolStripMenuItem.Size = new System.Drawing.Size(119, 31);
+            this.lokalisierungToolStripMenuItem.Text = "-> Deserialisiere <-";
             // 
-            // speicherLeerenToolStripMenuItem
+            // wähleVerzeichnisToolStripMenuItem1
             // 
-            this.speicherLeerenToolStripMenuItem.Name = "speicherLeerenToolStripMenuItem";
-            this.speicherLeerenToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.speicherLeerenToolStripMenuItem.Text = "Speicher leeren";
-            this.speicherLeerenToolStripMenuItem.Click += new System.EventHandler(this.speicherLeerenToolStripMenuItem_Click);
+            this.wähleVerzeichnisToolStripMenuItem1.Name = "wähleVerzeichnisToolStripMenuItem1";
+            this.wähleVerzeichnisToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.wähleVerzeichnisToolStripMenuItem1.Text = "Wähle Verzeichnis";
+            this.wähleVerzeichnisToolStripMenuItem1.Click += new System.EventHandler(this.wähleVerzeichnisToolStripMenuItem1_Click);
+            // 
+            // autoVerzeichnisToolStripMenuItem1
+            // 
+            this.autoVerzeichnisToolStripMenuItem1.Name = "autoVerzeichnisToolStripMenuItem1";
+            this.autoVerzeichnisToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.autoVerzeichnisToolStripMenuItem1.Text = "Auto Verzeichnis";
+            this.autoVerzeichnisToolStripMenuItem1.Click += new System.EventHandler(this.autoVerzeichnisToolStripMenuItem1_Click);
+            // 
+            // ersetzeTexteToolStripMenuItem
+            // 
+            this.ersetzeTexteToolStripMenuItem.Name = "ersetzeTexteToolStripMenuItem";
+            this.ersetzeTexteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ersetzeTexteToolStripMenuItem.Text = "Ersetze Texte";
+            this.ersetzeTexteToolStripMenuItem.Click += new System.EventHandler(this.ersetzeTexteToolStripMenuItem_Click);
+            // 
+            // löscheAlleDateienToolStripMenuItem
+            // 
+            this.löscheAlleDateienToolStripMenuItem.Name = "löscheAlleDateienToolStripMenuItem";
+            this.löscheAlleDateienToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.löscheAlleDateienToolStripMenuItem.Text = "Lösche alle Dateien";
+            this.löscheAlleDateienToolStripMenuItem.Click += new System.EventHandler(this.löscheAlleDateienToolStripMenuItem_Click);
             // 
             // testToolStripMenuItem
             // 
+            this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.testeLINQToolStripMenuItem,
+            this.showToolStripMenuItem,
+            this.sucheToolStripMenuItem});
             this.testToolStripMenuItem.Margin = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(88, 31);
             this.testToolStripMenuItem.Text = "-> Testing <-";
-            this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
+            // 
+            // testeLINQToolStripMenuItem
+            // 
+            this.testeLINQToolStripMenuItem.Name = "testeLINQToolStripMenuItem";
+            this.testeLINQToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.testeLINQToolStripMenuItem.Text = "Teste LINQ";
+            this.testeLINQToolStripMenuItem.Click += new System.EventHandler(this.testeLINQToolStripMenuItem_Click);
+            // 
+            // showToolStripMenuItem
+            // 
+            this.showToolStripMenuItem.Name = "showToolStripMenuItem";
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.showToolStripMenuItem.Text = "Show";
+            this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
+            // 
+            // sucheToolStripMenuItem
+            // 
+            this.sucheToolStripMenuItem.Name = "sucheToolStripMenuItem";
+            this.sucheToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.sucheToolStripMenuItem.Text = "Suche";
             // 
             // Root
             // 
@@ -324,34 +391,12 @@ namespace Lokalomat
             this.layoutControlItem5.Text = "Wähle Xtra Dokument:";
             this.layoutControlItem5.TextSize = new System.Drawing.Size(108, 13);
             // 
-            // serialisiereNeueControlsToolStripMenuItem
+            // zeigeUnsortierteControlsToolStripMenuItem1
             // 
-            this.serialisiereNeueControlsToolStripMenuItem.Name = "serialisiereNeueControlsToolStripMenuItem";
-            this.serialisiereNeueControlsToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.serialisiereNeueControlsToolStripMenuItem.Text = "Serialisiere neue Controls";
-            this.serialisiereNeueControlsToolStripMenuItem.Click += new System.EventHandler(this.serialisiereNeueControlsToolStripMenuItem_Click);
-            // 
-            // sucheToolStripMenuItem
-            // 
-            this.sucheToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.inDateienToolStripMenuItem,
-            this.inAktivenControlsToolStripMenuItem});
-            this.sucheToolStripMenuItem.Margin = new System.Windows.Forms.Padding(30, 0, 0, 0);
-            this.sucheToolStripMenuItem.Name = "sucheToolStripMenuItem";
-            this.sucheToolStripMenuItem.Size = new System.Drawing.Size(83, 31);
-            this.sucheToolStripMenuItem.Text = "-> Suche <-";
-            // 
-            // inDateienToolStripMenuItem
-            // 
-            this.inDateienToolStripMenuItem.Name = "inDateienToolStripMenuItem";
-            this.inDateienToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.inDateienToolStripMenuItem.Text = "In Dateien";
-            // 
-            // inAktivenControlsToolStripMenuItem
-            // 
-            this.inAktivenControlsToolStripMenuItem.Name = "inAktivenControlsToolStripMenuItem";
-            this.inAktivenControlsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.inAktivenControlsToolStripMenuItem.Text = "In Assembly";
+            this.zeigeUnsortierteControlsToolStripMenuItem1.Name = "zeigeUnsortierteControlsToolStripMenuItem1";
+            this.zeigeUnsortierteControlsToolStripMenuItem1.Size = new System.Drawing.Size(211, 22);
+            this.zeigeUnsortierteControlsToolStripMenuItem1.Text = "Zeige unsortierte Controls";
+            this.zeigeUnsortierteControlsToolStripMenuItem1.Click += new System.EventHandler(this.zeigeUnsortierteControlsToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -397,22 +442,27 @@ namespace Lokalomat
         private DevExpress.XtraGrid.GridControl gridControl1;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
-        private System.Windows.Forms.ToolStripMenuItem wähleVerzeichnisToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem serializeToJsonToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deserializeFromJsonToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem dateienLöschenToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem compareToolStripMenuItem;
         private DevExpress.XtraEditors.ComboBoxEdit comboBoxEdit2;
         private DevExpress.XtraEditors.ComboBoxEdit comboBoxEdit1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-        private System.Windows.Forms.ToolStripMenuItem speicherLeerenToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem serialisiereNeueControlsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem testeLINQToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem verzeichnisWählenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem autoVerzeichnisToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lokalisierungToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sucheToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem inDateienToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem inAktivenControlsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem speicherLeerenToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem wähleVerzeichnisToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem wähleVerzeichnisToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem autoVerzeichnisToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem ersetzeTexteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem löscheAlleDateienToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem autoVerzeichnisToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem zeigeUnsortierteControlsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zeigeUnsortierteControlsToolStripMenuItem1;
     }
 }
 

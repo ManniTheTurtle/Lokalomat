@@ -89,43 +89,6 @@ namespace Lokalomat
             return (xtraFormList, xtraUserControlList);
         }
 
-        // Controlsuche
-        public List<Control> LadeControlsundLayoutControls(Object xtraeditorscontrol)
-        {
-            List<Control> controls = new List<Control>();
-
-            if (typeof(XtraForm).IsAssignableFrom(xtraeditorscontrol.GetType()))
-            {
-                var xtraform = (XtraForm)xtraeditorscontrol;
-
-                if (xtraform != null && xtraform.Controls.Count > 0)
-                {
-                    foreach (var item in xtraform.Controls)
-                    {
-                        controls.Add(item as Control);    // --> List<Control>
-                    }
-                }
-            }
-            else if (typeof(XtraUserControl).IsAssignableFrom(xtraeditorscontrol.GetType()))
-            {
-                var xtrausercontrol = (XtraUserControl)xtraeditorscontrol;
-
-                if (xtrausercontrol != null && xtrausercontrol.Controls.Count > 0)
-                {
-                    foreach (var item in xtrausercontrol.Controls)
-                    {
-                        controls.Add(item as Control);    // --> List<Control>
-                    }
-                }
-            }
-
-            else
-            {
-            }
-
-            return controls;
-        }
-
         // Deserialisiere alles
         public List<MyXtraDocument> DeserializeAllFilesFromActiveFolder(string filepath)
         {
@@ -139,7 +102,6 @@ namespace Lokalomat
 
                 DeserializedXtraDocsList.Add(JsonConvert.DeserializeObject<MyXtraDocument>(jsonstring));    // momentan werden alle assemblys gemeinsam deserialized in eine Liste
             }
-
 
             return DeserializedXtraDocsList;
         }
