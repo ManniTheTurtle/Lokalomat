@@ -78,29 +78,31 @@ namespace Lokalomat
         public List<GroupControl> groupControlslist = new List<GroupControl>();
         public List<LayoutControl> layoutControlslist = new List<LayoutControl>();
         public List<DataLayoutControl> dataLayoutControlslist = new List<DataLayoutControl>();
-        public List<LayoutControlItem> layoutControlItemslist = new List<LayoutControlItem>();
-        public List<LayoutControlGroup> layoutControlGroupslist = new List<LayoutControlGroup>();
+        public List<LayoutGroup> layoutGroupslist = new List<LayoutGroup>();
+        public List<TabbedGroup> tabbedGroupslist = new List<TabbedGroup>();
         public List<TabbedControlGroup> tabbedControlGroupslist = new List<TabbedControlGroup>();
+        public List<LayoutControlGroup> layoutControlGroupslist = new List<LayoutControlGroup>();
+        public List<LayoutControlItem> layoutControlItemslist = new List<LayoutControlItem>();
         public List<GridControl> gridControlslist = new List<GridControl>();
+        public List<GridLookUpEdit> GridLookUpEditslist = new List<GridLookUpEdit>();
         public List<GridColumn> gridColumnslist = new List<GridColumn>();
         public List<ColumnView> gridColumnsViewlist = new List<ColumnView>();
         public List<TextEdit> textEditslist = new List<TextEdit>();
         public List<SimpleButton> simpleButtonslist = new List<SimpleButton>();
         public List<CheckEdit> checkEditslist = new List<CheckEdit>();
         public List<ComboBoxEdit> comboBoxEditslist = new List<ComboBoxEdit>();
-        public List<XtraTabPage> xtraTabPageslist = new List<XtraTabPage>();
         public List<XtraTabControl> xtraTabControlslist = new List<XtraTabControl>();
-        public List<LayoutGroup> layoutGroupslist = new List<LayoutGroup>();
+        public List<XtraTabPage> xtraTabPageslist = new List<XtraTabPage>();
         public List<ButtonEdit> buttonEditslist = new List<ButtonEdit>();
         public List<ImageEdit> imageEditslist = new List<ImageEdit>();
         public List<DateEdit> dateEditslist = new List<DateEdit>();
         public List<DropDownButton> DropDownButtonslist = new List<DropDownButton>();
-        public List<GridLookUpEdit> GridLookUpEditslist = new List<GridLookUpEdit>();
         public List<CheckedListBoxControl> checkedListBoxControlslist = new List<CheckedListBoxControl>();
         public List<PictureEdit> pictureEditslist = new List<PictureEdit>();
         public List<ListBoxControl> listBoxControlslist = new List<ListBoxControl>();
         public List<ImageComboBoxEdit> imageComboBoxEditslist = new List<ImageComboBoxEdit>();
         
+
         //------------------------------------------------------------------------------------|
 
         // --> Verzeichnis durchsuchen nach passenden Assemblies
@@ -111,6 +113,10 @@ namespace Lokalomat
             listBox1.Items.Add($"Assemblies Count: {assemblyList.Count}");
 
             BefuelleComboBox1();
+
+            gridView1.Columns.Clear();
+            gridControl1.DataSource = null;
+            gridControl1.DataSource = assemblyList;
         }
 
         // --> Xtra Dokumente aus Assembly extrahieren und Controls hinzufügen
@@ -224,6 +230,7 @@ namespace Lokalomat
             BefuelleComboBox2(XtraDocumentsList);
             comboBoxEdit2.BackColor = Color.DeepSkyBlue;
 
+            gridView1.Columns.Clear();
             gridControl1.DataSource = null;
             gridControl1.DataSource = XtraDocumentsList;
 
@@ -241,17 +248,6 @@ namespace Lokalomat
                 {
                     switch (item)
                     {
-
-                        case GroupControl lc when typeof(GroupControl).IsAssignableFrom(item.GetType()):
-                            groupControlslist.Add(lc);
-                            if (lc.HasChildren)
-                            {
-                                foreach (var lc_control in lc.Controls)
-                                {
-                                    SucheUndUnterscheideKindElemente(lc_control);
-                                }
-                            }
-                            break;
 
                         case DataLayoutControl lc when typeof(DataLayoutControl).IsAssignableFrom(item.GetType()):
                             dataLayoutControlslist.Add(lc);
@@ -287,11 +283,45 @@ namespace Lokalomat
 
                         case LayoutGroup lc when typeof(LayoutGroup).IsAssignableFrom(item.GetType()):
                             layoutGroupslist.Add(lc);
+
+                            if (lc.Items.Count > 0)
+                            {
+                                foreach (var lc_item in lc.Items)
+                                {
+                                    SucheUndUnterscheideKindElemente(lc_item);
+                                }
+                            }
+                            break;
+
+                        case TabbedGroup lc when typeof(TabbedGroup).IsAssignableFrom(item.GetType()):
+                            tabbedGroupslist.Add(lc);
+
+                            if (lc.TabPages.Count > 0) 
+                            {
+                                foreach (var i in lc.TabPages)
+                                {
+                                    SucheUndUnterscheideKindElemente(i);
+                                }
+                            }
+                            break;
+
+                        case TabbedControlGroup lc when typeof(TabbedControlGroup).IsAssignableFrom(item.GetType()):
+                            tabbedControlGroupslist.Add(lc);
+
+                            if (lc.TabPages.Count > 0)  // diese .TabPages sind nicht XtraTabPage sondern LayoutControlGroup!
+                            {
+                                foreach (var i in lc.TabPages)
+                                {
+                                    SucheUndUnterscheideKindElemente(i);
+                                }
+                            }
                             break;
 
                         case LayoutControlGroup lc when typeof(LayoutControlGroup).IsAssignableFrom(lc.GetType()):
                             layoutControlGroupslist.Add(lc);
 
+                            SucheUndUnterscheideKindElemente(lc.ParentTabbedGroup);
+                            
                             if (lc.Items.Count > 0)
                             {
                                 foreach (var i in lc.Items)
@@ -303,28 +333,16 @@ namespace Lokalomat
 
                         case LayoutControlItem lc when typeof(LayoutControlItem).IsAssignableFrom(lc.GetType()):
                             layoutControlItemslist.Add(lc);
+                            
+                            SucheUndUnterscheideKindElemente(lc.Control); 
+
                             break;
 
-                        case TabbedControlGroup lc when typeof(TabbedControlGroup).IsAssignableFrom(item.GetType()):
-                            tabbedControlGroupslist.Add(lc);
+                        case GroupControl lc when typeof(GroupControl).IsAssignableFrom(item.GetType()):
+                            groupControlslist.Add(lc);
 
-                            if (lc.TabPages.Count > 0)
+                            if (lc.Controls.Count > 0)
                             {
-                                foreach (var i in lc.TabPages)
-                                {
-                                    SucheUndUnterscheideKindElemente(i);
-                                }
-                            }
-                            break;
-
-                        case XtraTabControl lc when typeof(XtraTabControl).IsAssignableFrom(item.GetType()):
-                            xtraTabControlslist.Add(lc);
-                            if (lc.HasChildren)
-                            {
-                                foreach (var lc_item in lc.TabPages)
-                                {
-                                    SucheUndUnterscheideKindElemente(lc_item);
-                                }
                                 foreach (var lc_control in lc.Controls)
                                 {
                                     SucheUndUnterscheideKindElemente(lc_control);
@@ -342,8 +360,31 @@ namespace Lokalomat
                             gridColumnsViewlist.AddRange(z.Cast<ColumnView>().ToList());
                             break;
 
-                        case XtraTabPage lc when typeof(XtraTabPage).IsAssignableFrom(item.GetType()):
-                            xtraTabPageslist.Add(lc);
+                        case GridLookUpEdit i when typeof(GridLookUpEdit).IsAssignableFrom(item.GetType()):
+                            GridLookUpEditslist.Add(i);
+
+                            GridColumnCollection x = i.Properties.PopupView.Columns;
+                            gridColumnslist.AddRange(x.Cast<GridColumn>().ToList());
+                            gridColumnsViewlist.AddRange(x.Cast<ColumnView>().ToList());
+                            break;
+
+                        case XtraTabControl i when typeof(XtraTabControl).IsAssignableFrom(item.GetType()):
+                            xtraTabControlslist.Add(i);
+                            if (i.HasChildren)
+                            {
+                                foreach (var i_item in i.TabPages)
+                                {
+                                    SucheUndUnterscheideKindElemente(i_item);
+                                }
+                                foreach (var i_control in i.Controls)
+                                {
+                                    SucheUndUnterscheideKindElemente(i_control);
+                                }
+                            }
+                            break;
+
+                        case XtraTabPage i when typeof(XtraTabPage).IsAssignableFrom(item.GetType()):
+                            xtraTabPageslist.Add(i);
                             break;
 
                         case CheckEdit i when typeof(CheckEdit).IsAssignableFrom(item.GetType()):
@@ -354,14 +395,6 @@ namespace Lokalomat
                             DropDownButtonslist.Add(i);
                             break;
 
-                        case GridLookUpEdit i when typeof(GridLookUpEdit).IsAssignableFrom(item.GetType()):
-                            GridLookUpEditslist.Add(i);
-
-                            GridColumnCollection x = i.Properties.PopupView.Columns;
-                            gridColumnslist.AddRange(x.Cast<GridColumn>().ToList());
-                            gridColumnsViewlist.AddRange(x.Cast<ColumnView>().ToList());
-                            break;
-
                         case DateEdit i when typeof(DateEdit).IsAssignableFrom(item.GetType()):
                             dateEditslist.Add(i);
                             break;
@@ -370,12 +403,8 @@ namespace Lokalomat
                             imageEditslist.Add(i);
                             break;
 
-                        case ButtonEdit i when typeof(ButtonEdit).IsAssignableFrom(item.GetType()):
-                            buttonEditslist.Add(i);
-                            break;
-
-                        case SimpleButton i when typeof(SimpleButton).IsAssignableFrom(item.GetType()):
-                            simpleButtonslist.Add(i);
+                        case ImageComboBoxEdit i when typeof(ImageComboBoxEdit).IsAssignableFrom(item.GetType()):
+                            imageComboBoxEditslist.Add(i);
                             break;
 
                         case ComboBoxEdit i when typeof(ComboBoxEdit).IsAssignableFrom(item.GetType()):
@@ -398,8 +427,12 @@ namespace Lokalomat
                             listBoxControlslist.Add(i);
                             break;
 
-                        case ImageComboBoxEdit i when typeof(ImageComboBoxEdit).IsAssignableFrom(item.GetType()):
-                            imageComboBoxEditslist.Add(i);
+                        case ButtonEdit i when typeof(ButtonEdit).IsAssignableFrom(item.GetType()):
+                            buttonEditslist.Add(i);
+                            break;
+
+                        case SimpleButton i when typeof(SimpleButton).IsAssignableFrom(item.GetType()):
+                            simpleButtonslist.Add(i);
                             break;
 
                         default:
@@ -668,6 +701,7 @@ namespace Lokalomat
             BefuelleComboBox2(DeserializedXtraDocsList);
             comboBoxEdit2.BackColor = Color.LightGreen;
 
+            gridView1.Columns.Clear();
             gridControl1.DataSource = null;
             gridControl1.DataSource = DeserializedXtraDocsList;
         }
@@ -683,6 +717,7 @@ namespace Lokalomat
             BefuelleComboBox2(DeserializedXtraDocsList);
             comboBoxEdit2.BackColor = Color.LightGreen;
 
+            gridView1.Columns.Clear();
             gridControl1.DataSource = null;
             gridControl1.DataSource = DeserializedXtraDocsList;
         }
@@ -724,6 +759,8 @@ namespace Lokalomat
                     }
                 }
 
+                gridView1.Columns.Clear();
+                gridControl1.DataSource = null;
                 gridControl1.DataSource = XtraDocumentsList;
             }
         }
@@ -758,11 +795,18 @@ namespace Lokalomat
             if (XtraDocumentsList.Any(x => DeserializedXtraDocsList.Any(y => y.Name != x.Name)))
 
                 DeserializedXtraDocsList.AddRange(XtraDocumentsList.Where(x => DeserializedXtraDocsList.Any(y => y.Name != x.Name)));
+
+            gridView1.Columns.Clear();
+            gridControl1.DataSource = null;
         }
 
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            gridView1.Columns.Clear();
+            gridControl1.DataSource = null;
+
+            string Name = "Franz";
+            MessageBox.Show(Name);
         }
 
         //------------------------------------------------------------------------------------|
@@ -900,6 +944,8 @@ namespace Lokalomat
                     if (comboBoxEdit1.SelectedItem != null && comboBoxEdit1.SelectedItem.ToString() == item.Location)
                     {
                         ChosenAssembly = item;
+
+                        gridView1.Columns.Clear();
                         gridControl1.DataSource = null;
 
                         SucheNachDokumenten();
@@ -918,6 +964,7 @@ namespace Lokalomat
                     {
                         if (comboBoxEdit2.SelectedItem != null && comboBoxEdit2.SelectedItem.ToString() == item.Name)
                         {
+                            gridView1.Columns.Clear();
                             gridControl1.DataSource = null;
                             gridControl1.DataSource = item.MyUiElementsList;
 
@@ -950,6 +997,9 @@ namespace Lokalomat
         // Clear All
         private void speicherLeerenToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            gridView1.Columns.Clear();
+            gridControl1.DataSource = null;
+
             AssemblyFileName = "leer";
             DocumentName = "leer";
 
@@ -976,22 +1026,33 @@ namespace Lokalomat
             {
                 dir.Delete(true);
             }
+
+            if (di.GetFiles().Length == 0)
+            {
+                listBox1.Items.Add($"Alle Dateien gelöscht");
+            }
         }
 
         // Show all unpicked Controls
         private void zeigeUnsortierteControlsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            List<Control> showableControls = new List<Control>();
-
-            foreach (var item in otherControlTypes)
+            
+            if (otherControlTypes != null && otherControlTypes.Count > 0)
             {
-                if (item != null && typeof(Control).IsAssignableFrom(item.GetType()))
+                List<Control> showableControls = new List<Control>();
+
+                foreach (var item in otherControlTypes)
                 {
-                    showableControls.Add((Control)item);
+                    if (item != null && typeof(Control).IsAssignableFrom(item.GetType()))
+                    {
+                        showableControls.Add((Control)item);
+                    }
                 }
+
+                gridView1.Columns.Clear();
+                gridControl1.DataSource = null;
+                gridControl1.DataSource = showableControls;
             }
-            gridControl1.DataSource = null;
-            gridControl1.DataSource = showableControls;
         }
 
     }

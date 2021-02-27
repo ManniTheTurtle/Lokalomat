@@ -41,6 +41,7 @@ namespace Lokalomat
             this.verzeichnisWählenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoVerzeichnisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.speicherLeerenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.zeigeUnsortierteControlsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.manuellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wähleVerzeichnisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoVerzeichnisToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,7 +62,6 @@ namespace Lokalomat
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.zeigeUnsortierteControlsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit2.Properties)).BeginInit();
@@ -187,10 +187,10 @@ namespace Lokalomat
             // autoToolStripMenuItem
             // 
             this.autoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.verzeichnisWählenToolStripMenuItem,
             this.autoVerzeichnisToolStripMenuItem,
-            this.speicherLeerenToolStripMenuItem1,
-            this.zeigeUnsortierteControlsToolStripMenuItem1});
+            this.verzeichnisWählenToolStripMenuItem,
+            this.zeigeUnsortierteControlsToolStripMenuItem1,
+            this.speicherLeerenToolStripMenuItem1});
             this.autoToolStripMenuItem.Margin = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.autoToolStripMenuItem.Name = "autoToolStripMenuItem";
             this.autoToolStripMenuItem.Size = new System.Drawing.Size(128, 31);
@@ -217,11 +217,18 @@ namespace Lokalomat
             this.speicherLeerenToolStripMenuItem1.Text = "Speicher leeren";
             this.speicherLeerenToolStripMenuItem1.Click += new System.EventHandler(this.speicherLeerenToolStripMenuItem1_Click);
             // 
+            // zeigeUnsortierteControlsToolStripMenuItem1
+            // 
+            this.zeigeUnsortierteControlsToolStripMenuItem1.Name = "zeigeUnsortierteControlsToolStripMenuItem1";
+            this.zeigeUnsortierteControlsToolStripMenuItem1.Size = new System.Drawing.Size(211, 22);
+            this.zeigeUnsortierteControlsToolStripMenuItem1.Text = "Zeige unsortierte Controls";
+            this.zeigeUnsortierteControlsToolStripMenuItem1.Click += new System.EventHandler(this.zeigeUnsortierteControlsToolStripMenuItem_Click);
+            // 
             // manuellToolStripMenuItem
             // 
             this.manuellToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.wähleVerzeichnisToolStripMenuItem,
             this.autoVerzeichnisToolStripMenuItem2,
+            this.wähleVerzeichnisToolStripMenuItem,
             this.zeigeUnsortierteControlsToolStripMenuItem});
             this.manuellToolStripMenuItem.Margin = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.manuellToolStripMenuItem.Name = "manuellToolStripMenuItem";
@@ -390,13 +397,6 @@ namespace Lokalomat
             this.layoutControlItem5.Spacing = new DevExpress.XtraLayout.Utils.Padding(30, 0, 0, 0);
             this.layoutControlItem5.Text = "Wähle Xtra Dokument:";
             this.layoutControlItem5.TextSize = new System.Drawing.Size(108, 13);
-            // 
-            // zeigeUnsortierteControlsToolStripMenuItem1
-            // 
-            this.zeigeUnsortierteControlsToolStripMenuItem1.Name = "zeigeUnsortierteControlsToolStripMenuItem1";
-            this.zeigeUnsortierteControlsToolStripMenuItem1.Size = new System.Drawing.Size(211, 22);
-            this.zeigeUnsortierteControlsToolStripMenuItem1.Text = "Zeige unsortierte Controls";
-            this.zeigeUnsortierteControlsToolStripMenuItem1.Click += new System.EventHandler(this.zeigeUnsortierteControlsToolStripMenuItem_Click);
             // 
             // MainForm
             // 

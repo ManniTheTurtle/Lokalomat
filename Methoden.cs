@@ -29,14 +29,17 @@ namespace Lokalomat
         {
             List<Assembly> AssemblyList = new List<Assembly>();
 
-            foreach (string Datei in Directory.GetFiles(Verzeichnis).Where(s => !s.Contains("DevExpress.") && s.EndsWith(".dll") || s.EndsWith(".exe")))
+            if (Verzeichnis != null)
             {
-                try
+                foreach (string Datei in Directory.GetFiles(Verzeichnis).Where(s => !s.Contains("DevExpress.") && s.EndsWith(".dll") || s.EndsWith(".exe")))
                 {
-                    AssemblyList.Add(Assembly.LoadFile(Datei));
-                }
-                catch
-                {
+                    try
+                    {
+                        AssemblyList.Add(Assembly.LoadFile(Datei));
+                    }
+                    catch
+                    {
+                    }
                 }
             }
 
