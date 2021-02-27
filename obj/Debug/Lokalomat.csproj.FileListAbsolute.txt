@@ -385,3 +385,16 @@ C:\Archiv\Gits\Lokalomat\obj\Debug\Lokalomat.csproj.CoreCompileInputs.cache
 C:\Archiv\Gits\Lokalomat\obj\Debug\Lokalomat.csproj.CopyComplete
 C:\Archiv\Gits\Lokalomat\obj\Debug\LokalisierungsAutomat.exe
 C:\Archiv\Gits\Lokalomat\obj\Debug\LokalisierungsAutomat.pdb
+C:\Archiv\Gits\Lokalomat\bin\Debug\DevExpress.Images.v20.2.dll
+C:\Archiv\Gits\Lokalomat\bin\Debug\DevExpress.XtraNavBar.v20.2.dll
+C:\Archiv\Gits\Lokalomat\bin\Debug\DevExpress.XtraRichEdit.v20.2.dll
+C:\Archiv\Gits\Lokalomat\bin\Debug\DevExpress.XtraNavBar.v20.2.xml
+C:\Archiv\Gits\Lokalomat\bin\Debug\DevExpress.XtraRichEdit.v20.2.xml
+C:\Archiv\Gits\Lokalomat\bin\Debug\de\DevExpress.XtraNavBar.v20.2.resources.dll
+C:\Archiv\Gits\Lokalomat\bin\Debug\es\DevExpress.XtraNavBar.v20.2.resources.dll
+C:\Archiv\Gits\Lokalomat\bin\Debug\ja\DevExpress.XtraNavBar.v20.2.resources.dll
+C:\Archiv\Gits\Lokalomat\bin\Debug\ru\DevExpress.XtraNavBar.v20.2.resources.dll
+C:\Archiv\Gits\Lokalomat\bin\Debug\de\DevExpress.XtraRichEdit.v20.2.resources.dll
+C:\Archiv\Gits\Lokalomat\bin\Debug\es\DevExpress.XtraRichEdit.v20.2.resources.dll
+C:\Archiv\Gits\Lokalomat\bin\Debug\ja\DevExpress.XtraRichEdit.v20.2.resources.dll
+C:\Archiv\Gits\Lokalomat\bin\Debug\ru\DevExpress.XtraRichEdit.v20.2.resources.dll

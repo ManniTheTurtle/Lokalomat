@@ -38,13 +38,13 @@ namespace Lokalomat
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.autoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.verzeichnisWählenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoVerzeichnisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.speicherLeerenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.verzeichnisWählenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zeigeUnsortierteControlsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.speicherLeerenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.manuellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wähleVerzeichnisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoVerzeichnisToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.wähleVerzeichnisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zeigeUnsortierteControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lokalisierungToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wähleVerzeichnisToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -196,13 +196,6 @@ namespace Lokalomat
             this.autoToolStripMenuItem.Size = new System.Drawing.Size(128, 31);
             this.autoToolStripMenuItem.Text = "-> Finde Controls <-";
             // 
-            // verzeichnisWählenToolStripMenuItem
-            // 
-            this.verzeichnisWählenToolStripMenuItem.Name = "verzeichnisWählenToolStripMenuItem";
-            this.verzeichnisWählenToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.verzeichnisWählenToolStripMenuItem.Text = "Verzeichnis wählen";
-            this.verzeichnisWählenToolStripMenuItem.Click += new System.EventHandler(this.verzeichnisWählenToolStripMenuItem_Click);
-            // 
             // autoVerzeichnisToolStripMenuItem
             // 
             this.autoVerzeichnisToolStripMenuItem.Name = "autoVerzeichnisToolStripMenuItem";
@@ -210,12 +203,12 @@ namespace Lokalomat
             this.autoVerzeichnisToolStripMenuItem.Text = "Auto Verzeichnis";
             this.autoVerzeichnisToolStripMenuItem.Click += new System.EventHandler(this.autoVerzeichnisToolStripMenuItem_Click);
             // 
-            // speicherLeerenToolStripMenuItem1
+            // verzeichnisWählenToolStripMenuItem
             // 
-            this.speicherLeerenToolStripMenuItem1.Name = "speicherLeerenToolStripMenuItem1";
-            this.speicherLeerenToolStripMenuItem1.Size = new System.Drawing.Size(211, 22);
-            this.speicherLeerenToolStripMenuItem1.Text = "Speicher leeren";
-            this.speicherLeerenToolStripMenuItem1.Click += new System.EventHandler(this.speicherLeerenToolStripMenuItem1_Click);
+            this.verzeichnisWählenToolStripMenuItem.Name = "verzeichnisWählenToolStripMenuItem";
+            this.verzeichnisWählenToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.verzeichnisWählenToolStripMenuItem.Text = "Verzeichnis wählen";
+            this.verzeichnisWählenToolStripMenuItem.Click += new System.EventHandler(this.verzeichnisWählenToolStripMenuItem_Click);
             // 
             // zeigeUnsortierteControlsToolStripMenuItem1
             // 
@@ -223,6 +216,13 @@ namespace Lokalomat
             this.zeigeUnsortierteControlsToolStripMenuItem1.Size = new System.Drawing.Size(211, 22);
             this.zeigeUnsortierteControlsToolStripMenuItem1.Text = "Zeige unsortierte Controls";
             this.zeigeUnsortierteControlsToolStripMenuItem1.Click += new System.EventHandler(this.zeigeUnsortierteControlsToolStripMenuItem_Click);
+            // 
+            // speicherLeerenToolStripMenuItem1
+            // 
+            this.speicherLeerenToolStripMenuItem1.Name = "speicherLeerenToolStripMenuItem1";
+            this.speicherLeerenToolStripMenuItem1.Size = new System.Drawing.Size(211, 22);
+            this.speicherLeerenToolStripMenuItem1.Text = "Speicher leeren";
+            this.speicherLeerenToolStripMenuItem1.Click += new System.EventHandler(this.speicherLeerenToolStripMenuItem1_Click);
             // 
             // manuellToolStripMenuItem
             // 
@@ -235,19 +235,19 @@ namespace Lokalomat
             this.manuellToolStripMenuItem.Size = new System.Drawing.Size(106, 31);
             this.manuellToolStripMenuItem.Text = "-> Serialisiere <-";
             // 
-            // wähleVerzeichnisToolStripMenuItem
-            // 
-            this.wähleVerzeichnisToolStripMenuItem.Name = "wähleVerzeichnisToolStripMenuItem";
-            this.wähleVerzeichnisToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.wähleVerzeichnisToolStripMenuItem.Text = "Wähle Verzeichnis";
-            this.wähleVerzeichnisToolStripMenuItem.Click += new System.EventHandler(this.wähleVerzeichnisToolStripMenuItem_Click);
-            // 
             // autoVerzeichnisToolStripMenuItem2
             // 
             this.autoVerzeichnisToolStripMenuItem2.Name = "autoVerzeichnisToolStripMenuItem2";
             this.autoVerzeichnisToolStripMenuItem2.Size = new System.Drawing.Size(211, 22);
             this.autoVerzeichnisToolStripMenuItem2.Text = "Auto Verzeichnis";
             this.autoVerzeichnisToolStripMenuItem2.Click += new System.EventHandler(this.autoVerzeichnisToolStripMenuItem2_Click);
+            // 
+            // wähleVerzeichnisToolStripMenuItem
+            // 
+            this.wähleVerzeichnisToolStripMenuItem.Name = "wähleVerzeichnisToolStripMenuItem";
+            this.wähleVerzeichnisToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.wähleVerzeichnisToolStripMenuItem.Text = "Wähle Verzeichnis";
+            this.wähleVerzeichnisToolStripMenuItem.Click += new System.EventHandler(this.wähleVerzeichnisToolStripMenuItem_Click);
             // 
             // zeigeUnsortierteControlsToolStripMenuItem
             // 
@@ -259,8 +259,8 @@ namespace Lokalomat
             // lokalisierungToolStripMenuItem
             // 
             this.lokalisierungToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.wähleVerzeichnisToolStripMenuItem1,
             this.autoVerzeichnisToolStripMenuItem1,
+            this.wähleVerzeichnisToolStripMenuItem1,
             this.ersetzeTexteToolStripMenuItem,
             this.löscheAlleDateienToolStripMenuItem});
             this.lokalisierungToolStripMenuItem.Margin = new System.Windows.Forms.Padding(30, 0, 0, 0);

@@ -24,6 +24,8 @@ using Newtonsoft.Json.Linq;
 using EigeneKlassen;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraRichEdit;
+using DevExpress.XtraBars.Navigation;
+using DevExpress.XtraNavBar;
 
 namespace Lokalomat
 {
@@ -101,7 +103,18 @@ namespace Lokalomat
         public List<PictureEdit> pictureEditslist = new List<PictureEdit>();
         public List<ListBoxControl> listBoxControlslist = new List<ListBoxControl>();
         public List<ImageComboBoxEdit> imageComboBoxEditslist = new List<ImageComboBoxEdit>();
-        
+        public List<TileControl> tileControlslist = new List<TileControl>();
+        public List<TileGroup> tileGroupslist = new List<TileGroup>();
+        public List<TileItem> tileItemslist = new List<TileItem>();
+        public List<TileItemElement> tileItemElementslist = new List<TileItemElement>();
+        public List<TileBar> tileBarslist = new List<TileBar>();
+        public List<TileBarGroup> tileBarGroupslist = new List<TileBarGroup>();
+        public List<AccordionControl> accordionControlslist = new List<AccordionControl>();
+        public List<LabelControl> labelControlslist = new List<LabelControl>();
+        public List<NavBarControl> navBarControlslist = new List<NavBarControl>();
+        public List<RichEditControl> richEditControlslist = new List<RichEditControl>();
+        public List<CheckedComboBoxEdit> checkedComboBoxEditslist = new List<CheckedComboBoxEdit>();
+
 
         //------------------------------------------------------------------------------------|
 
@@ -435,6 +448,50 @@ namespace Lokalomat
                             simpleButtonslist.Add(i);
                             break;
 
+                        case LabelControl i when typeof(LabelControl).IsAssignableFrom(item.GetType()):
+                            labelControlslist.Add(i);
+                            break;
+
+                        case NavBarControl i when typeof(NavBarControl).IsAssignableFrom(item.GetType()):
+                            navBarControlslist.Add(i);
+                            break;
+
+                        case RichEditControl i when typeof(RichEditControl).IsAssignableFrom(item.GetType()):
+                            richEditControlslist.Add(i);
+                            break;
+
+                        case CheckedComboBoxEdit i when typeof(CheckedComboBoxEdit).IsAssignableFrom(item.GetType()):
+                            checkedComboBoxEditslist.Add(i);
+                            break;
+
+                        case TileControl i when typeof(TileControl).IsAssignableFrom(item.GetType()):
+                            tileControlslist.Add(i);
+                            break;
+
+                        case TileGroup i when typeof(TileGroup).IsAssignableFrom(item.GetType()):
+                            tileGroupslist.Add(i);
+                            break;
+
+                        case TileBar i when typeof(TileBar).IsAssignableFrom(item.GetType()):
+                            tileBarslist.Add(i);
+                            break;
+
+                        case TileItem i when typeof(TileItem).IsAssignableFrom(item.GetType()):
+                            tileItemslist.Add(i);
+                            break;
+
+                        case TileItemElement i when typeof(TileItemElement).IsAssignableFrom(item.GetType()):
+                            tileItemElementslist.Add(i);
+                            break;
+
+                        case TileBarGroup i when typeof(TileBarGroup).IsAssignableFrom(item.GetType()):
+                            tileBarGroupslist.Add(i);
+                            break;
+
+                        case AccordionControl i when typeof(AccordionControl).IsAssignableFrom(item.GetType()):
+                            accordionControlslist.Add(i);
+                            break;
+
                         default:
                             otherControlTypes.Add(item);
                             break;
@@ -605,7 +662,95 @@ namespace Lokalomat
                     Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString() 
                 });
             }
+            foreach (var item in tileControlslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TileControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
+                    Other = item.Container == null ? "nicht verfügbar" : item.Container.ToString() 
+                });;
+            }
+            foreach (var item in tileGroupslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TileGroup, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.Site == null ? "nicht verfügbar" : item.Site.Name, Parent = item.Container == null ? "nicht verfügbar" : item.Container.ToString(), 
+                    OwnedControl = item.Control == null ? "nicht verfügbar" : item.Control.ToString()
+                });
+            }
+            foreach (var item in tileItemslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TileItem, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    Other = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString(), Parent = item.Group == null ? "nicht verfügbar" : item.Group.Name 
+                });
+            }
+            foreach (var item in tileItemElementslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TileItemElement, Text = item.Text, XtraDokument = DocumentName, 
+                    Other = item.ColumnIndex.ToString() + "  " + item.RowIndex.ToString()
+                });
+            }
+            foreach (var item in tileBarslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TileBar, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
+                    Other = item.Container == null ? "nicht verfügbar" : item.Container.ToString() 
+                });
+            }
+            foreach (var item in tileBarGroupslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TileBarGroup, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.Site == null ? "nicht verfügbar" : item.Site.Name, Parent = item.Container == null ? "nicht verfügbar" : item.Container.ToString(), 
+                    OwnedControl = item.Control == null ? "nicht verfügbar" : item.Control.ToString()
+                });
+            }
+            foreach (var item in accordionControlslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.AccordionControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString() 
+                });
+            }
+            foreach (var item in labelControlslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.LabelControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString() 
+                });
+            }
+            foreach (var item in navBarControlslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.NavBarControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
+                    Other = item.ContextMenu == null ? "nicht verfügbar" : item.ContextMenu.ToString() 
+                });
+            }
+            foreach (var item in richEditControlslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.RichEditControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
+                    Other = item.Container == null ? "nicht verfügbar" : item.Container.ToString() 
+                });
+            }
+            foreach (var item in checkedComboBoxEditslist)
+            {
+                AllControlsAsUIelements.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.CheckedComboBoxEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
+                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString() 
+                });
+            }
 
+
+
+            labelControlslist.Clear();
+            navBarControlslist.Clear();
+            richEditControlslist.Clear();
+            checkedComboBoxEditslist.Clear();
+            accordionControlslist.Clear();
+            tileBarGroupslist.Clear();
+            tileControlslist.Clear();
+            tileGroupslist.Clear();
+            tileItemslist.Clear();
+            tileItemElementslist.Clear();
+            tileBarslist.Clear();
             checkedListBoxControlslist.Clear();
             pictureEditslist.Clear();
             listBoxControlslist.Clear();
