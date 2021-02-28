@@ -27,14 +27,15 @@ namespace EigeneKlassen
         {
             GridColumn, GridView, GridControl, SimpleButton, TextEdit, CheckEdit, ComboBoxEdit, TabbedControlGroup, LayoutControlGroup,
             LayoutControlItem, DataLayoutControl, LayoutGroup, XtraTabPage, LayoutControl, ButtonEdit, ImageEdit, GroupControl, DateEdit,
-            DropDownButton, GridLookUpEdit, GridColumnView, ImageComboboxEdit, ListBoxControl, PictureEdit, CheckedListBoxControl,
-            TileControl, TileGroup, TileBar, TileItem, TileItemElement, TileBarGroup, AccordionControl, LabelControl, NavBarControl, 
-            RichEditControl, CheckedComboBoxEdit
+            DropDownButton, GridLookUpEdit, GridColumnView, ImageComboboxEdit, ListBoxControl, PictureEdit, CheckedListBoxControl, 
+            TileControl, TileGroup, TileBar, TileItem, TileItemElement, TileBarGroup, AccordionControl, AccordionControlElement, 
+            NavBarControl, NavBarItem, NavBarGroup, RichEditControl, CheckedComboBoxEdit, LabelControl
         }
 
         public Klasse ObjektTyp { get; set; }
         public string Name { get; set; }
         public string Text { get; set; }
+        public string ToolTip { get; set; }
         public string XtraDokument { get; set; }
         public string Parent { get; set; }
         public string TopLevelControl { get; set; }
@@ -42,7 +43,8 @@ namespace EigeneKlassen
         public string Stylecontroller { get; set; }
         public string OwnedControl { get; set; }
 
-        public string Originaltext { get; set; }
+        public string OriginalText { get; set; }
+        public string OriginalToolTip { get; set; }
         public string Other { get; set; }
     }
 }
