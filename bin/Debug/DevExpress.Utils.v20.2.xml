@@ -1125,6 +1125,11 @@ The following screenshot shows the UltraFlat style applied to a button edit cont
       <param name="assembly"></param>
       <returns></returns>
     </member>
+    <member name="M:DevExpress.Skins.SkinManager.SetDPIAware">
+      <summary>
+        <para>Enables system DPI awareness mode for the current process.</para>
+      </summary>
+    </member>
     <member name="P:DevExpress.Skins.SkinManager.Skins">
       <summary>
         <para>Gets the collection of skins that are currently available for use in DevExpress controls.</para>
@@ -3583,7 +3588,7 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
     </member>
     <member name="E:DevExpress.Utils.ContextItem.CustomToolTip">
       <summary>
-        <para>Allows you to specify a tooltip shown when the mouse pointer hovers over a context button. This event is only raised for <see cref="T:DevExpress.Utils.RatingContextButton"></see> and <see cref="T:DevExpress.Utils.TrackBarContextButton"></see> objects.</para>
+        <para>Allows the hint for the current item to be customized. This event is only raised for <see cref="T:DevExpress.Utils.RatingContextButton"/> objects.</para>
       </summary>
     </member>
     <member name="P:DevExpress.Utils.ContextItem.Enabled">
@@ -3679,9 +3684,9 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
     </member>
     <member name="P:DevExpress.Utils.ContextItem.ShowToolTips">
       <summary>
-        <para>Gets or sets whether a tooltip is shown when the mouse pointer hovers over the button.</para>
+        <para>Gets or sets whether hints can be displayed for the current item.</para>
       </summary>
-      <value>true, if a tooltip is shown when the mouse pointer hovers over the button; otherwise, false.</value>
+      <value>true, if hints can be displayed for the current item; otherwise, false.</value>
     </member>
     <member name="P:DevExpress.Utils.ContextItem.Size">
       <summary>
@@ -3691,9 +3696,9 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
     </member>
     <member name="P:DevExpress.Utils.ContextItem.SuperTip">
       <summary>
-        <para>Gets or sets a super tooltip shown when the mouse pointer hovers over the button.</para>
+        <para>Gets or sets a <see cref="T:DevExpress.Utils.SuperToolTip"/> for the current context item.</para>
       </summary>
-      <value>A <see cref="T:DevExpress.Utils.SuperToolTip"/> object that specifies a super tooltip shown when the mouse pointer hovers over the button.</value>
+      <value>A <see cref="T:DevExpress.Utils.SuperToolTip"/> object associated with the current context item.</value>
     </member>
     <member name="P:DevExpress.Utils.ContextItem.Tag">
       <summary>
@@ -3703,21 +3708,21 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
     </member>
     <member name="P:DevExpress.Utils.ContextItem.ToolTip">
       <summary>
-        <para>Gets or sets the text in a regular tooltip shown when the mouse pointer hovers over the button.</para>
+        <para>Gets or sets the text of the hint for the current item.</para>
       </summary>
-      <value>A <see cref="T:System.String"/> value that specifies the text in a regular tooltip shown when the mouse pointer hovers over the button.</value>
+      <value>A String value that specifies the text of the hint for the current item.</value>
     </member>
     <member name="P:DevExpress.Utils.ContextItem.ToolTipIconType">
       <summary>
-        <para>Gets or sets the icon in a regular tooltip shown when the mouse pointer hovers over the button.</para>
+        <para>Gets or sets the type of icon displayed in the hint for the current item.</para>
       </summary>
-      <value>A <see cref="T:DevExpress.Utils.ToolTipIconType"/> enumeration value that specifies the icon in a regular tooltip shown when the mouse pointer hovers over the button.</value>
+      <value>A <see cref="T:DevExpress.Utils.ToolTipIconType"/> enumeration value that specifies the type of icon displayed in the hint for the current item.</value>
     </member>
     <member name="P:DevExpress.Utils.ContextItem.ToolTipTitle">
       <summary>
-        <para>Gets or sets the title in a regular tooltip shown when the mouse pointer hovers over the button.</para>
+        <para>Gets or sets the title of the hint for the current item.</para>
       </summary>
-      <value>A <see cref="T:System.String"/> value that specifies the title in a regular tooltip shown when the mouse pointer hovers over the button.</value>
+      <value>A String value that specifies the title of the hint for the current item.</value>
     </member>
     <member name="P:DevExpress.Utils.ContextItem.Visibility">
       <summary>
@@ -4011,9 +4016,9 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
     </member>
     <member name="P:DevExpress.Utils.ContextItemCollectionOptions.ShowToolTips">
       <summary>
-        <para>Gets or sets whether tooltips are shown when the mouse pointer hovers over context buttons.</para>
+        <para>Gets or sets whether tooltips are shown for context items.</para>
       </summary>
-      <value>true, to show tooltips for context buttons; otherwise, false.</value>
+      <value>true, to show tooltips for context items; otherwise, false.</value>
     </member>
     <member name="P:DevExpress.Utils.ContextItemCollectionOptions.TopPanelColor">
       <summary>
@@ -4558,6 +4563,12 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
       <summary>
         <para>Initializes a new DragDropEventArgs class instance with the default settings. For internal use.</para>
       </summary>
+    </member>
+    <member name="P:DevExpress.Utils.DragDrop.DragDropEventArgs.CustomData">
+      <summary>
+        <para>Gets or sets custom data associated with the operation.</para>
+      </summary>
+      <value>An object that contains data associated with the operation.</value>
     </member>
     <member name="T:DevExpress.Utils.DragDrop.DragDropEvents">
       <summary>
@@ -6022,16 +6033,6 @@ Provides storage for pens, fonts and brushes.</para>
       <param name="brush">Brush that determines the color and texture of the drawn text.</param>
       <param name="bounds">RectangleF structure that specifies the location of the drawn text.</param>
     </member>
-    <member name="M:DevExpress.Utils.Drawing.GraphicsCache.DrawString(System.String,System.Drawing.Font,System.Drawing.Brush,System.Drawing.RectangleF,DevExpress.Utils.StringFormatInfo)">
-      <summary>
-        <para></para>
-      </summary>
-      <param name="s"></param>
-      <param name="font"></param>
-      <param name="brush"></param>
-      <param name="bounds"></param>
-      <param name="strFormatInfo"></param>
-    </member>
     <member name="M:DevExpress.Utils.Drawing.GraphicsCache.DrawString(System.String,System.Drawing.Font,System.Drawing.Brush,System.Single,System.Single)">
       <summary>
         <para>Draws the specified text string at the specified location with the specified Brush and Font objects.</para>
@@ -6461,12 +6462,6 @@ Provides storage for pens, fonts and brushes.</para>
         <para></para>
       </summary>
     </member>
-    <member name="M:DevExpress.Utils.Drawing.GraphicsCache.Restore(System.Object)">
-      <summary>
-        <para></para>
-      </summary>
-      <param name="state"></param>
-    </member>
     <member name="M:DevExpress.Utils.Drawing.GraphicsCache.RestoreClipRelease(DevExpress.Utils.Drawing.GraphicsClipState)">
       <summary>
         <para></para>
@@ -6478,12 +6473,6 @@ Provides storage for pens, fonts and brushes.</para>
         <para>Applies the specified rotation to the transformation matrix of the contained <see cref="T:System.Drawing.Graphics"/> object.</para>
       </summary>
       <param name="angle">Angle of rotation in degrees.</param>
-    </member>
-    <member name="M:DevExpress.Utils.Drawing.GraphicsCache.Save">
-      <summary>
-        <para></para>
-      </summary>
-      <returns></returns>
     </member>
     <member name="M:DevExpress.Utils.Drawing.GraphicsCache.SaveAndSetClip(System.Drawing.RectangleF,System.Boolean)">
       <summary>
@@ -6512,13 +6501,12 @@ Provides storage for pens, fonts and brushes.</para>
       </summary>
       <value></value>
     </member>
-    <member name="M:DevExpress.Utils.Drawing.GraphicsCache.ScaleTransform(System.Single,System.Single,System.Drawing.Drawing2D.MatrixOrder)">
+    <member name="M:DevExpress.Utils.Drawing.GraphicsCache.ScaleTransform(System.Single,System.Single)">
       <summary>
-        <para></para>
+        <para>Applies the specified scaling operation to the transformation matrix of the contained <see cref="T:System.Drawing.Graphics"/> object by prepending it to the object&#39;s transformation matrix.</para>
       </summary>
-      <param name="sx"></param>
-      <param name="sy"></param>
-      <param name="order"></param>
+      <param name="sx">Scale factor in the x direction.</param>
+      <param name="sy">Scale factor in the y direction.</param>
     </member>
     <member name="M:DevExpress.Utils.Drawing.GraphicsCache.SetActiveSkinInfo(DevExpress.LookAndFeel.UserLookAndFeel)">
       <summary>
@@ -6570,13 +6558,12 @@ Provides storage for pens, fonts and brushes.</para>
       </summary>
       <value>A <see cref="T:System.Drawing.Drawing2D.Matrix"/> object.</value>
     </member>
-    <member name="M:DevExpress.Utils.Drawing.GraphicsCache.TranslateTransform(System.Single,System.Single,System.Drawing.Drawing2D.MatrixOrder)">
+    <member name="M:DevExpress.Utils.Drawing.GraphicsCache.TranslateTransform(System.Single,System.Single)">
       <summary>
-        <para></para>
+        <para>Changes the origin of the coordinate system by prepending the specified translation to the transformation matrix of the contained <see cref="T:System.Drawing.Graphics"/> ojbect.</para>
       </summary>
-      <param name="dx"></param>
-      <param name="dy"></param>
-      <param name="order"></param>
+      <param name="dx">The x-coordinate of the translation.</param>
+      <param name="dy">The y-coordinate of the translation.</param>
     </member>
     <member name="P:DevExpress.Utils.Drawing.GraphicsCache.UseDirectXPaint">
       <summary>
@@ -8711,11 +8698,6 @@ For the <see cref="T:DevExpress.Utils.SharedImageCollection"/>, this property sp
       </summary>
       <value>The LayoutEngine for the panel&#39;s contents.</value>
     </member>
-    <member name="M:DevExpress.Utils.Layout.XtraLayoutPanelBase.ResumeLayout">
-      <summary>
-        <para></para>
-      </summary>
-    </member>
     <member name="M:DevExpress.Utils.Layout.XtraLayoutPanelBase.ResumeLayout(System.Boolean)">
       <summary>
         <para>Resumes the layout behavior for the panel.</para>
@@ -9708,7 +9690,7 @@ For the <see cref="T:DevExpress.Utils.SharedImageCollection"/>, this property sp
     </member>
     <member name="T:DevExpress.Utils.SharedImageCollection">
       <summary>
-        <para>An image collection that allows you to share images between controls on multiple forms.</para>
+        <para>The image collection that allows you to share images between controls within multiple forms.</para>
       </summary>
     </member>
     <member name="M:DevExpress.Utils.SharedImageCollection.#ctor">
@@ -15727,11 +15709,6 @@ A specific version of the addressed image is automatically chosen based on the a
       </summary>
       <value>An Int32 value that specifies the width of a <see cref="T:DevExpress.XtraEditors.SidePanel"/>&#39;s overlay resize zone.</value>
     </member>
-    <member name="M:DevExpress.XtraEditors.SidePanel.RefreshResizeZone">
-      <summary>
-        <para></para>
-      </summary>
-    </member>
     <member name="M:DevExpress.XtraEditors.SidePanel.ResetBackColor">
       <summary>
         <para>Resets this panel&#39;s <see cref="P:DevExpress.XtraEditors.SidePanel.BackColor"/> property to its default value.</para>
@@ -16245,7 +16222,7 @@ A specific version of the addressed image is automatically chosen based on the a
     </member>
     <member name="E:DevExpress.XtraEditors.SvgImageBox.CustomContextButtonToolTip">
       <summary>
-        <para>Allows you to specify a tooltip shown when the mouse pointer hovers over a context button. This event is only raised for <see cref="T:DevExpress.Utils.RatingContextButton"></see> and <see cref="T:DevExpress.Utils.TrackBarContextButton"></see> objects.</para>
+        <para>Allows you to customize tooltips for rating context buttons (<see cref="T:DevExpress.Utils.RatingContextButton"/>).</para>
       </summary>
     </member>
     <member name="M:DevExpress.XtraEditors.SvgImageBox.EndUpdate">

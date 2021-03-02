@@ -4616,7 +4616,7 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
     </member>
     <member name="T:DevExpress.XtraGrid.Views.BandedGrid.AdvBandedGridView">
       <summary>
-        <para>Displays data in a tabular form and organizes columns into bands. Supports complex data cell arrangements.</para>
+        <para>Displays data in a tabular form, allows grouping columns into bands and supports complex data cell arrangements.</para>
       </summary>
     </member>
     <member name="M:DevExpress.XtraGrid.Views.BandedGrid.AdvBandedGridView.#ctor">
@@ -4821,23 +4821,6 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
       </summary>
       <param name="index">An integer value specifying the zero-based index of the required collection item.</param>
       <value>A <see cref="T:DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn"/> object representing the column at the specified position within the collection. null (Nothing in Visual Basic) if the specified index is negative or exceeds the last available index.</value>
-    </member>
-    <member name="T:DevExpress.XtraGrid.Views.BandedGrid.BandedGridOptionsBehavior">
-      <summary>
-        <para>Contains behavior options for Banded Grid Views.</para>
-      </summary>
-    </member>
-    <member name="M:DevExpress.XtraGrid.Views.BandedGrid.BandedGridOptionsBehavior.#ctor(DevExpress.XtraGrid.Views.BandedGrid.BandedGridView)">
-      <summary>
-        <para>Initializes a new instance of the <see cref="T:DevExpress.XtraGrid.Views.BandedGrid.BandedGridOptionsBehavior"/> class with specified settings.</para>
-      </summary>
-      <param name="view">The View that owns the created BandedGridOptionsBehavior object.</param>
-    </member>
-    <member name="P:DevExpress.XtraGrid.Views.BandedGrid.BandedGridOptionsBehavior.AlignGroupSummaryInGroupRow">
-      <summary>
-        <para>This property is not supported for Banded Grid Views.</para>
-      </summary>
-      <value>A DefaultBoolean value.</value>
     </member>
     <member name="T:DevExpress.XtraGrid.Views.BandedGrid.BandedGridOptionsCustomization">
       <summary>
@@ -5079,7 +5062,7 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
     </member>
     <member name="T:DevExpress.XtraGrid.Views.BandedGrid.BandedGridView">
       <summary>
-        <para>Displays data in a tabular form and organizes columns into bands.</para>
+        <para>Displays data in a tabular form and allows grouping of columns into bands.</para>
       </summary>
     </member>
     <member name="M:DevExpress.XtraGrid.Views.BandedGrid.BandedGridView.#ctor">
@@ -5214,9 +5197,9 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
     </member>
     <member name="P:DevExpress.XtraGrid.Views.BandedGrid.BandedGridView.OptionsBehavior">
       <summary>
-        <para>Provides access to the View&#39;s behavior options.</para>
+        <para></para>
       </summary>
-      <value>An object that contains the View&#39;s behavior options.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.XtraGrid.Views.BandedGrid.BandedGridView.OptionsCustomization">
       <summary>
@@ -7917,14 +7900,14 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
     </member>
     <member name="M:DevExpress.XtraGrid.Views.Base.ColumnView.GetFocusedRowCellValue(DevExpress.XtraGrid.Columns.GridColumn)">
       <summary>
-        <para>Returns the specified column&#39;s edit value within the focused row. Returns null if the column is not found.</para>
+        <para>Returns the specified column&#39;s edit value within the focused row.</para>
       </summary>
       <param name="column">A <see cref="T:DevExpress.XtraGrid.Columns.GridColumn"/> column which contains the required cell.</param>
       <returns>An object representing the cell&#39;s value.</returns>
     </member>
     <member name="M:DevExpress.XtraGrid.Views.Base.ColumnView.GetFocusedRowCellValue(System.String)">
       <summary>
-        <para>Returns the edit value of the specified cell within the focused row. Returns null if a column with such field name is not found.</para>
+        <para>Returns the edit value of the specified cell within the focused row.</para>
       </summary>
       <param name="fieldName">A string identifying the field name of the column which contains the required cell. A <see cref="T:System.NullReferenceException"/> exception will be thrown if the underlying data source does not contain a column with the specified field name.</param>
       <returns>An object representing the cell&#39;s value.</returns>
@@ -12106,6 +12089,12 @@ In server mode, this option is not in effect.</para>
         <para></para>
       </summary>
     </member>
+    <member name="P:DevExpress.XtraGrid.Views.Grid.DragDropGridEventArgs.CustomData">
+      <summary>
+        <para></para>
+      </summary>
+      <value></value>
+    </member>
     <member name="M:DevExpress.XtraGrid.Views.Grid.DragDropGridEventArgs.GetDragDropGridEventArgs(DevExpress.Utils.DragDrop.DragDropEventArgs)">
       <summary>
         <para></para>
@@ -13034,7 +13023,7 @@ In server mode, this option is not in effect.</para>
     </member>
     <member name="P:DevExpress.XtraGrid.Views.Grid.GridOptionsBehavior.AlignGroupSummaryInGroupRow">
       <summary>
-        <para>Gets or sets whether to forcibly move group footer summaries (which reside in group footers) to positions in group rows under corresponding column headers. Group footers will be hidden as a result. This feature is supported for the <see cref="T:DevExpress.XtraGrid.Views.Grid.GridView"/>.</para>
+        <para>Gets or sets whether to forcibly move group footer summaries (which reside in group footers) to positions in group rows under corresponding column headers. Group footers will be hidden as a result. This feature is supported for the <see cref="T:DevExpress.XtraGrid.Views.Grid.GridView"/> and <see cref="T:DevExpress.XtraGrid.Views.BandedGrid.BandedGridView"/>.</para>
       </summary>
       <value>A value that specifies whether to display group footer summaries in group rows under corresponding column headers.</value>
     </member>
@@ -14646,12 +14635,12 @@ This option is in effect when the <see cref="P:DevExpress.XtraGrid.Views.Grid.Gr
     </member>
     <member name="E:DevExpress.XtraGrid.Views.Grid.GridView.CustomRowCellEdit">
       <summary>
-        <para>Allows you to assign custom in-place editors to individual cells. To avoid performance issues and increased memory consumption, assign repository items that already exist in the GridControl.RepositoryItems collection. Do not create new repository items in this handler.</para>
+        <para>Allows you to assign custom in-place editors to individual cells.</para>
       </summary>
     </member>
     <member name="E:DevExpress.XtraGrid.Views.Grid.GridView.CustomRowCellEditForEditing">
       <summary>
-        <para>Allows you to assign a custom editor to a column for in-place editing and so override the default column editor, which is by default used both in display and edit modes. To avoid performance issues and increased memory consumption, assign repository items that already exist in the GridControl.RepositoryItems collection. Do not create new repository items in this handler.
+        <para>Allows you to assign a custom editor to a column for in-place editing and so override the default column editor, which is by default used both in display and edit modes.
 This event also allows you to change editors within an Edit Form.</para>
       </summary>
     </member>
@@ -15149,7 +15138,7 @@ The method&#39;s argument will contain the requested value. The completed parame
     </member>
     <member name="P:DevExpress.XtraGrid.Views.Grid.GridView.GroupFormat">
       <summary>
-        <para>Gets or sets the format rule that specifies a template for group row captions. You can build this template from custom text strings and the following placeholders: {0}, {1}, {2} and [#image].</para>
+        <para>Gets or sets the format rule that specifies a template for group row captions. You can build this template from custom text strings and the following placeholders:</para>
       </summary>
       <value>A string value specifying the text pattern for group rows.</value>
     </member>
@@ -20630,7 +20619,7 @@ This value is used to initialize the <see cref="P:DevExpress.XtraGrid.Views.Prin
     </member>
     <member name="E:DevExpress.XtraGrid.Views.Tile.TileView.CustomContextButtonToolTip">
       <summary>
-        <para>Allows you to specify a tooltip shown when the mouse pointer hovers over a context button. This event is only raised for <see cref="T:DevExpress.Utils.RatingContextButton"></see> and <see cref="T:DevExpress.Utils.TrackBarContextButton"></see> objects.</para>
+        <para>Allows you to dynamically customize tooltips of context buttons, displayed by this <see cref="T:DevExpress.XtraGrid.Views.Tile.TileView"/>.</para>
       </summary>
     </member>
     <member name="E:DevExpress.XtraGrid.Views.Tile.TileView.CustomItemHeight">
@@ -22127,7 +22116,7 @@ This value is used to initialize the <see cref="P:DevExpress.XtraGrid.Views.Prin
     </member>
     <member name="E:DevExpress.XtraGrid.Views.WinExplorer.WinExplorerView.CustomContextButtonToolTip">
       <summary>
-        <para>Allows you to specify a tooltip shown when the mouse pointer hovers over a context button. This event is only raised for <see cref="T:DevExpress.Utils.RatingContextButton"></see> and <see cref="T:DevExpress.Utils.TrackBarContextButton"></see> objects.</para>
+        <para>Allows hints for the <see cref="T:DevExpress.Utils.RatingContextButton"/> objects displayed in the current <see cref="T:DevExpress.XtraGrid.Views.WinExplorer.WinExplorerView"/> to be customized.</para>
       </summary>
     </member>
     <member name="E:DevExpress.XtraGrid.Views.WinExplorer.WinExplorerView.CustomDrawGroupItem">

@@ -46,7 +46,7 @@ namespace Lokalomat
 
         public string AssemblyFilePath;
 
-        public string SerializationFilePath;
+        public string SerializationFilePath = @"C:\k3tfs\Programm\bin\Debug\de\LokalisierungsTest";
 
         public string DeserializationFilePath;
 
@@ -122,7 +122,6 @@ namespace Lokalomat
 
 
 
-
         //------------------------------------------------------------------------------------|
 
         // --> Verzeichnis durchsuchen nach passenden Assemblies
@@ -136,11 +135,10 @@ namespace Lokalomat
 
             gridView1.Columns.Clear();
             gridControl1.DataSource = null;
-            gridControl1.DataSource = assemblyList;
         }
 
         // --> Xtra Dokumente aus Assembly extrahieren und Controls hinzufügen
-        private void SucheNachDokumenten()
+        private void SucheUndErstelleDokumente()
         {
             typesList = NutzeMethode.LadeTypes(ChosenAssembly, typesList);
 
@@ -183,7 +181,7 @@ namespace Lokalomat
                             }
                         }
 
-                        DocumentName = item.Name;
+                        DocumentName = AssemblyFileName+"_"+item.Name;
 
                         dictionary.Clear();
                         ListeAlleErgebnisse();
@@ -1144,7 +1142,7 @@ namespace Lokalomat
         // Verzeichnis automatisch auswählen für Assemblies
         private void autoVerzeichnisToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AssemblyFilePath = @"C:\Archiv\Gits\Tutorials\CommonControlsTestUI\CommonControlsTestUI\bin\Debug";
+            AssemblyFilePath = @"C:\k3tfs\Programm\bin\Debug";
 
             ladeAsseblies();
         }
@@ -1170,7 +1168,7 @@ namespace Lokalomat
         // Verzeichnis automatisch auswählen zum Serialisieren
         private void autoVerzeichnisToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            SerializationFilePath = @"C:\Users\Manni\Desktop\Objekte\";
+            SerializationFilePath = @"C:\k3tfs\Programm\bin\Debug\de\LokalisierungsTest";
 
             serialisiereAlleneuenControls();
         }
@@ -1260,7 +1258,7 @@ namespace Lokalomat
                         gridView1.Columns.Clear();
                         gridControl1.DataSource = null;
 
-                        SucheNachDokumenten();
+                        SucheUndErstelleDokumente();
                     }
                 }
             }

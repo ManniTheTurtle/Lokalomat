@@ -5911,12 +5911,12 @@ This property is obsolete. Use the <see cref="P:DevExpress.XtraTreeList.TreeList
     </member>
     <member name="E:DevExpress.XtraTreeList.TreeList.CustomNodeCellEdit">
       <summary>
-        <para>Enables editors to be assigned to cells on an individual basis. To avoid performance issues and increased memory consumption, assign repository items that already exist in the TreeList.RepositoryItems collection. Do not create new repository items in this handler.</para>
+        <para>Enables editors to be assigned to cells on an individual basis.</para>
       </summary>
     </member>
     <member name="E:DevExpress.XtraTreeList.TreeList.CustomNodeCellEditForEditing">
       <summary>
-        <para>Allows you to assign a custom editor to a column for in-place editing and override the default column editor, which is by default used both in display and edit modes. To avoid performance issues and increased memory consumption, assign repository items that already exist in the TreeList.RepositoryItems collection. Do not create new repository items in this handler.</para>
+        <para>Allows you to assign a custom editor to a column for in-place editing and override the default column editor, which is by default used both in display and edit modes.</para>
       </summary>
     </member>
     <member name="E:DevExpress.XtraTreeList.TreeList.CustomRowFilter">
@@ -9651,15 +9651,15 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
     </member>
     <member name="P:DevExpress.XtraTreeList.TreeListOptionsNavigation.UseBandsAdvHorzNavigation">
       <summary>
-        <para>Gets or sets whether focus always moves horizontally to the sibling cell or with respect to how columns are arranged in bands.</para>
+        <para>Gets or sets whether advanced horizontal navigation is enabled in a banded layout.</para>
       </summary>
-      <value>true, if focus always moves horizontally to the sibling cell; otherwise, false.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.XtraTreeList.TreeListOptionsNavigation.UseBandsAdvVertNavigation">
       <summary>
-        <para>Gets or sets whether focus always moves vertically to the sibling cell or with respect to how columns are arranged in bands.</para>
+        <para>Gets or sets whether advanced vertical navigation is enabled in a banded layout.</para>
       </summary>
-      <value>true, if focus always moves vertically to the sibling cell; otherwise, false.</value>
+      <value>true, if advanced vertical navigation is enabled; otherwise, false.</value>
     </member>
     <member name="P:DevExpress.XtraTreeList.TreeListOptionsNavigation.UseTabKey">
       <summary>

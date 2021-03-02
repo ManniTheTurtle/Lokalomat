@@ -224,11 +224,6 @@
       </summary>
       <value>An <see cref="T:DevExpress.Utils.ImageCollection"></see> or <see cref="T:DevExpress.Utils.SvgImageCollection"></see> that contains images.</value>
     </member>
-    <member name="E:DevExpress.XtraBars.Alerter.AlertControl.HyperlinkClick">
-      <summary>
-        <para></para>
-      </summary>
-    </member>
     <member name="P:DevExpress.XtraBars.Alerter.AlertControl.IgnoreChildren">
       <summary>
         <para>This method supports the internal infrastructure and is not intended to be used directly from your code.</para>
@@ -311,12 +306,6 @@
       </summary>
       <param name="args">An AlertFormWidthEventArgs object passed to the event.</param>
       <returns>The value of the Width event parameter.</returns>
-    </member>
-    <member name="M:DevExpress.XtraBars.Alerter.AlertControl.RaiseHyperlinkClick(DevExpress.Utils.HyperlinkClickEventArgs)">
-      <summary>
-        <para></para>
-      </summary>
-      <param name="e"></param>
     </member>
     <member name="M:DevExpress.XtraBars.Alerter.AlertControl.RaiseMouseFromEnter(DevExpress.XtraBars.Alerter.AlertEventArgs)">
       <summary>
@@ -2431,7 +2420,7 @@ A specific version of the addressed image is automatically chosen, based on the 
       <summary>
         <para>Gets or sets the item&#39;s maximum width in auto-size mode. Not in effect in a ribbon.</para>
       </summary>
-      <value>An integer value that specifies the item&#39;s maximum width.</value>
+      <value>An integer value that specifies the item&#39;s minimum width.</value>
     </member>
     <member name="P:DevExpress.XtraBars.BarEditItem.MinWidth">
       <summary>
@@ -10755,12 +10744,6 @@ Dock Panels support &quot;Press and Tap&quot; and &quot;Two-Finger Tap&quot; ges
       </summary>
       <value>true, if the <see cref="T:DevExpress.XtraBars.Docking2010.Views.BaseDocument"/> is currently maximized; otherwise, false.</value>
     </member>
-    <member name="P:DevExpress.XtraBars.Docking2010.Views.BaseDocument.IsUpdateNeeded">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
-    </member>
     <member name="P:DevExpress.XtraBars.Docking2010.Views.BaseDocument.IsVisible">
       <summary>
         <para>Gets whether the document is visible.</para>
@@ -10962,7 +10945,7 @@ Dock Panels support &quot;Press and Tap&quot; and &quot;Two-Finger Tap&quot; ges
     </member>
     <member name="E:DevExpress.XtraBars.Docking2010.Views.BaseView.ControlReleased">
       <summary>
-        <para>Fires after a control has been succesfully unbound from its parent document.</para>
+        <para>Fires after the previously selected document is disposed.</para>
       </summary>
     </member>
     <member name="E:DevExpress.XtraBars.Docking2010.Views.BaseView.ControlReleasing">
@@ -19300,15 +19283,9 @@ Dock Panels support &quot;Press and Tap&quot; and &quot;Two-Finger Tap&quot; ges
     </member>
     <member name="P:DevExpress.XtraBars.Navigation.AccordionControl.Appearance">
       <summary>
-        <para>Provides access to multiple appearance groups that store appearance settings for all accordion elements in every visual state. To set up appearance states for all visual states at once, use the Appearance.Item\Group\ItemWithContainer.Default group.</para>
+        <para>Provides access to multiple appearance groups that store appearance settings for all accordion elements in every visual state.</para>
       </summary>
       <value>An DevExpress.XtraBars.Navigation.AccordionControlAppearances object that contains multiple appearance groups that store appearance settings for all accordion elements in every visual state.</value>
-    </member>
-    <member name="P:DevExpress.XtraBars.Navigation.AccordionControl.BackColor">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
     </member>
     <member name="M:DevExpress.XtraBars.Navigation.AccordionControl.BeginInit">
       <summary>
@@ -19385,7 +19362,7 @@ Dock Panels support &quot;Press and Tap&quot; and &quot;Two-Finger Tap&quot; ges
     </member>
     <member name="E:DevExpress.XtraBars.Navigation.AccordionControl.CustomContextButtonToolTip">
       <summary>
-        <para>Allows you to specify a tooltip shown when the mouse pointer hovers over a context button. This event is only raised for <see cref="T:DevExpress.Utils.RatingContextButton"></see> and <see cref="T:DevExpress.Utils.TrackBarContextButton"></see> objects.</para>
+        <para>Allows you to dynamically customize item tooltips.</para>
       </summary>
     </member>
     <member name="E:DevExpress.XtraBars.Navigation.AccordionControl.CustomDrawElement">
@@ -19513,9 +19490,9 @@ The Default value is equivalent to ScrollUp.</value>
     </member>
     <member name="P:DevExpress.XtraBars.Navigation.AccordionControl.FilterText">
       <summary>
-        <para>Gets or sets the active Filter Control text.</para>
+        <para></para>
       </summary>
-      <value>The active Filter Control text.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.XtraBars.Navigation.AccordionControl.FlyoutForm">
       <summary>
@@ -19694,11 +19671,6 @@ The Default value is equivalent to ScrollUp.</value>
         <para>Redraws the <see cref="T:DevExpress.XtraBars.Navigation.AccordionControl"/>.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraBars.Navigation.AccordionControl.ResetBackColor">
-      <summary>
-        <para></para>
-      </summary>
-    </member>
     <member name="P:DevExpress.XtraBars.Navigation.AccordionControl.ResizeMode">
       <summary>
         <para>Gets or sets whether end-users can drag the control&#39;s edge to resize the control horizontally. The property allows you to choose the position of the resize zone.</para>
@@ -19870,12 +19842,6 @@ This method is in effect if item selection is enabled with the <see cref="P:DevE
     <member name="P:DevExpress.XtraBars.Navigation.AccordionControl.SuperTip">
       <summary>
         <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
-      </summary>
-      <value></value>
-    </member>
-    <member name="P:DevExpress.XtraBars.Navigation.AccordionControl.Text">
-      <summary>
-        <para></para>
       </summary>
       <value></value>
     </member>
@@ -22782,12 +22748,6 @@ See Navigation Frame and Tab Pane.</para>
         <para>Gets or sets the glyph displayed in the tile corresponding to the current <see cref="T:DevExpress.XtraBars.Navigation.TileNavElement"/> object.</para>
       </summary>
       <value>The image displayed in a tile.</value>
-    </member>
-    <member name="P:DevExpress.XtraBars.Navigation.TileNavElement.TileImageOptions">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraBars.Navigation.TileNavElement.TileNavPane">
       <summary>
@@ -25986,7 +25946,7 @@ The width of items is specified by the Width attribute of the <see cref="P:DevEx
     </member>
     <member name="E:DevExpress.XtraBars.Ribbon.Gallery.StandaloneGallery.CustomContextButtonToolTip">
       <summary>
-        <para>Allows you to specify a tooltip shown when the mouse pointer hovers over a context button. This event is only raised for <see cref="T:DevExpress.Utils.RatingContextButton"></see> and <see cref="T:DevExpress.Utils.TrackBarContextButton"></see> objects.</para>
+        <para>Allows hints for the <see cref="T:DevExpress.Utils.RatingContextButton"/> objects displayed in the current <see cref="T:DevExpress.XtraBars.Ribbon.Gallery.StandaloneGallery"/> to be customized.</para>
       </summary>
     </member>
     <member name="E:DevExpress.XtraBars.Ribbon.Gallery.StandaloneGallery.DragItemDrop">
@@ -28819,7 +28779,7 @@ This option is in effect when a custom control is embedded into the gallery grou
     </member>
     <member name="E:DevExpress.XtraBars.Ribbon.RibbonControl.LayoutUpgrade">
       <summary>
-        <para>Fires when a layout is restored from storage (a stream, xml file, or system registry).</para>
+        <para>Fires when a layout is restored from a storage (a stream, xml file, or system registry).</para>
       </summary>
     </member>
     <member name="P:DevExpress.XtraBars.Ribbon.RibbonControl.LayoutVersion">
@@ -35720,16 +35680,6 @@ This image is shown when the notification has the Generic template applied.</par
     <member name="E:DevExpress.XtraToolbox.ToolboxControl.CustomDrawElement">
       <summary>
         <para>Provides the ability to perform custom painting of the <see cref="T:DevExpress.XtraToolbox.ToolboxControl"/> visual elements.</para>
-      </summary>
-    </member>
-    <member name="E:DevExpress.XtraToolbox.ToolboxControl.CustomDrawGroups">
-      <summary>
-        <para></para>
-      </summary>
-    </member>
-    <member name="E:DevExpress.XtraToolbox.ToolboxControl.CustomDrawItems">
-      <summary>
-        <para></para>
       </summary>
     </member>
     <member name="P:DevExpress.XtraToolbox.ToolboxControl.DesignManager">

@@ -103,7 +103,15 @@ namespace Lokalomat
             {
                 string jsonstring = File.ReadAllText(file);
 
-                DeserializedXtraDocsList.Add(JsonConvert.DeserializeObject<MyXtraDocument>(jsonstring));    // momentan werden alle assemblys gemeinsam deserialized in eine Liste
+                if (file.EndsWith(".json"))
+                {
+                    var MyXtraDocNullTest = JsonConvert.DeserializeObject<MyXtraDocument>(jsonstring);
+
+                    if (MyXtraDocNullTest != null)
+                    {
+                        DeserializedXtraDocsList.Add(MyXtraDocNullTest);    // momentan werden alle assemblys gemeinsam deserialized in eine Liste
+                    }
+                }
             }
 
             return DeserializedXtraDocsList;

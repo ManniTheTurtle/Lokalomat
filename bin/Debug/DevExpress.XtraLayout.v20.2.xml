@@ -1035,26 +1035,6 @@ is dependent on the type of control embedded in this layout item.</value>
         <para>The default maximum width is specified by the Control.MaximumSize.Width property if it is not set to 0; otherwise, the default maximum width is specified by the IXtraResizableControl.MaxSize.Width property.The default maximum height is specified by the Control.MaximumSize.Height property if it is not set to 0; otherwise, the default maximum height is specified by the IXtraResizableControl.MaxSize.Height property.</para>
       </summary>
     </member>
-    <member name="T:DevExpress.XtraLayout.ControlMinSizeCalcMode">
-      <summary>
-        <para>Contains values that specify how default minimum size constraints are calculated for controls that implement the <see cref="T:DevExpress.Utils.Controls.IXtraResizableControl"/> interface.</para>
-      </summary>
-    </member>
-    <member name="F:DevExpress.XtraLayout.ControlMinSizeCalcMode.CombineControlMinimumSizeAndIXtraResizableMinSize">
-      <summary>
-        <para>The default minimum width is calculated for a control as the minimum of two values: Control.MinimumSize.Width and IXtraResizableControl.MinSize.Width.The default minimum height is calculated for a control as the minimum of two values: Control.MinimumSize.Height and IXtraResizableControl.MinSize.Height.</para>
-      </summary>
-    </member>
-    <member name="F:DevExpress.XtraLayout.ControlMinSizeCalcMode.UseControlMinimumSize">
-      <summary>
-        <para>The default minimum width and height are specified by the Control.MinimumSize.Width and Control.MinimumSize.Height values, respectively.</para>
-      </summary>
-    </member>
-    <member name="F:DevExpress.XtraLayout.ControlMinSizeCalcMode.UseControlMinimumSizeIfNotZero">
-      <summary>
-        <para>The default minimum width is specified by the Control.MinimumSize.Width property if it is not set to 0; otherwise, the default minimum width is specified by the IXtraResizableControl.MinSize.Width property.The default minimum height is specified by the Control.MinimumSize.Height property if it is not set to 0; otherwise, the default minimum height is specified by the IXtraResizableControl.MinSize.Height property.</para>
-      </summary>
-    </member>
     <member name="N:DevExpress.XtraLayout.Converter">
       <summary>
         <para>Contains classes used to convert layouts of controls.</para>
@@ -1251,18 +1231,6 @@ is dependent on the type of control embedded in this layout item.</value>
         <para>This property is not supported by the <see cref="T:DevExpress.XtraLayout.EmptySpaceItem"/> class.</para>
       </summary>
       <value>false.</value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.EmptySpaceItem.ContentHorzAlignment">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.EmptySpaceItem.ContentVertAlignment">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraLayout.EmptySpaceItem.ContentVisible">
       <summary>
@@ -2402,9 +2370,9 @@ is dependent on the type of control embedded in this layout item.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControl.Images">
       <summary>
-        <para>Gets or sets a collection of icons that can be displayed in a layout item, group, or tab&#39;s label.</para>
+        <para>Gets or sets a collection of images that can be displayed within the LayoutControl&#39;s elements.</para>
       </summary>
-      <value>A collection of icons that can be displayed in a layout item, group, or tab&#39;s label.</value>
+      <value>An object that is an image collection providing images to be displayed in the LayoutControl&#39;s items.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControl.IsInitialized">
       <summary>
@@ -2526,7 +2494,7 @@ is dependent on the type of control embedded in this layout item.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControl.OptionsSerialization">
       <summary>
-        <para>Contains options that specify how the LayoutControl&#39;s layout is saved to and restored from a data store (an XML file, a stream or the system registry).</para>
+        <para>Provides access to options that control how the LayoutControl&#39;s layout is saved to and restored from a data store (an XML file, stream or the system registry).</para>
       </summary>
       <value>A <see cref="T:DevExpress.XtraLayout.LayoutSerializationOptions"/> object.</value>
     </member>
@@ -2612,9 +2580,9 @@ is dependent on the type of control embedded in this layout item.</value>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.RestoreLayoutFromRegistry(System.String)">
       <summary>
-        <para>Restores the layout that is stored at the specified system registry path.</para>
+        <para>Restores the layout which is stored at the specified system registry path.</para>
       </summary>
-      <param name="path">A <see cref="T:System.String"/> value that specifies the system registry path. If the specified path doesn&#39;t exist, this method does nothing.</param>
+      <param name="path">A <see cref="T:System.String"/> value which specifies the system registry path. If the specified path doesn&#39;t exist, this method does nothing.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.RestoreLayoutFromStream(System.IO.Stream)">
       <summary>
@@ -2638,7 +2606,7 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>Saves the current layout to the specified system registry path.</para>
       </summary>
-      <param name="path">A <see cref="T:System.String"/> value that specifies the system registry path to which to save the layout.</param>
+      <param name="path">A <see cref="T:System.String"/> value which specifies the system registry path to save the layout to.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.SaveLayoutToStream(System.IO.Stream)">
       <summary>
@@ -2650,7 +2618,7 @@ is dependent on the type of control embedded in this layout item.</value>
       <summary>
         <para>Saves the layout to an XML file.</para>
       </summary>
-      <param name="xmlFile">A <see cref="T:System.String"/> value that specifies the path to the file where the layout should be stored. If an empty string is specified, an exception is raised.</param>
+      <param name="xmlFile">A <see cref="T:System.String"/> value which specifies the path to the file where the layout should be stored. If an empty string is specified, an exception is raised.</param>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutControl.SelectParentGroup">
       <summary>
@@ -2952,9 +2920,9 @@ is dependent on the type of control embedded in this layout item.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControlItem.AllowGlyphSkinning">
       <summary>
-        <para>Gets or sets whether a label&#39;s icon is filled with the label&#39;s foreground color.</para>
+        <para>Gets or sets whether the <see cref="T:DevExpress.XtraLayout.LayoutControlItem"/>&#39;s icon should be painted in the item&#39;s foreground color.</para>
       </summary>
-      <value><see cref="F:DevExpress.Utils.DefaultBoolean.Default"/> to use the parent group&#39;s <see cref="P:DevExpress.XtraLayout.LayoutGroupCaptionImageOptions.AllowGlyphSkinning"/> option; <see cref="F:DevExpress.Utils.DefaultBoolean.True"/> to fill the icon with the label&#39;s foreground color; <see cref="F:DevExpress.Utils.DefaultBoolean.False"/> to display the icon as it is.</value>
+      <value>A DefaultBoolean enumerator value that specifies whether the <see cref="T:DevExpress.XtraLayout.LayoutControlItem"/>&#39;s icon should be painted in the item&#39;s foreground color.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControlItem.AllowHotTrack">
       <summary>
@@ -3059,45 +3027,45 @@ is dependent on the type of control embedded in this layout item.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControlItem.Image">
       <summary>
-        <para>Gets or sets the icon displayed in the item&#39;s label.</para>
+        <para>Gets or sets the image displayed in the item&#39;s label.</para>
       </summary>
-      <value>An object that specifies an image.</value>
+      <value>An <see cref="T:System.Drawing.Image"/> object which represents the item&#39;s image.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControlItem.ImageAlignment">
       <summary>
-        <para>Gets or sets the alignment of the icon in the label.</para>
+        <para>Gets or sets the alignment of the image within the label.</para>
       </summary>
-      <value>A <see cref="T:System.Drawing.ContentAlignment"/> enumeration value that specifies the alignment of the icon in the label.</value>
+      <value>A <see cref="T:System.Drawing.ContentAlignment"/> enumeration value that specifies the alignment of the image within the label.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControlItem.ImageIndex">
       <summary>
-        <para>Gets or sets the index of the icon displayed in the item&#39;s label.</para>
+        <para>Gets or sets the index of the image assigned to the item.</para>
       </summary>
-      <value>An integer value that specifies the index of an icon in an image collection.</value>
+      <value>An integer which specifies the index of the item&#39;s image in a collection of images.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControlItem.ImageOptions">
       <summary>
-        <para>Gets options that allow you to display an icon in the item&#39;s label.</para>
+        <para>Provides access to all properties that allow you to assign and customize an image for this item&#39;s label.</para>
       </summary>
-      <value>A <see cref="T:DevExpress.XtraLayout.LayoutControlItemImageOptions"/> object that specifies an icon displayed in the item&#39;s label.</value>
+      <value>A DevExpress.XtraLayout.LayoutControlItemImageOptions object that stores all properties that allow you to assign and customize an image for this item&#39;s label.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControlItem.Images">
       <summary>
-        <para>Gets a collection of icons that can be displayed in the item&#39;s label.</para>
+        <para>Gets an image collection whose images can be displayed within the current item.</para>
       </summary>
-      <value>An object that specifies an image collection.</value>
+      <value>An object that represents the image source.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControlItem.ImageToTextDistance">
       <summary>
-        <para>Gets or sets the distance between the label&#39;s text and icon.</para>
+        <para>Gets or sets the distance between the item&#39;s label and image.</para>
       </summary>
-      <value>An integer value that specifies the distance between the label&#39;s text and icon, in pixels.</value>
+      <value>An integer value that specifies the distance  between the item&#39;s label and image, in pixels.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControlItem.ItemImages">
       <summary>
-        <para>Gets a collection of icons that can be displayed in the item&#39;s label.</para>
+        <para>Returns the collection of images that can be displayed within the current item.</para>
       </summary>
-      <value>An <see cref="T:DevExpress.Utils.ImageCollection"/> object that contains images.</value>
+      <value>An ImageCollection object that contains images.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutControlItem.MaxSize">
       <summary>
@@ -3165,38 +3133,9 @@ is dependent on the type of control embedded in this layout item.</value>
       </summary>
       <value>A DevExpress.XtraLayout.ViewInfo.LayoutControlItemViewInfo object.</value>
     </member>
-    <member name="T:DevExpress.XtraLayout.LayoutControlItemImageOptions">
-      <summary>
-        <para>Contains options that specify the icon in a layout item&#39;s label.</para>
-      </summary>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutControlItemImageOptions.#ctor(DevExpress.XtraLayout.LayoutControlItem)">
-      <summary>
-        <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.LayoutControlItemImageOptions"/> class with specified settings.</para>
-      </summary>
-      <param name="owner"></param>
-    </member>
-    <member name="P:DevExpress.XtraLayout.LayoutControlItemImageOptions.Alignment">
-      <summary>
-        <para>Gets or sets how the alignment of the icon in the item&#39;s label.</para>
-      </summary>
-      <value>A value that specifies the alignment of the icon in the item&#39;s label.</value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.LayoutControlItemImageOptions.AllowGlyphSkinning">
-      <summary>
-        <para>Gets or sets whether the icon is filled with the control&#39;s foreground color.</para>
-      </summary>
-      <value><see cref="F:DevExpress.Utils.DefaultBoolean.Default"/> to use the parent group&#39;s <see cref="P:DevExpress.XtraLayout.LayoutGroupCaptionImageOptions.AllowGlyphSkinning"/> option; <see cref="F:DevExpress.Utils.DefaultBoolean.True"/> to fill the icon with the control&#39;s foreground color; <see cref="F:DevExpress.Utils.DefaultBoolean.False"/> to display the icon as it is.</value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.LayoutControlItemImageOptions.ImageToTextDistance">
-      <summary>
-        <para>Gets or sets the amount of space between the icon and the text in the label.</para>
-      </summary>
-      <value>An integer value that specifies the amount of space between the icon and the text in the label.</value>
-    </member>
     <member name="T:DevExpress.XtraLayout.LayoutGroup">
       <summary>
-        <para>A base class for regular layout groups.</para>
+        <para>Represents the base class for regular layout groups.</para>
       </summary>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutGroup.Accept(DevExpress.XtraLayout.Utils.BaseVisitor)">
@@ -3357,9 +3296,9 @@ is dependent on the type of control embedded in this layout item.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutGroup.AllowGlyphSkinning">
       <summary>
-        <para>Gets or sets whether the group or tab&#39;s icon is filled with the control&#39;s foreground color.</para>
+        <para>Gets or sets whether the <see cref="T:DevExpress.XtraLayout.LayoutGroup"/>&#39;s icon should be painted in the same color as the <see cref="T:DevExpress.XtraLayout.LayoutGroup"/>&#39;s foreground color.</para>
       </summary>
-      <value><see cref="F:DevExpress.Utils.DefaultBoolean.Default"/> to use the control&#39;s <see cref="P:DevExpress.XtraLayout.OptionsView.AllowGlyphSkinning"/> option; <see cref="F:DevExpress.Utils.DefaultBoolean.True"/> to fill the icon with the control&#39;s foreground color; <see cref="F:DevExpress.Utils.DefaultBoolean.False"/> to display the icon as it is.</value>
+      <value>A DefaultBoolean enumerator value that specifies whether the <see cref="T:DevExpress.XtraLayout.LayoutGroup"/>&#39;s icon should be painted in the same color as the <see cref="T:DevExpress.XtraLayout.LayoutGroup"/>&#39;s foreground color.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutGroup.AllowHtmlStringInCaption">
       <summary>
@@ -3435,21 +3374,21 @@ is dependent on the type of control embedded in this layout item.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutGroup.CaptionImageIndex">
       <summary>
-        <para>Gets or sets the index of an image in the <see cref="P:DevExpress.XtraLayout.LayoutControl.Images"/> or <see cref="P:DevExpress.XtraGrid.Views.Base.ColumnView.Images"/> collection that is displayed in the group or tab&#39;s label.</para>
+        <para>Gets the index of an image in an image collection which must be displayed within the group&#39;s caption.</para>
       </summary>
-      <value>An integer value that specifies the zero-based index of an image in the <see cref="P:DevExpress.XtraLayout.LayoutControl.Images"/> or <see cref="P:DevExpress.XtraGrid.Views.Base.ColumnView.Images"/> collection.</value>
+      <value>A zero-based index of an image in an image collection, that is displayed within the group&#39;s caption.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutGroup.CaptionImageLocation">
       <summary>
-        <para>Gets or sets the icon&#39;s alignment relative to the text.</para>
+        <para>Gets or sets the relative position of an image within the group caption.</para>
       </summary>
-      <value>A <see cref="T:DevExpress.Utils.GroupElementLocation"/> enumeration value that specifies the icon&#39;s alignment relative to the text.</value>
+      <value>A <see cref="T:DevExpress.Utils.GroupElementLocation"/> value that specifies the image&#39;s position.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutGroup.CaptionImageOptions">
       <summary>
-        <para>Gets options that specify the label&#39;s icon.</para>
+        <para>Provides access to all properties that allow you to assign and customize an image for this group&#39;s caption area.</para>
       </summary>
-      <value>A <see cref="T:DevExpress.XtraLayout.LayoutGroupCaptionImageOptions"/> object that contains image options.</value>
+      <value>A DevExpress.XtraLayout.LayoutGroupCaptionImageOptions object that stores all properties that allow you to assign and customize an image for this group&#39;s caption area.</value>
     </member>
     <member name="F:DevExpress.XtraLayout.LayoutGroup.captionImageOptionsCore">
       <summary>
@@ -3459,15 +3398,15 @@ is dependent on the type of control embedded in this layout item.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutGroup.CaptionImagePadding">
       <summary>
-        <para>Gets or sets the amount of space between the icon and the label&#39;s bounds.</para>
+        <para>Gets or sets padding for the image displayed in the current group&#39;s page header.</para>
       </summary>
-      <value>A structure that specifies the amount of space between the icon and the label&#39;s bounds.</value>
+      <value>A Padding value that specifies padding for the image displayed in the current group&#39;s page header.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutGroup.CaptionImageVisible">
       <summary>
-        <para>Gets or sets whether the label&#39;s icon is visible.</para>
+        <para>Gets or sets whether the group caption image is visible.</para>
       </summary>
-      <value>true if the label&#39;s icon is visible; otherwise, false.</value>
+      <value>true if the group caption image is visible; otherwise, false.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutGroup.CellSize">
       <summary>
@@ -3661,9 +3600,9 @@ is dependent on the type of control embedded in this layout item.</value>
     </member>
     <member name="P:DevExpress.XtraLayout.LayoutGroup.ImageList">
       <summary>
-        <para>Gets a collection of images that can be displayed in the group&#39;s label.</para>
+        <para>Gets an image collection whose images can be displayed within the group.</para>
       </summary>
-      <value>An object that specifies an image collection.</value>
+      <value>An object which represents an image collection.</value>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutGroup.Invalidate">
       <summary>
@@ -3825,47 +3764,6 @@ is dependent on the type of control embedded in this layout item.</value>
         <para>Gets the object which contains the information used to render the layout group.</para>
       </summary>
       <value>A DevExpress.XtraLayout.ViewInfo.LayoutGroupViewInfo object.</value>
-    </member>
-    <member name="T:DevExpress.XtraLayout.LayoutGroupCaptionImageOptions">
-      <summary>
-        <para>Contains options that specify the image in a layout group or tab&#39;s label (header).</para>
-      </summary>
-    </member>
-    <member name="M:DevExpress.XtraLayout.LayoutGroupCaptionImageOptions.#ctor(DevExpress.XtraLayout.LayoutGroup)">
-      <summary>
-        <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.LayoutGroupCaptionImageOptions"/> class with specified settings.</para>
-      </summary>
-      <param name="owner"></param>
-    </member>
-    <member name="P:DevExpress.XtraLayout.LayoutGroupCaptionImageOptions.AllowGlyphSkinning">
-      <summary>
-        <para>Gets or sets whether the icon is filled with the control&#39;s foreground color.</para>
-      </summary>
-      <value><see cref="F:DevExpress.Utils.DefaultBoolean.Default"/> to use the owner control&#39;s <see cref="P:DevExpress.XtraLayout.OptionsView.AllowGlyphSkinning"/> option; <see cref="F:DevExpress.Utils.DefaultBoolean.True"/> to fill the icon with the control&#39;s foreground color; <see cref="F:DevExpress.Utils.DefaultBoolean.False"/> to display the icon as it is.</value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.LayoutGroupCaptionImageOptions.HasDefaultPadding">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.LayoutGroupCaptionImageOptions.Location">
-      <summary>
-        <para>Gets or sets the alignment of the icon relative to the text.</para>
-      </summary>
-      <value>A value that specifies the alignment of the icon relative to the text.</value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.LayoutGroupCaptionImageOptions.Padding">
-      <summary>
-        <para>Gets or sets the amount of space between the icon and the label&#39;s bounds.</para>
-      </summary>
-      <value>A structure that specifies the amount of space between the icon and the label&#39;s bounds.</value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.LayoutGroupCaptionImageOptions.Visible">
-      <summary>
-        <para>Gets or sets whether the icon is visible.</para>
-      </summary>
-      <value>true if the icon is visible; otherwise, false.</value>
     </member>
     <member name="T:DevExpress.XtraLayout.LayoutItem">
       <summary>
@@ -4040,7 +3938,7 @@ is dependent on the type of control embedded in this layout item.</value>
     </member>
     <member name="T:DevExpress.XtraLayout.LayoutSerializationOptions">
       <summary>
-        <para>Contains options that specify how the LayoutControl&#39;s layout is saved to and restored from a data store (an XML file, a stream or the system registry).</para>
+        <para>Contains options that control how the LayoutControl&#39;s layout is saved to and restored from a data store (an XML file, stream or the system registry).</para>
       </summary>
     </member>
     <member name="M:DevExpress.XtraLayout.LayoutSerializationOptions.#ctor">
@@ -4945,12 +4843,6 @@ is dependent on the type of control embedded in this layout item.</value>
       </summary>
       <value>A <see cref="T:DevExpress.XtraLayout.ControlMaxSizeCalcMode"/> value.</value>
     </member>
-    <member name="P:DevExpress.XtraLayout.OptionsView.ControlDefaultMinSizeCalcMode">
-      <summary>
-        <para>Gets or sets how default minimum size constraints are calculated for controls that implement the <see cref="T:DevExpress.Utils.Controls.IXtraResizableControl"/> interface.</para>
-      </summary>
-      <value>A <see cref="T:DevExpress.XtraLayout.ControlMinSizeCalcMode"/> value.</value>
-    </member>
     <member name="P:DevExpress.XtraLayout.OptionsView.DragFadeAnimationFrameCount">
       <summary>
         <para>Gets or sets the number of frames in the fade animation.</para>
@@ -5218,88 +5110,6 @@ is dependent on the type of control embedded in this layout item.</value>
       </summary>
       <param name="index">The zero-based index of the element to remove.</param>
       <param name="updateItemIndexes">true, to recalculate the <see cref="P:DevExpress.XtraLayout.OptionsTableLayoutItem.RowIndex"/> property of items in the current layout group; otherwise, false.</param>
-    </member>
-    <member name="T:DevExpress.XtraLayout.SimpleLabelAutoSizeMode">
-      <summary>
-        <para>Enumerates values that specify whether a <see cref="T:DevExpress.XtraLayout.SimpleLabelItem"/>&#39;s maximum width, height, or both are calculated automatically based on the item&#39;s content.</para>
-      </summary>
-    </member>
-    <member name="F:DevExpress.XtraLayout.SimpleLabelAutoSizeMode.Both">
-      <summary>
-        <para>The item&#39;s maximum width and height are calculated automatically based on the item&#39;s content.</para>
-      </summary>
-    </member>
-    <member name="F:DevExpress.XtraLayout.SimpleLabelAutoSizeMode.Default">
-      <summary>
-        <para>The mode is not specified explicitly. Enables the <see cref="F:DevExpress.XtraLayout.SimpleLabelAutoSizeMode.Vertical"/> mode.</para>
-      </summary>
-    </member>
-    <member name="F:DevExpress.XtraLayout.SimpleLabelAutoSizeMode.Horizontal">
-      <summary>
-        <para>The item&#39;s maximum width is calculated automatically based on the item&#39;s content.</para>
-      </summary>
-    </member>
-    <member name="F:DevExpress.XtraLayout.SimpleLabelAutoSizeMode.None">
-      <summary>
-        <para>The item&#39;s maximum width and height are not calculated automatically based on the item&#39;s content. The maximum width and height are not limited.</para>
-      </summary>
-    </member>
-    <member name="F:DevExpress.XtraLayout.SimpleLabelAutoSizeMode.Vertical">
-      <summary>
-        <para>The item&#39;s maximum height is calculated automatically based on the item&#39;s content.</para>
-      </summary>
-    </member>
-    <member name="T:DevExpress.XtraLayout.SimpleLabelItem">
-      <summary>
-        <para>An area in the <see cref="T:DevExpress.XtraLayout.LayoutControl"/> that contains a label, but does not contain an embedded control.</para>
-      </summary>
-    </member>
-    <member name="M:DevExpress.XtraLayout.SimpleLabelItem.#ctor">
-      <summary>
-        <para>Initializes a new instance of the <see cref="T:DevExpress.XtraLayout.SimpleLabelItem"/> class.</para>
-      </summary>
-    </member>
-    <member name="P:DevExpress.XtraLayout.SimpleLabelItem.AutoSizeMode">
-      <summary>
-        <para>Gets or sets whether the item&#39;s maximum width, height, or both are calculated automatically based on the item&#39;s content. This property is only in effect if the <see cref="P:DevExpress.XtraLayout.LayoutControlItem.SizeConstraintsType"/> property is set to <see cref="F:DevExpress.XtraLayout.SizeConstraintsType.Default"/>. The <see cref="F:DevExpress.XtraLayout.SimpleLabelAutoSizeMode.Default"/> value is equivalent to <see cref="F:DevExpress.XtraLayout.SimpleLabelAutoSizeMode.Vertical"/>.</para>
-      </summary>
-      <value>A value that specifies whether the maximum width, height, or both are calculated automatically.</value>
-    </member>
-    <member name="M:DevExpress.XtraLayout.SimpleLabelItem.GetDefaultText">
-      <summary>
-        <para>Returns the <see cref="P:DevExpress.XtraLayout.BaseLayoutItem.Text"/> property&#39;s default value.</para>
-      </summary>
-      <returns>A <see cref="T:System.String"/> value that specifies the <see cref="P:DevExpress.XtraLayout.BaseLayoutItem.Text"/> property&#39;s default value.</returns>
-    </member>
-    <member name="P:DevExpress.XtraLayout.SimpleLabelItem.ImageOptions">
-      <summary>
-        <para>Gets a set of options that specify the image displayed in the item.</para>
-      </summary>
-      <value>An object that contains a set of image options.</value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.SimpleLabelItem.MaxSize">
-      <summary>
-        <para>Gets or sets the item&#39;s maximum size. This property is only in effect if the <see cref="P:DevExpress.XtraLayout.LayoutControlItem.SizeConstraintsType"/> property is not set to <see cref="F:DevExpress.XtraLayout.SizeConstraintsType.Default"/>.</para>
-      </summary>
-      <value>A <see cref="T:System.Drawing.Size"/> structure that specifies the item&#39;s maximum size.</value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.SimpleLabelItem.MinSize">
-      <summary>
-        <para>Gets or sets the item&#39;s minimum size. This property is only in effect if the <see cref="P:DevExpress.XtraLayout.LayoutControlItem.SizeConstraintsType"/> property is not set to <see cref="F:DevExpress.XtraLayout.SizeConstraintsType.Default"/>.</para>
-      </summary>
-      <value>A <see cref="T:System.Drawing.Size"/> structure that specifies the item&#39;s minimum size.</value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.SimpleLabelItem.TextVisible">
-      <summary>
-        <para>This member supports the internal infrastructure, and is not intended to be used directly from your code.</para>
-      </summary>
-      <value>Always true.</value>
-    </member>
-    <member name="P:DevExpress.XtraLayout.SimpleLabelItem.TypeName">
-      <summary>
-        <para>Gets the type&#39;s name.</para>
-      </summary>
-      <value>A string value that specifies the type&#39;s name.</value>
     </member>
     <member name="T:DevExpress.XtraLayout.SizeConstraintsType">
       <summary>

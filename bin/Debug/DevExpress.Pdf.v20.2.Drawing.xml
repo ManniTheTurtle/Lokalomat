@@ -11,227 +11,227 @@
     </member>
     <member name="T:DevExpress.Pdf.IPdfViewerAnnotation">
       <summary>
-        <para>Implements options used to obtain information common for annotation types.</para>
+        <para></para>
       </summary>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerAnnotation.Bounds">
       <summary>
-        <para>Gets the annotation&#39;s bounds on the page.</para>
+        <para></para>
       </summary>
-      <value>Annotation bounds in the page coordinate system.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerAnnotation.Color">
       <summary>
-        <para>Gets the annotation color.</para>
+        <para></para>
       </summary>
-      <value>The annotation color.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerAnnotation.Contents">
       <summary>
-        <para>Gets the annotation contents.</para>
+        <para></para>
       </summary>
-      <value>The annotation contents.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerAnnotation.ModificationDate">
       <summary>
-        <para>Gets the date and time of the annotation&#39;s last modification.</para>
+        <para></para>
       </summary>
-      <value>The date and time of the annotation&#39;s last modification.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerAnnotation.Name">
       <summary>
-        <para>Gets the annotation&#39;s name.</para>
+        <para></para>
       </summary>
-      <value>The annotation name.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerAnnotation.PageNumber">
       <summary>
-        <para>Gets the page number where the annotation is located.</para>
+        <para></para>
       </summary>
-      <value>The page number.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerAnnotation.Type">
       <summary>
-        <para>Gets the annotation&#39;s type.</para>
+        <para></para>
       </summary>
-      <value>One of enumeration values that indicates the annotation type.</value>
+      <value></value>
     </member>
     <member name="T:DevExpress.Pdf.IPdfViewerAnnotationBuilder">
       <summary>
-        <para>Implements options used to build all annotation types.</para>
+        <para></para>
       </summary>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerAnnotationBuilder.AnnotationType">
       <summary>
-        <para>Gets the annotation&#39;s type.</para>
+        <para></para>
       </summary>
-      <value>An enumeration value that indicates the annotation type.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerAnnotationBuilder.Bounds">
       <summary>
-        <para>Gets the annotation&#39;s bounds on a page.</para>
+        <para></para>
       </summary>
-      <value>Annotation bounds in the page coordinate system.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerAnnotationBuilder.Color">
       <summary>
-        <para>Specifies the annotation&#39;s color.</para>
+        <para></para>
       </summary>
-      <value>The markup annotation color.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerAnnotationBuilder.Contents">
       <summary>
-        <para>Specifies the annotation contents.</para>
+        <para></para>
       </summary>
-      <value>The annotation contents.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerAnnotationBuilder.IsSelected">
       <summary>
-        <para>Specifies whether or not to select the annotation.</para>
+        <para></para>
       </summary>
-      <value>true, to select the annotation; otherwise, false (the default value).</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerAnnotationBuilder.ModificationDate">
       <summary>
-        <para>Specifies the date and time of the annotation&#39;s last modification.</para>
+        <para></para>
       </summary>
-      <value>The date and time when the annotation was last modified.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerAnnotationBuilder.Name">
       <summary>
-        <para>Specifies the annotation name.</para>
+        <para></para>
       </summary>
-      <value>The name of the annotation.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerAnnotationBuilder.PageNumber">
       <summary>
-        <para>Gets the number of the page on which the annotation is located.</para>
+        <para></para>
       </summary>
-      <value>The page number.</value>
+      <value></value>
     </member>
     <member name="T:DevExpress.Pdf.IPdfViewerMarkupAnnotation">
       <summary>
-        <para>Implements properties used to return information about markup annotations.</para>
+        <para></para>
       </summary>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerMarkupAnnotation.Author">
       <summary>
-        <para>Gets the markup annotation&#39;s author.</para>
+        <para></para>
       </summary>
-      <value>The annotation author.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerMarkupAnnotation.CreationDate">
       <summary>
-        <para>Gets the date and time when the markup annotation was created.</para>
+        <para></para>
       </summary>
-      <value>The date and time of the markup annotation&#39;s creation.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerMarkupAnnotation.Opacity">
       <summary>
-        <para>Gets the markup annotation opacity.</para>
+        <para></para>
       </summary>
-      <value>The markup annotation opacity (from 0 to 1).</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerMarkupAnnotation.Subject">
       <summary>
-        <para>Gets the markup annotation&#39;s subject.</para>
+        <para></para>
       </summary>
-      <value>A short description of the subject.</value>
+      <value></value>
     </member>
     <member name="T:DevExpress.Pdf.IPdfViewerMarkupAnnotationBuilder">
       <summary>
-        <para>Implements properties used to build markup annotations.</para>
+        <para>Implements properties used to build the markup annotation.</para>
       </summary>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerMarkupAnnotationBuilder.Author">
       <summary>
-        <para>Gets or sets the author of a markup annotation&#39;s author.</para>
+        <para>Gets or sets the author of a markup annotation.</para>
       </summary>
       <value>The author&#39;s name.</value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerMarkupAnnotationBuilder.CreationDate">
       <summary>
-        <para>Specifies the date and time when the markup annotation was created.</para>
+        <para>Gets or sets the date and time when the markup annotation was created.</para>
       </summary>
       <value>The annotation&#39;s creation date.</value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerMarkupAnnotationBuilder.Opacity">
       <summary>
-        <para>Specifies the markup annotation opacity.</para>
+        <para></para>
       </summary>
-      <value>Markup annotation opacity (from 0 to 1).</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerMarkupAnnotationBuilder.Subject">
       <summary>
-        <para>Gets or sets a subject the markup annotation addresses.&#39;</para>
+        <para>Gets or sets a short description of the subject addressed by the markup annotation.&#39;</para>
       </summary>
       <value>A short description of the subject.</value>
     </member>
     <member name="T:DevExpress.Pdf.IPdfViewerTextAnnotation">
       <summary>
-        <para>Contains properties used to return information about text annotations.</para>
+        <para></para>
       </summary>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerTextAnnotation.IconName">
       <summary>
-        <para>Gets the name of the annotation&#39;s icon.</para>
+        <para></para>
       </summary>
-      <value>The annotation icon&#39;s name.</value>
+      <value></value>
     </member>
     <member name="T:DevExpress.Pdf.IPdfViewerTextAnnotationBuilder">
       <summary>
-        <para>Contains options used to build text annotations.</para>
+        <para></para>
       </summary>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerTextAnnotationBuilder.IconName">
       <summary>
-        <para>Gets the name of the annotation&#39;s icon.</para>
+        <para></para>
       </summary>
-      <value>The icon name.</value>
+      <value></value>
     </member>
     <member name="T:DevExpress.Pdf.IPdfViewerTextMarkupAnnotation">
       <summary>
-        <para>Contains properties used to return information about text markup annotations.</para>
+        <para></para>
       </summary>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerTextMarkupAnnotation.Quads">
       <summary>
-        <para>Gets a collection of quadrilateral points that encompass the annotation area.</para>
+        <para></para>
       </summary>
-      <value>A list of quadrilateral points.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerTextMarkupAnnotation.Style">
       <summary>
-        <para>Gets the style of a text markup annotation.</para>
+        <para></para>
       </summary>
-      <value>An enumeration value that indicates the text markup style.</value>
+      <value></value>
     </member>
     <member name="T:DevExpress.Pdf.IPdfViewerTextMarkupAnnotationBuilder">
       <summary>
-        <para>Implements options used to build text markup annotations.</para>
+        <para></para>
       </summary>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerTextMarkupAnnotationBuilder.Quads">
       <summary>
-        <para>Gets a collection of quadrilateral points that encompass the annotation area.</para>
+        <para></para>
       </summary>
-      <value>A list of the quadrilateral points.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerTextMarkupAnnotationBuilder.SelectedText">
       <summary>
-        <para>Gets a selected text for which a markup annotation is created.</para>
+        <para></para>
       </summary>
-      <value>The selected text.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.IPdfViewerTextMarkupAnnotationBuilder.Style">
       <summary>
-        <para>Gets or sets the style of a text markup annotation.</para>
+        <para></para>
       </summary>
-      <value>The enumeration value that specifies the annotation style.</value>
+      <value></value>
     </member>
     <member name="T:DevExpress.Pdf.PdfCommentFilter">
       <summary>
-        <para>Contains filters that can be applied to annotations.</para>
+        <para></para>
       </summary>
     </member>
     <member name="M:DevExpress.Pdf.PdfCommentFilter.#ctor">
@@ -241,89 +241,84 @@
     </member>
     <member name="P:DevExpress.Pdf.PdfCommentFilter.Authors">
       <summary>
-        <para>Retrieves a list of authors whose annotations should be displayed.</para>
+        <para></para>
       </summary>
-      <value>A list of annotation authors.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.PdfCommentFilter.Checked">
       <summary>
-        <para>Specifies whether to show checked annotations.</para>
+        <para></para>
       </summary>
-      <value>true to apply this filter; otherwise, false.</value>
+      <value></value>
     </member>
     <member name="M:DevExpress.Pdf.PdfCommentFilter.Clear">
       <summary>
-        <para>Clears all applied filters.</para>
-      </summary>
-    </member>
-    <member name="M:DevExpress.Pdf.PdfCommentFilter.ClearWithoutNotification">
-      <summary>
-        <para>Clears all applied filters without notification.</para>
+        <para></para>
       </summary>
     </member>
     <member name="E:DevExpress.Pdf.PdfCommentFilter.FilterChanged">
       <summary>
-        <para>Fires when the filter has been changed.</para>
+        <para></para>
       </summary>
     </member>
     <member name="P:DevExpress.Pdf.PdfCommentFilter.HideAll">
       <summary>
-        <para>Specifies whether to hide all annotations and comments.</para>
+        <para></para>
       </summary>
-      <value>true to hide all annotations; otherwise, false.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.PdfCommentFilter.NoneStatus">
       <summary>
-        <para>Specifies whether to show annotations whose review status is None.</para>
+        <para></para>
       </summary>
-      <value>true to apply this filter; otherwise, false.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.PdfCommentFilter.SearchText">
       <summary>
-        <para>Gets or sets the text used to filter annotations.</para>
+        <para></para>
       </summary>
-      <value>The text that annotations should contain.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.PdfCommentFilter.Statuses">
       <summary>
-        <para>Retrieves a list of statuses by which to filter the annotations.</para>
+        <para></para>
       </summary>
-      <value>A list of statuses.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.Pdf.PdfCommentFilter.Types">
       <summary>
-        <para>Retrieves a list of types by which to filter the annotations.</para>
+        <para></para>
       </summary>
-      <value>A list of types.</value>
+      <value></value>
     </member>
     <member name="T:DevExpress.Pdf.PdfCommentSortMode">
       <summary>
-        <para>Lists values used to specify the annotation&#39;s sort mode in the Comments pane.</para>
+        <para></para>
       </summary>
     </member>
     <member name="F:DevExpress.Pdf.PdfCommentSortMode.Author">
       <summary>
-        <para>Annotations are sorted by author.</para>
+        <para></para>
       </summary>
     </member>
     <member name="F:DevExpress.Pdf.PdfCommentSortMode.Checked">
       <summary>
-        <para>Annotations are sorted by checkmark status (checked or unchecked).</para>
+        <para></para>
       </summary>
     </member>
     <member name="F:DevExpress.Pdf.PdfCommentSortMode.Date">
       <summary>
-        <para>Annotations are sorted by date.</para>
+        <para></para>
       </summary>
     </member>
     <member name="F:DevExpress.Pdf.PdfCommentSortMode.Page">
       <summary>
-        <para>Annotations are sorted by page.</para>
+        <para></para>
       </summary>
     </member>
     <member name="F:DevExpress.Pdf.PdfCommentSortMode.Type">
       <summary>
-        <para>Annotations are sorted by type.</para>
+        <para></para>
       </summary>
     </member>
     <member name="T:DevExpress.Pdf.PdfGraphics">
@@ -1412,83 +1407,83 @@
     </member>
     <member name="T:DevExpress.Pdf.PdfViewerAnnotationBuilderExtensions">
       <summary>
-        <para>Defines extension methods for the IPdfViewerAnnotationBuilder interface.</para>
+        <para></para>
       </summary>
     </member>
     <member name="M:DevExpress.Pdf.PdfViewerAnnotationBuilderExtensions.AsMarkupAnnotationBuilder(DevExpress.Pdf.IPdfViewerAnnotationBuilder)">
       <summary>
-        <para>Casts the IPdfViewerAnnotationBuilder object to the IPdfViewerMarkupAnnotationBuilder object.</para>
+        <para></para>
       </summary>
-      <param name="builder">Current IPdfViewerAnnotationBuilder object.</param>
-      <returns>The object that contain information about the markup annotation.</returns>
+      <param name="builder"></param>
+      <returns></returns>
     </member>
     <member name="M:DevExpress.Pdf.PdfViewerAnnotationBuilderExtensions.AsTextAnnotationBuilder(DevExpress.Pdf.IPdfViewerAnnotationBuilder)">
       <summary>
-        <para>Casts the IPdfViewerAnnotationBuilder object to the IPdfViewerTextAnnotationBuilder object.</para>
+        <para></para>
       </summary>
-      <param name="builder">Current IPdfViewerAnnotationBuilder object.</param>
-      <returns>The IPdfViewerTextAnnotationBuilder object that contains text annotation parameters.</returns>
+      <param name="builder"></param>
+      <returns></returns>
     </member>
     <member name="M:DevExpress.Pdf.PdfViewerAnnotationBuilderExtensions.AsTextAnnotationBuilder(DevExpress.Pdf.IPdfViewerMarkupAnnotationBuilder)">
       <summary>
-        <para>Casts the IPdfViewerMarkupAnnotationBuilder object to the IPdfViewerTextAnnotationBuilder object.</para>
+        <para></para>
       </summary>
-      <param name="builder">Current IPdfViewerMarkupAnnotationBuilder object.</param>
-      <returns>The IPdfViewerTextAnnotationBuilder object that contains text annotation parameters.</returns>
+      <param name="builder"></param>
+      <returns></returns>
     </member>
     <member name="M:DevExpress.Pdf.PdfViewerAnnotationBuilderExtensions.AsTextMarkupAnnotationBuilder(DevExpress.Pdf.IPdfViewerAnnotationBuilder)">
       <summary>
-        <para>Casts the IPdfViewerAnnotationBuilder object to the IPdfViewerTextMarkupAnnotationBuilder object.</para>
+        <para></para>
       </summary>
-      <param name="builder">Current IPdfViewerAnnotationBuilder object.</param>
-      <returns>The IPdfViewerTextMarkupAnnotationBuilder object that contains text markup annotation parameters.</returns>
+      <param name="builder"></param>
+      <returns></returns>
     </member>
     <member name="M:DevExpress.Pdf.PdfViewerAnnotationBuilderExtensions.AsTextMarkupAnnotationBuilder(DevExpress.Pdf.IPdfViewerMarkupAnnotationBuilder)">
       <summary>
-        <para>Casts the IPdfViewerMarkupAnnotationBuilder object to the IPdfViewerTextMarkupAnnotationBuilder object.</para>
+        <para></para>
       </summary>
-      <param name="builder">Current IPdfViewerMarkupAnnotationBuilder object.</param>
-      <returns>The IPdfViewerTextMarkupAnnotationBuilder object that contains text markup annotation parameters.</returns>
+      <param name="builder"></param>
+      <returns></returns>
     </member>
     <member name="T:DevExpress.Pdf.PdfViewerAnnotationExtensions">
       <summary>
-        <para>Defines extension methods for the IPdfViewerAnnotation interface.</para>
+        <para></para>
       </summary>
     </member>
     <member name="M:DevExpress.Pdf.PdfViewerAnnotationExtensions.AsMarkupAnnotation(DevExpress.Pdf.IPdfViewerAnnotation)">
       <summary>
-        <para>Casts the IPdfViewerAnnotation object to the IPdfViewerMarkupAnnotation object</para>
+        <para></para>
       </summary>
-      <param name="annotation">Current IPdfViewerAnnotation object.</param>
-      <returns>The IPdfViewerMarkupAnnotation object that contains markup annotation parameters.</returns>
+      <param name="annotation"></param>
+      <returns></returns>
     </member>
     <member name="M:DevExpress.Pdf.PdfViewerAnnotationExtensions.AsTextAnnotation(DevExpress.Pdf.IPdfViewerAnnotation)">
       <summary>
-        <para>Casts the IPdfViewerAnnotation object to the IPdfViewerTextAnnotation object.</para>
+        <para></para>
       </summary>
-      <param name="annotation">Current IPdfViewerAnnotation instance.</param>
-      <returns>The IPdfViewerTextAnnotation object that contains text annotation parameters.</returns>
+      <param name="annotation"></param>
+      <returns></returns>
     </member>
     <member name="M:DevExpress.Pdf.PdfViewerAnnotationExtensions.AsTextAnnotation(DevExpress.Pdf.IPdfViewerMarkupAnnotation)">
       <summary>
-        <para>Casts the IPdfViewerMarkupAnnotation object to the IPdfViewerTextAnnotation object.</para>
+        <para></para>
       </summary>
-      <param name="annotation">Current IPdfViewerMarkupAnnotation instance.</param>
-      <returns>The IPdfViewerTextAnnotation object that contains text annotation parameters.</returns>
+      <param name="annotation"></param>
+      <returns></returns>
     </member>
     <member name="M:DevExpress.Pdf.PdfViewerAnnotationExtensions.AsTextMarkupAnnotation(DevExpress.Pdf.IPdfViewerAnnotation)">
       <summary>
-        <para>Casts the IPdfViewerAnnotation object to the IPdfViewerTextMarkupAnnotation object.</para>
+        <para></para>
       </summary>
-      <param name="annotation">Current IPdfViewerAnnotation object.</param>
-      <returns>The IPdfViewerTextMarkupAnnotation object that contains text markup annotation parameters.</returns>
+      <param name="annotation"></param>
+      <returns></returns>
     </member>
     <member name="M:DevExpress.Pdf.PdfViewerAnnotationExtensions.AsTextMarkupAnnotation(DevExpress.Pdf.IPdfViewerMarkupAnnotation)">
       <summary>
-        <para>Casts the IPdfViewerMarkupAnnotation object to the IPdfViewerTextMarkupAnnotation object.</para>
+        <para></para>
       </summary>
-      <param name="annotation">Current IPdfViewerMarkupAnnotation instance.</param>
-      <returns>The IPdfViewerTextMarkupAnnotation object that contains text markup annotation parameters.</returns>
+      <param name="annotation"></param>
+      <returns></returns>
     </member>
   </members>
 </doc>

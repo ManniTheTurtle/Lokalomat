@@ -1382,7 +1382,7 @@ This member is supported by individual descendant of the <see cref="T:DevExpress
       <summary>
         <para>Gets or sets the default error icon.</para>
       </summary>
-      <value>A <see cref="T:System.Drawing.Image"/> object that specifies the default error icon.</value>
+      <value>A <see cref="T:System.Drawing.Image"/> object representing the default error icon.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.BaseEdit.DefaultErrorIconAlignment">
       <summary>
@@ -1392,9 +1392,9 @@ This member is supported by individual descendant of the <see cref="T:DevExpress
     </member>
     <member name="P:DevExpress.XtraEditors.BaseEdit.DefaultErrorImageOptions">
       <summary>
-        <para>Gets a set of options that allow you to assign and customize the default icon displayed when an error is associated with the editor.</para>
+        <para>Provides access to properties that allow you to assign and customize a default image displayed within the editor, when an error is associated with the editor.</para>
       </summary>
-      <value>A <see cref="T:DevExpress.XtraEditors.BaseEditErrorImageOptions"/> object that stores properties that allow you to assign and customize the default icon displayed when an error is associated with the editor.</value>
+      <value>A DevExpress.XtraEditors.BaseEditErrorImageOptions object that stores properties that allow you to assign and customize a default image displayed within the editor, when an error is associated with the editor.</value>
     </member>
     <member name="M:DevExpress.XtraEditors.BaseEdit.DeselectAll">
       <summary>
@@ -1450,27 +1450,27 @@ This member is supported by individual descendant of the <see cref="T:DevExpress
     </member>
     <member name="P:DevExpress.XtraEditors.BaseEdit.ErrorIcon">
       <summary>
-        <para>Gets or sets an icon displayed when an error is associated with the editor.</para>
+        <para>Gets or sets the error icon displayed within the editor, when an error is associated with the editor.</para>
       </summary>
-      <value>A <see cref="T:System.Drawing.Image"/> object that specifies the error icon.</value>
+      <value>A <see cref="T:System.Drawing.Image"/> object representing the error icon.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.BaseEdit.ErrorIconAlignment">
       <summary>
-        <para>Gets or sets the alignment of the icon displayed when an error is associated with the editor.</para>
+        <para>Gets or sets the alignment of the error icon displayed within the editor, when an error is associated with the editor.</para>
       </summary>
-      <value>An <see cref="T:System.Windows.Forms.ErrorIconAlignment"/> value that specifies the error icon&#39;s alignment.</value>
+      <value>The <see cref="T:System.Windows.Forms.ErrorIconAlignment"/> value that specifies the error icon&#39;s alignment.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.BaseEdit.ErrorImageOptions">
       <summary>
-        <para>Gets a set of options that allow you to assign and customize an icon displayed when an error is associated with the editor.</para>
+        <para>Provides access to properties that allow you to assign and customize an image displayed within the editor, when an error is associated with the editor.</para>
       </summary>
-      <value>A <see cref="T:DevExpress.XtraEditors.BaseEditErrorImageOptions"/> object that stores properties that allow you to assign and customize an icon displayed when an error is associated with the editor.</value>
+      <value>A DevExpress.XtraEditors.BaseEditErrorImageOptions object that stores properties that allow you to assign and customize an image displayed within the editor, when an error is associated with the editor.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.BaseEdit.ErrorText">
       <summary>
-        <para>Gets or sets the tooltip displayed when the mouse pointer hovers over the error icon.</para>
+        <para>Gets or sets the error description for the editor.</para>
       </summary>
-      <value>A string value that specifies the tooltip displayed when the mouse pointer hovers over the error icon.</value>
+      <value>A string value specifying the error description for the editor.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.BaseEdit.Font">
       <summary>
@@ -1735,23 +1735,6 @@ This member is supported by individual descendant of the <see cref="T:DevExpress
       </summary>
       <value>A DevExpress.Utils.ToolTipAnchor value that specifies whether the tooltip is anchored relative to the mouse cursor or relative to the editor. By Default, the behavior depends on the <see cref="P:DevExpress.Utils.ToolTipController.ToolTipAnchor"/> property.</value>
     </member>
-    <member name="T:DevExpress.XtraEditors.BaseEditErrorImageOptions">
-      <summary>
-        <para>Contains a set of options that allow you to specify and customize an error icon.</para>
-      </summary>
-    </member>
-    <member name="M:DevExpress.XtraEditors.BaseEditErrorImageOptions.#ctor(DevExpress.XtraEditors.BaseEdit)">
-      <summary>
-        <para>Initializes a new instance of the <see cref="T:DevExpress.XtraEditors.BaseEditErrorImageOptions"/> class with specified settings.</para>
-      </summary>
-      <param name="owner"></param>
-    </member>
-    <member name="P:DevExpress.XtraEditors.BaseEditErrorImageOptions.Alignment">
-      <summary>
-        <para>Gets or sets the alignment of the error icon relative to the editor.</para>
-      </summary>
-      <value>A value that specifies the alignment of the error icon relative to the editor.</value>
-    </member>
     <member name="T:DevExpress.XtraEditors.BaseImageListBoxControl">
       <summary>
         <para>Serves as a base for <see cref="T:DevExpress.XtraEditors.ImageListBoxControl"/> class.</para>
@@ -1939,7 +1922,7 @@ This member is supported by individual descendant of the <see cref="T:DevExpress
     </member>
     <member name="E:DevExpress.XtraEditors.BaseListBoxControl.CustomContextButtonToolTip">
       <summary>
-        <para>Allows you to specify a tooltip shown when the mouse pointer hovers over a context button. This event is only raised for <see cref="T:DevExpress.Utils.RatingContextButton"></see> and <see cref="T:DevExpress.Utils.TrackBarContextButton"></see> objects.</para>
+        <para>Allows hints for context buttons displayed in the current <see cref="T:DevExpress.XtraEditors.BaseListBoxControl"/> to be customized. This event is only raised for <see cref="T:DevExpress.Utils.RatingContextButton"/> and <see cref="T:DevExpress.Utils.TrackBarContextButton"/> objects.</para>
       </summary>
     </member>
     <member name="E:DevExpress.XtraEditors.BaseListBoxControl.CustomDrawScroll">
@@ -3883,12 +3866,6 @@ This member is supported by individual descendant of the <see cref="T:DevExpress
       </summary>
       <param name="xmlFile">A <see cref="T:System.String"/> value that specifies the file from which to restore the video settings.</param>
     </member>
-    <member name="P:DevExpress.XtraEditors.Camera.CameraControl.RotateAngle">
-      <summary>
-        <para>Gets or sets the rotation angle of the control&#39;s output.</para>
-      </summary>
-      <value>A value that specifies the rotation angle of the control&#39;s output.</value>
-    </member>
     <member name="M:DevExpress.XtraEditors.Camera.CameraControl.SaveSettingsToRegistry(System.String)">
       <summary>
         <para>Saves the video settings of the currently used capture device to the system registry.</para>
@@ -4001,7 +3978,7 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
     </member>
     <member name="F:DevExpress.XtraEditors.Camera.ResolutionMode.LastUsed">
       <summary>
-        <para>The most recently used resolution.</para>
+        <para>The last used resolution.</para>
       </summary>
     </member>
     <member name="F:DevExpress.XtraEditors.Camera.ResolutionMode.Manual">
@@ -4045,7 +4022,7 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
       <summary>
         <para>Gets the snapshot that a user has captured using the camera device.</para>
       </summary>
-      <value>The captured image.</value>
+      <value>The snapshot captured using the camera device.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.Camera.TakePictureDialog.ManualResolution">
       <summary>
@@ -5666,7 +5643,7 @@ The object specifies dates that lie in the range between the DateRange.StartDate
     </member>
     <member name="E:DevExpress.XtraEditors.Controls.CalendarControlBase.CustomContextButtonToolTip">
       <summary>
-        <para>Allows you to specify a tooltip shown when the mouse pointer hovers over a context button. This event is only raised for <see cref="T:DevExpress.Utils.RatingContextButton"></see> and <see cref="T:DevExpress.Utils.TrackBarContextButton"></see> objects.</para>
+        <para>Allows hints for context buttons (<see cref="P:DevExpress.XtraEditors.Controls.CalendarControlBase.ContextButtons"/>) to be customized.  This event is only raised for <see cref="T:DevExpress.Utils.RatingContextButton"/> and <see cref="T:DevExpress.Utils.TrackBarContextButton"/> objects.</para>
       </summary>
     </member>
     <member name="E:DevExpress.XtraEditors.Controls.CalendarControlBase.CustomDrawDayNumberCell">
@@ -14027,15 +14004,15 @@ A specific version of the addressed image is automatically chosen based on the a
     </member>
     <member name="P:DevExpress.XtraEditors.DataNavigatorButtons.Append">
       <summary>
-        <para>The button used to insert a new record.</para>
+        <para>Gets the button used to insert a new record.</para>
       </summary>
-      <value>The navigator&#39;s Append button.</value>
+      <value>A <see cref="T:DevExpress.XtraEditors.NavigatorButton"/> object representing the navigator&#39;s Append button.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.DataNavigatorButtons.CancelEdit">
       <summary>
-        <para>The button used to cancel modifications to the current record.</para>
+        <para>Gets the button used to cancel edits to the current record.</para>
       </summary>
-      <value>The navigator&#39;s Cancel Edit button.</value>
+      <value>A <see cref="T:DevExpress.XtraEditors.NavigatorButton"/> object representing the navigator&#39;s CancelEdit button.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.DataNavigatorButtons.CurrencyManager">
       <summary>
@@ -14050,57 +14027,57 @@ A specific version of the addressed image is automatically chosen based on the a
     </member>
     <member name="P:DevExpress.XtraEditors.DataNavigatorButtons.EndEdit">
       <summary>
-        <para>The button used to post modifications to the data source.</para>
+        <para>Gets the button used to post edited record values to the associated data source.</para>
       </summary>
-      <value>The navigator&#39;s End Edit button.</value>
+      <value>A <see cref="T:DevExpress.XtraEditors.NavigatorButton"/> object representing the navigator&#39;s EndEdit button.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.DataNavigatorButtons.First">
       <summary>
-        <para>The button that moves the current position to the first record in the data source.</para>
+        <para>Gets the button used to set the current record to the first record in a data source.</para>
       </summary>
-      <value>The navigator&#39;s First button.</value>
+      <value>A <see cref="T:DevExpress.XtraEditors.NavigatorButton"/> object representing the navigator&#39;s First button.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.DataNavigatorButtons.Last">
       <summary>
-        <para>The button that moves the current position to the last record in the data source.</para>
+        <para>Gets the button used to set the current record to the last record in a data source.</para>
       </summary>
-      <value>The navigator&#39;s Last button.</value>
+      <value>A <see cref="T:DevExpress.XtraEditors.NavigatorButton"/> object representing the navigator&#39;s Last button.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.DataNavigatorButtons.Next">
       <summary>
-        <para>The button that moves the current position to the next record.</para>
+        <para>Gets the button used to set focus to the next record in a data source.</para>
       </summary>
-      <value>The navigator&#39;s Next button.</value>
+      <value>A <see cref="T:DevExpress.XtraEditors.NavigatorButton"/> object representing the navigator&#39;s Next button.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.DataNavigatorButtons.NextPage">
       <summary>
-        <para>The button that moves the current position to the next page.</para>
+        <para>Gets the button used to change current record position in a data source by the <see cref="P:DevExpress.XtraEditors.DataNavigatorButtons.PageRecordCount"/> property value.</para>
       </summary>
-      <value>The navigator&#39;s Next Page button.</value>
+      <value>A <see cref="T:DevExpress.XtraEditors.NavigatorButton"/> object representing the navigator&#39;s NextPage button.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.DataNavigatorButtons.PageRecordCount">
       <summary>
-        <para>Gets or sets the number of records by which the current position moves when a user presses the Previous Page or Next Page button.</para>
+        <para>Gets or sets the number of records to which the current record changes after the PrevPage or NextPage button has been pressed.</para>
       </summary>
-      <value>The number of records in a page.</value>
+      <value>An integer value specifying the number of records to which the current record changes after the PrevPage or NextPage button has been pressed.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.DataNavigatorButtons.Prev">
       <summary>
-        <para>The button that moves the current position to the previous record.</para>
+        <para>Gets the button used to set focus to the previous record in a data source.</para>
       </summary>
-      <value>The navigator&#39;s Previous button.</value>
+      <value>A <see cref="T:DevExpress.XtraEditors.NavigatorButton"/> object representing the navigator&#39;s Prev button.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.DataNavigatorButtons.PrevPage">
       <summary>
-        <para>The button that moves the current position to the previous page.</para>
+        <para>Gets the button used to change current record position in a data source by the <see cref="P:DevExpress.XtraEditors.DataNavigatorButtons.PageRecordCount"/> property value.</para>
       </summary>
-      <value>The navigator&#39;s Previous Page button.</value>
+      <value>A <see cref="T:DevExpress.XtraEditors.NavigatorButton"/> object representing the navigator&#39;s PrevPage button.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.DataNavigatorButtons.Remove">
       <summary>
-        <para>The button used to delete the current record.</para>
+        <para>Gets the button used to delete the current record.</para>
       </summary>
-      <value>The navigator&#39;s Remove button.</value>
+      <value>A <see cref="T:DevExpress.XtraEditors.NavigatorButton"/> object representing the navigator&#39;s Remove button.</value>
     </member>
     <member name="T:DevExpress.XtraEditors.DateControl">
       <summary>
@@ -15679,7 +15656,7 @@ A specific version of the addressed image is automatically chosen based on the a
     </member>
     <member name="F:DevExpress.XtraEditors.FormatCondition.Between">
       <summary>
-        <para>The format is applied to cells (or rows) whose values are between the <see cref="P:DevExpress.XtraEditors.FormatConditionRuleValue.Value1"/> and <see cref="P:DevExpress.XtraEditors.FormatConditionRuleValue.Value2"/> property values exclusive. Enable the <see cref="F:DevExpress.XtraEditors.FormatConditionRuleBase.BetweenConditionsIncludeEndpoints"/> option to make the <see cref="F:DevExpress.XtraEditors.FormatCondition.Between"/> condition inclusive.</para>
+        <para>The format is applied to cells (or corresponding rows) whose values fall into the range specified by the <see cref="P:DevExpress.XtraEditors.FormatConditionRuleValue.Value1"/> and <see cref="P:DevExpress.XtraEditors.FormatConditionRuleValue.Value2"/> properties.</para>
       </summary>
     </member>
     <member name="F:DevExpress.XtraEditors.FormatCondition.Equal">
@@ -15719,7 +15696,7 @@ A specific version of the addressed image is automatically chosen based on the a
     </member>
     <member name="F:DevExpress.XtraEditors.FormatCondition.NotBetween">
       <summary>
-        <para>The format is applied to cells (or rows) whose values are not between the <see cref="P:DevExpress.XtraEditors.FormatConditionRuleValue.Value1"/> and <see cref="P:DevExpress.XtraEditors.FormatConditionRuleValue.Value2"/> property values inclusive. Enable the <see cref="F:DevExpress.XtraEditors.FormatConditionRuleBase.BetweenConditionsIncludeEndpoints"/> option to make the <see cref="F:DevExpress.XtraEditors.FormatCondition.NotBetween"/> condition exclusive.</para>
+        <para>The format is applied to cells (or corresponding rows) whose values fall outside of the range specified by the <see cref="P:DevExpress.XtraEditors.FormatConditionRuleValue.Value1"/> and <see cref="P:DevExpress.XtraEditors.FormatConditionRuleValue.Value2"/> properties.</para>
       </summary>
     </member>
     <member name="F:DevExpress.XtraEditors.FormatCondition.NotEqual">
@@ -16116,7 +16093,7 @@ The range&#39;s minimum value is the lowest column value, but not greater than 0
     </member>
     <member name="P:DevExpress.XtraEditors.FormatConditionRuleBase.AllowAnimation">
       <summary>
-        <para>Gets or sets whether the format is repainted with an animation effect when a cell value changes. Animation effects are supported for specific format rules, only in Data Grid&#39;s <see cref="T:DevExpress.XtraGrid.Views.Grid.GridView"/>, <see cref="T:DevExpress.XtraGrid.Views.BandedGrid.BandedGridView"/> and <see cref="T:DevExpress.XtraGrid.Views.BandedGrid.AdvBandedGridView"/>.</para>
+        <para>Gets or sets whether the format is repainted with an animation effect when a cell value changes. Animation effects are supported for specific format rules, only in the Data Grid control.</para>
       </summary>
       <value>A value that specifies whether an animation effect is enabled for the format rule.</value>
     </member>
@@ -16130,12 +16107,6 @@ The range&#39;s minimum value is the lowest column value, but not greater than 0
       <summary>
         <para>Locks the <see cref="T:DevExpress.XtraEditors.FormatConditionRuleBase"></see> by preventing change notifications from being fired, preventing visual updates until the EndUpdate method is called.</para>
       </summary>
-    </member>
-    <member name="F:DevExpress.XtraEditors.FormatConditionRuleBase.BetweenConditionsIncludeEndpoints">
-      <summary>
-        <para>Gets or sets whether the <see cref="F:DevExpress.XtraEditors.FormatCondition.Between"/> condition is inclusive (the <see cref="P:DevExpress.XtraEditors.FormatConditionRuleValue.Value1"/> and <see cref="P:DevExpress.XtraEditors.FormatConditionRuleValue.Value2"/> property values are included in the interval).</para>
-      </summary>
-      <value><see cref="F:DevExpress.Utils.DefaultBoolean.True"/> if the <see cref="F:DevExpress.XtraEditors.FormatCondition.Between"/> condition is inclusive; otherwise, <see cref="F:DevExpress.Utils.DefaultBoolean.Default"/> or <see cref="F:DevExpress.Utils.DefaultBoolean.False"/>.</value>
     </member>
     <member name="M:DevExpress.XtraEditors.FormatConditionRuleBase.ConvertToDecimal(System.Object)">
       <summary>
@@ -16305,7 +16276,7 @@ The range&#39;s minimum value is the lowest column value, but not greater than 0
     </member>
     <member name="T:DevExpress.XtraEditors.FormatConditionRuleDataUpdate">
       <summary>
-        <para>Highlights a cell with a custom icon and/or appearance settings for a limited time when a cell value changes. This format is only supported in Data Grid&#39;s <see cref="T:DevExpress.XtraGrid.Views.Grid.GridView"/>, <see cref="T:DevExpress.XtraGrid.Views.BandedGrid.BandedGridView"/> and <see cref="T:DevExpress.XtraGrid.Views.BandedGrid.AdvBandedGridView"/>.</para>
+        <para>Highlights a cell with a custom icon and/or appearance settings for a limited time when a cell value changes. This format is only supported in the Data Grid control.</para>
       </summary>
     </member>
     <member name="M:DevExpress.XtraEditors.FormatConditionRuleDataUpdate.#ctor">
@@ -17286,9 +17257,9 @@ In <see cref="F:DevExpress.XtraEditors.HotTrackSelectMode.SelectItemOnHotTrack"/
     </member>
     <member name="P:DevExpress.XtraEditors.LabelControl.AutoEllipsis">
       <summary>
-        <para>Gets or sets whether the control displays the ellipsis character for truncated text.</para>
+        <para>Gets or sets whether the ellipsis character is appended to the string when the string is truncated.</para>
       </summary>
-      <value>true if the control displays the ellipsis character for truncated text; otherwise, false.</value>
+      <value>true if the ellipsis character is used when the string is truncated; otherwise, false.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.LabelControl.AutoSizeInLayoutControl">
       <summary>
@@ -17806,11 +17777,6 @@ In <see cref="F:DevExpress.XtraEditors.HotTrackSelectMode.SelectItemOnHotTrack"/
         <para>Provides the capability to perform custom painting of grid rows in the drop-down.</para>
       </summary>
     </member>
-    <member name="E:DevExpress.XtraEditors.LookUpEdit.DataSourceChanged">
-      <summary>
-        <para></para>
-      </summary>
-    </member>
     <member name="P:DevExpress.XtraEditors.LookUpEdit.EditorTypeName">
       <summary>
         <para>Gets the class name of the current editor.</para>
@@ -17919,22 +17885,6 @@ In <see cref="F:DevExpress.XtraEditors.HotTrackSelectMode.SelectItemOnHotTrack"/
       <summary>
         <para>Forces the control to invalidate its client area and immediately redraw itself and any child controls.</para>
       </summary>
-    </member>
-    <member name="M:DevExpress.XtraEditors.LookUpEditBase.StartAutoSearch(System.String,System.Boolean)">
-      <summary>
-        <para></para>
-      </summary>
-      <param name="text"></param>
-      <param name="selectAll"></param>
-      <returns></returns>
-    </member>
-    <member name="M:DevExpress.XtraEditors.LookUpEditBase.StartAutoSuggest(System.String,System.Boolean)">
-      <summary>
-        <para></para>
-      </summary>
-      <param name="text"></param>
-      <param name="selectAll"></param>
-      <returns></returns>
     </member>
     <member name="T:DevExpress.XtraEditors.MarqueeProgressBarControl">
       <summary>
@@ -19041,7 +18991,7 @@ In <see cref="F:DevExpress.XtraEditors.HotTrackSelectMode.SelectItemOnHotTrack"/
     </member>
     <member name="E:DevExpress.XtraEditors.PictureEdit.CustomContextButtonToolTip">
       <summary>
-        <para>Allows you to specify a tooltip shown when the mouse pointer hovers over a context button. This event is only raised for <see cref="T:DevExpress.Utils.RatingContextButton"></see> and <see cref="T:DevExpress.Utils.TrackBarContextButton"></see> objects.</para>
+        <para>Allows hints for grading scale points of rating context buttons to be customized.</para>
       </summary>
     </member>
     <member name="M:DevExpress.XtraEditors.PictureEdit.CutImage">
@@ -20298,21 +20248,6 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
         <para>Fires when changing repository item properties residing within the repository.</para>
       </summary>
     </member>
-    <member name="T:DevExpress.XtraEditors.Repository.EditValueTypeCollection">
-      <summary>
-        <para></para>
-      </summary>
-    </member>
-    <member name="F:DevExpress.XtraEditors.Repository.EditValueTypeCollection.CSV">
-      <summary>
-        <para></para>
-      </summary>
-    </member>
-    <member name="F:DevExpress.XtraEditors.Repository.EditValueTypeCollection.List">
-      <summary>
-        <para></para>
-      </summary>
-    </member>
     <member name="T:DevExpress.XtraEditors.Repository.ExportMode">
       <summary>
         <para>Contains values that specify whether an editor&#39;s edit value or display text is exported, when the editor&#39;s data is exported in XLS and CSV formats.</para>
@@ -21395,12 +21330,6 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraEditors.Repository.RepositoryItemBreadCrumbEdit"/> class with the default settings.</para>
       </summary>
     </member>
-    <member name="P:DevExpress.XtraEditors.Repository.RepositoryItemBreadCrumbEdit.AdvancedModeOptions">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
-    </member>
     <member name="P:DevExpress.XtraEditors.Repository.RepositoryItemBreadCrumbEdit.AllowEdit">
       <summary>
         <para>Gets or sets whether the <see cref="T:DevExpress.XtraEditors.BreadCrumbEdit"/> can enter the Edit mode. If this setting is disabled, the control operates solely in Select mode.</para>
@@ -21798,9 +21727,9 @@ The DefaultBoolean.Default value is equivalent to DefaultBoolean.True if the sta
     </member>
     <member name="P:DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit.ResetTextEditStyleToStandardInFilterControl">
       <summary>
-        <para>Gets or sets whether the <see cref="P:DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit.TextEditStyle"/> property is automatically set to <see cref="F:DevExpress.XtraEditors.Controls.TextEditStyles.Standard"/>, when the editor is displayed within a <see cref="T:DevExpress.XtraEditors.FilterControl"/> and <see cref="T:DevExpress.DataAccess.UI.FilterEditorControl"/>.</para>
+        <para>Gets or sets whether the <see cref="P:DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit.TextEditStyle"/> property is automatically set to <see cref="F:DevExpress.XtraEditors.Controls.TextEditStyles.Standard"/>, when the editor is displayed within a <see cref="T:DevExpress.XtraEditors.FilterControl"/> and <see cref="T:DevExpress.XtraFilterEditor.FilterEditorControl"/>.</para>
       </summary>
-      <value>true if the <see cref="P:DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit.TextEditStyle"/> property is automatically set to <see cref="F:DevExpress.XtraEditors.Controls.TextEditStyles.Standard"/>, when the editor is displayed within a <see cref="T:DevExpress.XtraEditors.FilterControl"/> and <see cref="T:DevExpress.DataAccess.UI.FilterEditorControl"/>; otherwise, false.</value>
+      <value>true if the <see cref="P:DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit.TextEditStyle"/> property is automatically set to <see cref="F:DevExpress.XtraEditors.Controls.TextEditStyles.Standard"/>, when the editor is displayed within a <see cref="T:DevExpress.XtraEditors.FilterControl"/> and <see cref="T:DevExpress.XtraFilterEditor.FilterEditorControl"/>; otherwise, false.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit.TextEditStyle">
       <summary>
@@ -22150,9 +22079,9 @@ In bound mode, this method populates the item collection before returning it.</p
     </member>
     <member name="P:DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit.ResetTextEditStyleToStandardInFilterControl">
       <summary>
-        <para>Gets whether the <see cref="P:DevExpress.XtraEditors.Repository.RepositoryItemPopupContainerEdit.TextEditStyle"/> property is automatically set to <see cref="F:DevExpress.XtraEditors.Controls.TextEditStyles.Standard"/>, when the editor is displayed within a <see cref="T:DevExpress.XtraEditors.FilterControl"/> and <see cref="T:DevExpress.DataAccess.UI.FilterEditorControl"/>.</para>
+        <para>Gets whether the <see cref="P:DevExpress.XtraEditors.Repository.RepositoryItemPopupContainerEdit.TextEditStyle"/> property is automatically set to <see cref="F:DevExpress.XtraEditors.Controls.TextEditStyles.Standard"/>, when the editor is displayed within a <see cref="T:DevExpress.XtraEditors.FilterControl"/> and <see cref="T:DevExpress.XtraFilterEditor.FilterEditorControl"/>.</para>
       </summary>
-      <value>true, if the <see cref="P:DevExpress.XtraEditors.Repository.RepositoryItemPopupContainerEdit.TextEditStyle"/> property is automatically set to <see cref="F:DevExpress.XtraEditors.Controls.TextEditStyles.Standard"/>, when the editor is displayed within a <see cref="T:DevExpress.XtraEditors.FilterControl"/> and <see cref="T:DevExpress.DataAccess.UI.FilterEditorControl"/>; otherwise, false.</value>
+      <value>true, if the <see cref="P:DevExpress.XtraEditors.Repository.RepositoryItemPopupContainerEdit.TextEditStyle"/> property is automatically set to <see cref="F:DevExpress.XtraEditors.Controls.TextEditStyles.Standard"/>, when the editor is displayed within a <see cref="T:DevExpress.XtraEditors.FilterControl"/> and <see cref="T:DevExpress.XtraFilterEditor.FilterEditorControl"/>; otherwise, false.</value>
     </member>
     <member name="P:DevExpress.XtraEditors.Repository.RepositoryItemCheckedComboBoxEdit.SelectAllItemCaption">
       <summary>
@@ -23417,9 +23346,9 @@ In bound mode, this method populates the item collection before returning it.</p
     </member>
     <member name="P:DevExpress.XtraEditors.Repository.RepositoryItemDateTimeOffsetEdit.EditMask">
       <summary>
-        <para>Gets or sets the active mask expression. This property is synchronized with the &quot;MaskExpression&quot; setting available through the <see cref="P:DevExpress.XtraEditors.Repository.RepositoryItemTextEdit.MaskSettings"/> group.</para>
+        <para>This property is not supported. To set up an input mask, use the <see cref="P:DevExpress.XtraEditors.Repository.RepositoryItemTextEdit.MaskSettings"/> property instead.</para>
       </summary>
-      <value>The active mask expression.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.XtraEditors.Repository.RepositoryItemDateTimeOffsetEdit.EditorTypeName">
       <summary>
@@ -23509,12 +23438,6 @@ In bound mode, this method populates the item collection before returning it.</p
         <para>If an editor drop-down menu is open and a user clicks another UI element on a form, this menu closes and the clicked element fires its Click event. If this property is enabled, the menu closes but the element&#39;s Click event does not occur. This allows you to ensure that users do not accidentally click unwanted elements when they click outside an open drop-down menu to close it.</para>
       </summary>
       <value>Specifies whether the editor should suppress mouse events when the menu is open.</value>
-    </member>
-    <member name="P:DevExpress.XtraEditors.Repository.RepositoryItemDateTimeOffsetEdit.UseTextEditorForAutoFilter">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
     </member>
     <member name="T:DevExpress.XtraEditors.Repository.RepositoryItemFontEdit">
       <summary>
@@ -24313,11 +24236,6 @@ In bound mode, this method populates the item collection before returning it.</p
         <para>Provides the capability to perform custom painting of grid rows in the drop-down.</para>
       </summary>
     </member>
-    <member name="E:DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit.DataSourceChanged">
-      <summary>
-        <para></para>
-      </summary>
-    </member>
     <member name="P:DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit.DropDownItemHeight">
       <summary>
         <para>Gets or sets the height of a row in the dropdown (in pixels).</para>
@@ -24894,12 +24812,6 @@ In bound mode, this method populates the item collection before returning it.</p
       </summary>
       <value>true if tab characters typed within the dropdown window are accepted and processed by an extended memo editor; otherwise, false.</value>
     </member>
-    <member name="P:DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit.AdvancedModeOptions">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
-    </member>
     <member name="M:DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit.Assign(DevExpress.XtraEditors.Repository.RepositoryItem)">
       <summary>
         <para>Copies settings of the specified repository item to the current one.</para>
@@ -25164,7 +25076,7 @@ In bound mode, this method populates the item collection before returning it.</p
     </member>
     <member name="E:DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit.CustomContextButtonToolTip">
       <summary>
-        <para>Allows you to specify a tooltip shown when the mouse pointer hovers over a context button. This event is only raised for <see cref="T:DevExpress.Utils.RatingContextButton"></see> and <see cref="T:DevExpress.Utils.TrackBarContextButton"></see> objects.</para>
+        <para>Allows hints for the <see cref="T:DevExpress.Utils.RatingContextButton"/> objects displayed in the <see cref="T:DevExpress.XtraEditors.PictureEdit"/> to be customized.</para>
       </summary>
     </member>
     <member name="P:DevExpress.XtraEditors.Repository.RepositoryItemPictureEdit.CustomHeight">
@@ -26731,7 +26643,7 @@ In bound mode, this method populates the item collection before returning it.</p
     </member>
     <member name="P:DevExpress.XtraEditors.Repository.RepositoryItemTextEdit.Mask">
       <summary>
-        <para>Specifies the editor&#39;s input mask. From v20.2, use the <see cref="P:DevExpress.XtraEditors.Repository.RepositoryItemTextEdit.MaskSettings"/> property to specify an input mask.</para>
+        <para>Provides access to the editor&#39;s input mask.</para>
       </summary>
       <value>A <see cref="T:DevExpress.XtraEditors.Mask.MaskProperties"/> object that comprises the editor&#39;s mask settings.</value>
     </member>
@@ -27051,12 +26963,6 @@ The default value is <see cref="F:DevExpress.Utils.DefaultBoolean.Default"/>.</v
         <para>Gets or sets the step by which seconds increment in the touch-aware time-editing UI . The value of 60 must be multiple of TouchUISecondIncrement.</para>
       </summary>
       <value>The number by which seconds increment in the touch-aware time-editing UI.</value>
-    </member>
-    <member name="P:DevExpress.XtraEditors.Repository.RepositoryItemTimeEdit.UseTextEditorForAutoFilter">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
     </member>
     <member name="T:DevExpress.XtraEditors.Repository.RepositoryItemTimeSpanEdit">
       <summary>
@@ -28721,12 +28627,6 @@ A specific version of the addressed image is automatically chosen based on the a
         <para>A DirectX-compatible event that replaces the standard Control.Paint event.</para>
       </summary>
     </member>
-    <member name="P:DevExpress.XtraEditors.StepProgressBar.ProgressMode">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
-    </member>
     <member name="P:DevExpress.XtraEditors.StepProgressBar.ScrollMode">
       <summary>
         <para>Gets or ses the scrollbar style. Step Progress Bar displays a scroll bar when its <see cref="P:DevExpress.XtraEditors.StepProgressBar.LayoutMode"/> equals Fixed and there is not enough space to display all of the control items.</para>
@@ -28735,9 +28635,9 @@ A specific version of the addressed image is automatically chosen based on the a
     </member>
     <member name="M:DevExpress.XtraEditors.StepProgressBar.ScrollToItem(DevExpress.XtraEditors.StepProgressBarItem)">
       <summary>
-        <para>When the <see cref="P:DevExpress.XtraEditors.StepProgressBar.LayoutMode"/> property equals &quot;Fixed&quot;, items can be displayed outside the current visible region. The control displays a scroll bar that allows users to access these items. The ScrollToItem method allows you to scroll the control up or down to make a specific item visible.</para>
+        <para></para>
       </summary>
-      <param name="item">An item that should be visible in the current client area of a control.</param>
+      <param name="item"></param>
     </member>
     <member name="M:DevExpress.XtraEditors.StepProgressBar.SelectAll">
       <summary>
@@ -28913,9 +28813,9 @@ A specific version of the addressed image is automatically chosen based on the a
     </member>
     <member name="P:DevExpress.XtraEditors.StepProgressBarItem.Progress">
       <summary>
-        <para>Gets or sets the current progress towards this item.</para>
+        <para></para>
       </summary>
-      <value>The progress towards this item. A value between 0 and 100.</value>
+      <value></value>
     </member>
     <member name="E:DevExpress.XtraEditors.StepProgressBarItem.ProgressChanged">
       <summary>
@@ -29457,53 +29357,6 @@ A specific version of the addressed image is automatically chosen based on the a
       </summary>
       <value>A <see cref="T:DevExpress.XtraEditors.Repository.RepositoryItemTextEdit"/> object containing this editor&#39;s settings.</value>
     </member>
-    <member name="E:DevExpress.XtraEditors.TextEdit.QueryAdvancedMode">
-      <summary>
-        <para></para>
-      </summary>
-    </member>
-    <member name="T:DevExpress.XtraEditors.TextEdit.QueryAdvancedModeEventArgs">
-      <summary>
-        <para>Provides data for the <see cref="E:DevExpress.XtraEditors.TextEdit.QueryAdvancedMode"/> event.</para>
-      </summary>
-    </member>
-    <member name="P:DevExpress.XtraEditors.TextEdit.QueryAdvancedModeEventArgs.Editor">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
-    </member>
-    <member name="M:DevExpress.XtraEditors.TextEdit.QueryAdvancedModeEventArgs.GetParent``1">
-      <summary>
-        <para></para>
-      </summary>
-      <typeparam name="TContainer"></typeparam>
-      <returns></returns>
-    </member>
-    <member name="P:DevExpress.XtraEditors.TextEdit.QueryAdvancedModeEventArgs.Parent">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
-    </member>
-    <member name="P:DevExpress.XtraEditors.TextEdit.QueryAdvancedModeEventArgs.ParentForm">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
-    </member>
-    <member name="P:DevExpress.XtraEditors.TextEdit.QueryAdvancedModeEventArgs.RepositoryItem">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
-    </member>
-    <member name="P:DevExpress.XtraEditors.TextEdit.QueryAdvancedModeEventArgs.UseAdvancedMode">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
-    </member>
     <member name="M:DevExpress.XtraEditors.TextEdit.Reset">
       <summary>
         <para>Resets selection and caret position in the editor.</para>
@@ -29600,24 +29453,6 @@ A specific version of the addressed image is automatically chosen based on the a
         <para>Gets or sets the caption of the embedded editor label. TextEdit-based editors can have embedded labels only when in Advanced Mode. See this property for more information about this mode: <see cref="P:DevExpress.XtraEditors.Repository.RepositoryItemTextEdit.UseAdvancedMode"/>.</para>
       </summary>
       <value>The emdedded editor label&#39;s caption.</value>
-    </member>
-    <member name="P:DevExpress.XtraEditors.TextEditAdvancedModeOptions.LabelAppearance">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
-    </member>
-    <member name="P:DevExpress.XtraEditors.TextEditAdvancedModeOptions.SelectionColor">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
-    </member>
-    <member name="P:DevExpress.XtraEditors.TextEditAdvancedModeOptions.ShiftedLabelAppearance">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
     </member>
     <member name="M:DevExpress.XtraEditors.TextEditAdvancedModeOptions.ToString">
       <summary>
@@ -29751,7 +29586,7 @@ A specific version of the addressed image is automatically chosen based on the a
     </member>
     <member name="E:DevExpress.XtraEditors.TileControl.BeforeLoadLayout">
       <summary>
-        <para>Occurs before a layout is restored from storage (a stream, xml file or the system registry).</para>
+        <para></para>
       </summary>
     </member>
     <member name="M:DevExpress.XtraEditors.TileControl.BeginUpdate">
@@ -29802,7 +29637,7 @@ A specific version of the addressed image is automatically chosen based on the a
     </member>
     <member name="E:DevExpress.XtraEditors.TileControl.CustomContextButtonToolTip">
       <summary>
-        <para>Allows you to specify a tooltip shown when the mouse pointer hovers over a context button. This event is only raised for <see cref="T:DevExpress.Utils.RatingContextButton"></see> and <see cref="T:DevExpress.Utils.TrackBarContextButton"></see> objects.</para>
+        <para>Allows you to dynamically customize item tooltips.</para>
       </summary>
     </member>
     <member name="P:DevExpress.XtraEditors.TileControl.DefaultItemPadding">
@@ -30063,7 +29898,7 @@ This property is now obsolete. Use the <see cref="P:DevExpress.XtraEditors.TileC
     </member>
     <member name="E:DevExpress.XtraEditors.TileControl.LayoutUpgrade">
       <summary>
-        <para>Occurs after a layout whose version doesn&#39;t match the current layout version has been loaded from a stream, xml file or system registry.</para>
+        <para></para>
       </summary>
     </member>
     <member name="P:DevExpress.XtraEditors.TileControl.LookAndFeel">
@@ -30995,13 +30830,6 @@ This property is obsolete. Use the <see cref="P:DevExpress.XtraEditors.TileItemE
       <summary>
         <para>Releases all resources used by a <see cref="T:DevExpress.XtraEditors.TileItemAppearances"/> object of the specific <see cref="T:DevExpress.XtraEditors.TileItem"/>.</para>
       </summary>
-    </member>
-    <member name="M:DevExpress.XtraEditors.TileItemAppearances.GetAppearance(System.String)">
-      <summary>
-        <para></para>
-      </summary>
-      <param name="name"></param>
-      <returns></returns>
     </member>
     <member name="P:DevExpress.XtraEditors.TileItemAppearances.Hovered">
       <summary>
@@ -32838,9 +32666,9 @@ Always equal to true.</para>
     </member>
     <member name="P:DevExpress.XtraEditors.XtraBaseArgs.ContentPadding">
       <summary>
-        <para>Gets or sets the distance between the dialog (message box) content and borders.</para>
+        <para></para>
       </summary>
-      <value>The distance between borders and dialog (message box) content.</value>
+      <value></value>
     </member>
     <member name="P:DevExpress.XtraEditors.XtraBaseArgs.DefaultButtonIndex">
       <summary>
@@ -34027,12 +33855,6 @@ Always equal to true.</para>
       </summary>
       <value>true, if the message box width is restricted based on the available working area, and the text is automatically wrapped; otherwise, false. The default is false.</value>
     </member>
-    <member name="P:DevExpress.XtraEditors.XtraMessageBox.UseSkinPaddings">
-      <summary>
-        <para>Gets or sets whether all XtraMessageBoxes should retrieve element paddings from skins.</para>
-      </summary>
-      <value>Specifies whether all XtraMessageBoxes should retrieve element paddings from skins.</value>
-    </member>
     <member name="T:DevExpress.XtraEditors.XtraMessageBoxArgs">
       <summary>
         <para>Arguments that should be passed to the <see cref="M:DevExpress.XtraEditors.XtraMessageBox.Show(DevExpress.XtraEditors.XtraMessageBoxArgs)"/> method to customize the shown <see cref="T:DevExpress.XtraEditors.XtraMessageBox"/>.</para>
@@ -34156,12 +33978,6 @@ Always equal to true.</para>
       </summary>
       <value>true to use GDI+ to render strings; otherwise, false.</value>
     </member>
-    <member name="P:DevExpress.XtraEditors.XtraMessageBoxArgs.UseSkinPaddings">
-      <summary>
-        <para>Gets or sets whether message boxes that utilize this XtraMessageBoxArgs object should retrieve content paddings from the current DevExpress skin.</para>
-      </summary>
-      <value>Specifies whether to retrieve message box paddings from skins. The Default value means the behavior is inherited from the global <see cref="P:DevExpress.XtraEditors.XtraMessageBox.UseSkinPaddings"/> property.</value>
-    </member>
     <member name="T:DevExpress.XtraEditors.XtraMessageBoxClosedArgs">
       <summary>
         <para>Provides data for the <see cref="E:DevExpress.XtraEditors.XtraMessageBoxArgs.Closed"/> event.</para>
@@ -34279,7 +34095,7 @@ Always equal to true.</para>
     </member>
     <member name="F:DevExpress.XtraGrid.FormatConditionEnum.Between">
       <summary>
-        <para>The style is applied to cells (or rows) whose values are between the <see cref="P:DevExpress.XtraEditors.StyleFormatConditionBase.Value1"/> and <see cref="P:DevExpress.XtraEditors.StyleFormatConditionBase.Value2"/> property values exclusive. Enable the <see cref="F:DevExpress.XtraEditors.FormatConditionRuleBase.BetweenConditionsIncludeEndpoints"/> option to make the <see cref="F:DevExpress.XtraEditors.FormatCondition.Between"/> condition inclusive.</para>
+        <para>The style is applied to cells (or corresponding rows) whose values fall into the range specified by the <see cref="P:DevExpress.XtraEditors.StyleFormatConditionBase.Value1"/> and <see cref="P:DevExpress.XtraEditors.StyleFormatConditionBase.Value2"/> properties.</para>
       </summary>
     </member>
     <member name="F:DevExpress.XtraGrid.FormatConditionEnum.Equal">
@@ -34319,7 +34135,7 @@ Always equal to true.</para>
     </member>
     <member name="F:DevExpress.XtraGrid.FormatConditionEnum.NotBetween">
       <summary>
-        <para>The style is applied to cells (or rows) whose values are not between the <see cref="P:DevExpress.XtraEditors.StyleFormatConditionBase.Value1"/> and <see cref="P:DevExpress.XtraEditors.StyleFormatConditionBase.Value2"/> property values inclusive. Enable the <see cref="F:DevExpress.XtraEditors.FormatConditionRuleBase.BetweenConditionsIncludeEndpoints"/> option to make the <see cref="F:DevExpress.XtraEditors.FormatCondition.NotBetween"/> condition exclusive.</para>
+        <para>The style is applied to cells (or corresponding rows) whose values fall outside of the range specified by the <see cref="P:DevExpress.XtraEditors.StyleFormatConditionBase.Value1"/> and <see cref="P:DevExpress.XtraEditors.StyleFormatConditionBase.Value2"/> properties.</para>
       </summary>
     </member>
     <member name="F:DevExpress.XtraGrid.FormatConditionEnum.NotEqual">
@@ -34669,7 +34485,7 @@ Allows you to select a form that should be subsequently activated.</para>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraSplashScreen.OverlayWindowOptions"/> class.</para>
       </summary>
     </member>
-    <member name="M:DevExpress.XtraSplashScreen.OverlayWindowOptions.#ctor(System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Drawing.Color},System.Nullable{System.Drawing.Color},System.Nullable{System.Double},System.Drawing.Image,DevExpress.XtraSplashScreen.IOverlayWindowPainter,System.String,System.Nullable{DevExpress.XtraSplashScreen.ImageRotationParams},System.Nullable{System.Int32},System.Nullable{System.Drawing.Size},System.Nullable{DevExpress.XtraSplashScreen.WaitAnimationType},System.Nullable{DevExpress.XtraSplashScreen.LineAnimationParams},System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
+    <member name="M:DevExpress.XtraSplashScreen.OverlayWindowOptions.#ctor(System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Drawing.Color},System.Nullable{System.Drawing.Color},System.Nullable{System.Double},System.Drawing.Image,DevExpress.XtraSplashScreen.IOverlayWindowPainter,System.String,System.Nullable{DevExpress.XtraSplashScreen.ImageRotationParams},System.Nullable{System.Int32},System.Nullable{System.Drawing.Size},System.Nullable{DevExpress.XtraSplashScreen.WaitAnimationType},System.Nullable{DevExpress.XtraSplashScreen.LineAnimationParams},System.Nullable{System.Boolean})">
       <summary>
         <para>Initializes a new instance of the <see cref="T:DevExpress.XtraSplashScreen.OverlayWindowOptions"/> class with specified settings.</para>
       </summary>
@@ -34687,7 +34503,6 @@ Allows you to select a form that should be subsequently activated.</para>
       <param name="animationType"></param>
       <param name="lineAnimationParameters"></param>
       <param name="useDirectX"></param>
-      <param name="disableInput"></param>
     </member>
     <member name="P:DevExpress.XtraSplashScreen.OverlayWindowOptions.AnimationType">
       <summary>
@@ -34712,12 +34527,6 @@ Allows you to select a form that should be subsequently activated.</para>
         <para>Gets the default options.</para>
       </summary>
       <value>An object that specifies the default options.</value>
-    </member>
-    <member name="P:DevExpress.XtraSplashScreen.OverlayWindowOptions.DisableInput">
-      <summary>
-        <para></para>
-      </summary>
-      <value></value>
     </member>
     <member name="P:DevExpress.XtraSplashScreen.OverlayWindowOptions.FadeIn">
       <summary>
@@ -35967,7 +35776,7 @@ Allows you to disable fade-in and fade-out effects for the image and draw custom
       <param name="options">An OverlayWindowOptions object that specifies the Overlay Form options, such as the loading image, fade animation and colors.</param>
       <returns>A handle for the shown Overlay Form. Use this handle to close the Overlay Form.</returns>
     </member>
-    <member name="M:DevExpress.XtraSplashScreen.SplashScreenManager.ShowOverlayForm(System.Windows.Forms.Control,System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Drawing.Color},System.Nullable{System.Drawing.Color},System.Nullable{System.Int32},System.Drawing.Image,DevExpress.XtraSplashScreen.IOverlayWindowPainter,System.String,System.Nullable{DevExpress.XtraSplashScreen.ImageRotationParams},System.Nullable{System.Int32},System.Nullable{System.Drawing.Size},System.Nullable{DevExpress.XtraSplashScreen.WaitAnimationType},System.Nullable{DevExpress.XtraSplashScreen.LineAnimationParams},System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
+    <member name="M:DevExpress.XtraSplashScreen.SplashScreenManager.ShowOverlayForm(System.Windows.Forms.Control,System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Drawing.Color},System.Nullable{System.Drawing.Color},System.Nullable{System.Int32},System.Drawing.Image,DevExpress.XtraSplashScreen.IOverlayWindowPainter,System.String,System.Nullable{DevExpress.XtraSplashScreen.ImageRotationParams},System.Nullable{System.Int32},System.Nullable{System.Drawing.Size},System.Nullable{DevExpress.XtraSplashScreen.WaitAnimationType},System.Nullable{DevExpress.XtraSplashScreen.LineAnimationParams},System.Nullable{System.Boolean})">
       <summary>
         <para></para>
       </summary>
@@ -35986,7 +35795,6 @@ Allows you to disable fade-in and fade-out effects for the image and draw custom
       <param name="animationType"></param>
       <param name="lineAnimationParameters"></param>
       <param name="useDirectX"></param>
-      <param name="disableInput"></param>
       <returns></returns>
     </member>
     <member name="M:DevExpress.XtraSplashScreen.SplashScreenManager.ShowSkinSplashScreen(DevExpress.Utils.Svg.SvgImage,System.Nullable{System.Drawing.Size},System.String,System.String,System.String,System.String,System.Windows.Forms.Form,System.Boolean,System.Boolean,System.Boolean,DevExpress.XtraSplashScreen.SplashFormStartPosition,System.Drawing.Point)">
