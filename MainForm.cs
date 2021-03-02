@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors;
+﻿ using DevExpress.XtraEditors;
 using DevExpress.XtraLayout;
 using DevExpress.XtraLayout.Utils;
 using DevExpress.XtraGrid;
@@ -71,13 +71,14 @@ namespace Lokalomat
         public Dictionary<string, MyUiElement> SavedUIsDict = new Dictionary<string, MyUiElement>();
 
         // Container Listen:
-        public List<Assembly> assemblyList = new List<Assembly>();
-        public List<Type> typesList = new List<Type>();
-        public List<XtraForm> xtraFormslist = new List<XtraForm>();
-        public List<XtraUserControl> xtraUserControlList = new List<XtraUserControl>();
+        public List<Assembly> AssemblyList = new List<Assembly>();
+        public List<Type> TypesList = new List<Type>();
+        public List<XtraForm> ContainerListOfXtraForms = new List<XtraForm>();
+        public List<XtraUserControl> ContainerListOfXtraUserControls = new List<XtraUserControl>();
 
         // finale Listen:
         public List<object> otherControlTypes = new List<object>();
+        public List<XtraForm> xtraFormslist = new List<XtraForm>();
         public List<GroupControl> groupControlslist = new List<GroupControl>();
         public List<LayoutControl> layoutControlslist = new List<LayoutControl>();
         public List<DataLayoutControl> dataLayoutControlslist = new List<DataLayoutControl>();
@@ -127,9 +128,9 @@ namespace Lokalomat
         // --> Verzeichnis durchsuchen nach passenden Assemblies
         private void ladeAsseblies()
         {
-            assemblyList = NutzeMethode.LadeAssemblies(AssemblyFilePath);
+            AssemblyList = NutzeMethode.LadeAssemblies(AssemblyFilePath);
 
-            listBox1.Items.Add($"Assemblies Count: {assemblyList.Count}");
+            listBox1.Items.Add($"Assemblies Count: {AssemblyList.Count}");
 
             BefuelleComboBox1();
 
@@ -140,19 +141,19 @@ namespace Lokalomat
         // --> Xtra Dokumente aus Assembly extrahieren und Controls hinzufügen
         private void SucheUndErstelleDokumente()
         {
-            typesList = NutzeMethode.LadeTypes(ChosenAssembly, typesList);
+            TypesList = NutzeMethode.LadeTypes(ChosenAssembly, TypesList);
 
-            listBox1.Items.Add($"Types Count: {typesList.Count}");
+            listBox1.Items.Add($"Types Count: {TypesList.Count}");
 
-            (xtraFormslist, xtraUserControlList) = NutzeMethode.SortiereTypes(typesList, xtraFormslist, xtraUserControlList);
+            (ContainerListOfXtraForms, ContainerListOfXtraUserControls) = NutzeMethode.SortiereTypes(TypesList, ContainerListOfXtraForms, ContainerListOfXtraUserControls);
 
-            listBox1.Items.Add($"XtraForms Count: {xtraFormslist.Count}");
-            listBox1.Items.Add($"XtraUserControls Count: {xtraUserControlList.Count}");
+            listBox1.Items.Add($"XtraForms Count: {ContainerListOfXtraForms.Count}");
+            listBox1.Items.Add($"XtraUserControls Count: {ContainerListOfXtraUserControls.Count}");
 
             // -------------------------------->>> XtraForms
-            if (xtraFormslist != null && xtraFormslist.Count > 0)
+            if (ContainerListOfXtraForms != null && ContainerListOfXtraForms.Count > 0)
             {
-                foreach (var item in xtraFormslist)
+                foreach (var item in ContainerListOfXtraForms)
                 {
                     if (item != null)
                     {
@@ -175,6 +176,8 @@ namespace Lokalomat
 
                         if (item.Controls != null && item.Controls.Count > 0)
                         {
+                            SucheUndUnterscheideKindElemente(item);     // nur XtraForm besitzt TitelText, XtraUserControl nicht
+
                             foreach (var control in item.Controls)
                             {
                                 SucheUndUnterscheideKindElemente(control);
@@ -198,9 +201,9 @@ namespace Lokalomat
             }
 
             // -------------------------------->>> XtraUserControls
-            if (xtraUserControlList != null && xtraUserControlList.Count > 0)
+            if (ContainerListOfXtraUserControls != null && ContainerListOfXtraUserControls.Count > 0)
             {
-                foreach (var item in xtraUserControlList)
+                foreach (var item in ContainerListOfXtraUserControls)
                 {
                     if (item != null)
                     {
@@ -252,9 +255,9 @@ namespace Lokalomat
             gridControl1.DataSource = null;
             gridControl1.DataSource = XtraDocumentsList;
 
-            typesList.Clear();
-            xtraFormslist.Clear();
-            xtraUserControlList.Clear();
+            TypesList.Clear();
+            ContainerListOfXtraForms.Clear();
+            ContainerListOfXtraUserControls.Clear();
         }
 
         // --> Switch Case Filter
@@ -266,6 +269,9 @@ namespace Lokalomat
                 {
                     switch (item)
                     {
+                        case XtraForm i when typeof(XtraForm).IsAssignableFrom(item.GetType()):
+                            xtraFormslist.Add(i);
+                            break;
 
                         case DataLayoutControl lc when typeof(DataLayoutControl).IsAssignableFrom(item.GetType()):
                             dataLayoutControlslist.Add(lc);
@@ -633,6 +639,12 @@ namespace Lokalomat
         {
             MyUiElementslist.Clear();
             
+            foreach (var item in xtraFormslist)
+            {
+                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.XtraForm, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
+                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name
+                });
+            }
             foreach (var item in gridControlslist)
             {
                 MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.GridControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
@@ -905,6 +917,7 @@ namespace Lokalomat
                 });
             }
 
+            xtraFormslist.Clear();
             accordionControlElementslist.Clear();
             labelControlslist.Clear();
             navBarControlslist.Clear();
@@ -1210,7 +1223,7 @@ namespace Lokalomat
             coll.Clear();
             try
             {
-                foreach (var item in assemblyList)
+                foreach (var item in AssemblyList)
                 {
                     coll.Add(item.Location);
                 }
@@ -1247,9 +1260,9 @@ namespace Lokalomat
         {
             XtraDocumentsList.Clear();
 
-            if (assemblyList != null && assemblyList.Count() > 0)
+            if (AssemblyList != null && AssemblyList.Count() > 0)
             {
-                foreach (var item in assemblyList)
+                foreach (var item in AssemblyList)
                 {
                     if (comboBoxEdit1.SelectedItem != null && comboBoxEdit1.SelectedItem.ToString() == item.Location)
                     {
@@ -1313,7 +1326,7 @@ namespace Lokalomat
             AssemblyFileName = "leer";
             DocumentName = "leer";
 
-            assemblyList.Clear();
+            AssemblyList.Clear();
 
             MyUiElementslist.Clear();
             XtraDocumentsList.Clear();

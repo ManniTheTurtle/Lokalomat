@@ -25,7 +25,7 @@ namespace EigeneKlassen
     {
         public enum Klasse
         {
-            GridColumn, GridView, GridControl, SimpleButton, TextEdit, CheckEdit, ComboBoxEdit, TabbedControlGroup, LayoutControlGroup,
+            XtraForm, GridColumn, GridView, GridControl, SimpleButton, TextEdit, CheckEdit, ComboBoxEdit, TabbedControlGroup, LayoutControlGroup,
             LayoutControlItem, DataLayoutControl, LayoutGroup, XtraTabPage, LayoutControl, ButtonEdit, ImageEdit, GroupControl, DateEdit,
             DropDownButton, GridLookUpEdit, GridColumnView, ImageComboboxEdit, ListBoxControl, PictureEdit, CheckedListBoxControl, 
             TileControl, TileGroup, TileBar, TileItem, TileItemElement, TileBarGroup, AccordionControl, AccordionControlElement, 

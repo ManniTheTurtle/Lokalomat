@@ -85,7 +85,9 @@ namespace Lokalomat
                     }
                     catch (Exception)
                     {
+                        throw;
                     }
+
                     
                 }
             }

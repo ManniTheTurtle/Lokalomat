@@ -47,8 +47,8 @@ namespace Lokalomat
             this.wähleVerzeichnisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zeigeUnsortierteControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lokalisierungToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wähleVerzeichnisToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.autoVerzeichnisToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.wähleVerzeichnisToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ersetzeTexteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.löscheAlleDateienToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -268,31 +268,31 @@ namespace Lokalomat
             this.lokalisierungToolStripMenuItem.Size = new System.Drawing.Size(119, 31);
             this.lokalisierungToolStripMenuItem.Text = "-> Deserialisiere <-";
             // 
-            // wähleVerzeichnisToolStripMenuItem1
-            // 
-            this.wähleVerzeichnisToolStripMenuItem1.Name = "wähleVerzeichnisToolStripMenuItem1";
-            this.wähleVerzeichnisToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.wähleVerzeichnisToolStripMenuItem1.Text = "Wähle Verzeichnis";
-            this.wähleVerzeichnisToolStripMenuItem1.Click += new System.EventHandler(this.wähleVerzeichnisToolStripMenuItem1_Click);
-            // 
             // autoVerzeichnisToolStripMenuItem1
             // 
             this.autoVerzeichnisToolStripMenuItem1.Name = "autoVerzeichnisToolStripMenuItem1";
-            this.autoVerzeichnisToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.autoVerzeichnisToolStripMenuItem1.Size = new System.Drawing.Size(175, 22);
             this.autoVerzeichnisToolStripMenuItem1.Text = "Auto Verzeichnis";
             this.autoVerzeichnisToolStripMenuItem1.Click += new System.EventHandler(this.autoVerzeichnisToolStripMenuItem1_Click);
+            // 
+            // wähleVerzeichnisToolStripMenuItem1
+            // 
+            this.wähleVerzeichnisToolStripMenuItem1.Name = "wähleVerzeichnisToolStripMenuItem1";
+            this.wähleVerzeichnisToolStripMenuItem1.Size = new System.Drawing.Size(175, 22);
+            this.wähleVerzeichnisToolStripMenuItem1.Text = "Wähle Verzeichnis";
+            this.wähleVerzeichnisToolStripMenuItem1.Click += new System.EventHandler(this.wähleVerzeichnisToolStripMenuItem1_Click);
             // 
             // ersetzeTexteToolStripMenuItem
             // 
             this.ersetzeTexteToolStripMenuItem.Name = "ersetzeTexteToolStripMenuItem";
-            this.ersetzeTexteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ersetzeTexteToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.ersetzeTexteToolStripMenuItem.Text = "Ersetze Texte";
             this.ersetzeTexteToolStripMenuItem.Click += new System.EventHandler(this.ersetzeTexteToolStripMenuItem_Click);
             // 
             // löscheAlleDateienToolStripMenuItem
             // 
             this.löscheAlleDateienToolStripMenuItem.Name = "löscheAlleDateienToolStripMenuItem";
-            this.löscheAlleDateienToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.löscheAlleDateienToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.löscheAlleDateienToolStripMenuItem.Text = "Lösche alle Dateien";
             this.löscheAlleDateienToolStripMenuItem.Click += new System.EventHandler(this.löscheAlleDateienToolStripMenuItem_Click);
             // 
