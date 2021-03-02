@@ -1,0 +1,12 @@
+C:\k3tfs\Programm\bin\Debug\Lokalomat2021.exe.config
+C:\k3tfs\Programm\bin\Debug\Lokalomat2021.exe
+C:\k3tfs\Programm\bin\Debug\Lokalomat2021.pdb
+C:\Users\Manio\Desktop\Gits\Lokalomat\Lokalomat2021\Lokalomat2021\obj\Debug\Lokalomat2021.csprojAssemblyReference.cache
+C:\Users\Manio\Desktop\Gits\Lokalomat\Lokalomat2021\Lokalomat2021\obj\Debug\Lokalomat.MainForm.resources
+C:\Users\Manio\Desktop\Gits\Lokalomat\Lokalomat2021\Lokalomat2021\obj\Debug\Lokalomat2021.Properties.Resources.resources
+C:\Users\Manio\Desktop\Gits\Lokalomat\Lokalomat2021\Lokalomat2021\obj\Debug\Lokalomat2021.csproj.GenerateResource.cache
+C:\Users\Manio\Desktop\Gits\Lokalomat\Lokalomat2021\Lokalomat2021\obj\Debug\Lokalomat2021.exe.licenses
+C:\Users\Manio\Desktop\Gits\Lokalomat\Lokalomat2021\Lokalomat2021\obj\Debug\Lokalomat2021.csproj.CoreCompileInputs.cache
+C:\Users\Manio\Desktop\Gits\Lokalomat\Lokalomat2021\Lokalomat2021\obj\Debug\Lokalomat2021.csproj.CopyComplete
+C:\Users\Manio\Desktop\Gits\Lokalomat\Lokalomat2021\Lokalomat2021\obj\Debug\Lokalomat2021.exe
+C:\Users\Manio\Desktop\Gits\Lokalomat\Lokalomat2021\Lokalomat2021\obj\Debug\Lokalomat2021.pdb
