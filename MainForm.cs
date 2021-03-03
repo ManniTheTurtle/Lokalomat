@@ -1,18 +1,13 @@
-﻿ using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using DevExpress.XtraLayout;
-using DevExpress.XtraLayout.Utils;
 using DevExpress.XtraGrid;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Columns;
@@ -20,13 +15,12 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraDataLayout;
 using DevExpress.XtraTab;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using EigeneKlassen;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraRichEdit;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraNavBar;
-using static System.Windows.Forms.ImageList;
+using TargetTool;
 
 namespace Lokalomat
 {
@@ -119,7 +113,6 @@ namespace Lokalomat
         public List<NavBarControl> navBarControlslist = new List<NavBarControl>();
         public List<NavBarGroup> navBarGroupslist = new List<NavBarGroup>();
         public List<NavBarItem> navBarItemslist = new List<NavBarItem>();
-
 
 
 
@@ -1128,6 +1121,9 @@ namespace Lokalomat
 
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            XtraDoc1 xtraDoc1 = new XtraDoc1();
+            xtraDoc1.Show();
+
             gridView1.Columns.Clear();
             gridControl1.DataSource = null;
         }

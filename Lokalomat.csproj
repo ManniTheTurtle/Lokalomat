@@ -33,7 +33,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\k3tfs\Programm\bin\Debug\de\LokalisierungsTest\</OutputPath>
+    <OutputPath>..\..\..\..\..\k3tfs\Programm\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -84,14 +84,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Klassen.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Methoden.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
@@ -131,6 +129,19 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TestProgramm\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LokalomatKlassen\LokalomatKlassen.csproj">
+      <Project>{66613d70-455f-409d-a16d-f58981aefee4}</Project>
+      <Name>LokalomatKlassen</Name>
+    </ProjectReference>
+    <ProjectReference Include="TestProgramm\TargetTool\TargetTool.csproj">
+      <Project>{195f40d2-c99a-42d9-b6a8-12a9135d41a0}</Project>
+      <Name>TargetTool</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
