@@ -119,3 +119,15 @@ C:\Users\Manio\Desktop\Gits\Lokalomat\obj\Debug\Lokalomat.csproj.CoreCompileInpu
 C:\Users\Manio\Desktop\Gits\Lokalomat\obj\Debug\Lokalomat.csproj.CopyComplete
 C:\Users\Manio\Desktop\Gits\Lokalomat\obj\Debug\LokalisierungsAutomat.exe
 C:\Users\Manio\Desktop\Gits\Lokalomat\obj\Debug\LokalisierungsAutomat.pdb
+C:\Archiv\Gits\Lokalomat\obj\Debug\Lokalomat.csprojAssemblyReference.cache
+C:\Archiv\Gits\Lokalomat\obj\Debug\Lokalomat.MainForm.resources
+C:\Archiv\Gits\Lokalomat\obj\Debug\Lokalomat.Properties.Resources.resources
+C:\Archiv\Gits\Lokalomat\obj\Debug\Lokalomat.csproj.GenerateResource.cache
+C:\Archiv\Gits\Lokalomat\obj\Debug\LokalisierungsAutomat.exe.licenses
+C:\Archiv\Gits\Lokalomat\obj\Debug\Lokalomat.csproj.CoreCompileInputs.cache
+C:\Archiv\Gits\Lokalomat\obj\Debug\LokalisierungsAutomat.exe
+C:\Archiv\Gits\Lokalomat\obj\Debug\LokalisierungsAutomat.pdb
+C:\Users\Manni\Desktop\Build\LokalisierungsAutomat.exe.config
+C:\Users\Manni\Desktop\Build\LokalisierungsAutomat.exe
+C:\Users\Manni\Desktop\Build\LokalisierungsAutomat.pdb
+C:\Archiv\Gits\Lokalomat\obj\Debug\Lokalomat.csproj.CopyComplete

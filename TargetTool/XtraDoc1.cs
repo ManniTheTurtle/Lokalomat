@@ -27,7 +27,7 @@ namespace TargetTool
         {
             InitializeComponent();
 
-            ListOutOfDeserializedLanguageFiles = neueMethode.DeserializeAllFilesFromActiveFolder(@"C:\k3tfs\Programm\bin\Debug\de\LokalisierungsTest");
+            ListOutOfDeserializedLanguageFiles = neueMethode.DeserializeAllFilesFromActiveFolder(@"C:\Users\Manni\Desktop\Build\de");
 
             foreach (var item in ListOutOfDeserializedLanguageFiles)
             {

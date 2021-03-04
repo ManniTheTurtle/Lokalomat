@@ -97,3 +97,15 @@ C:\Users\Manio\Desktop\Gits\Lokalomat\TestProgramm\TargetTool\obj\Debug\TargetTo
 C:\Users\Manio\Desktop\Gits\Lokalomat\TestProgramm\TargetTool\obj\Debug\TargetTool.csproj.CopyComplete
 C:\Users\Manio\Desktop\Gits\Lokalomat\TestProgramm\TargetTool\obj\Debug\TargetTool.exe
 C:\Users\Manio\Desktop\Gits\Lokalomat\TestProgramm\TargetTool\obj\Debug\TargetTool.pdb
+C:\Archiv\Gits\Lokalomat\TargetTool\obj\Debug\TargetTool.csprojAssemblyReference.cache
+C:\Archiv\Gits\Lokalomat\TargetTool\obj\Debug\TargetTool.XtraDoc1.resources
+C:\Archiv\Gits\Lokalomat\TargetTool\obj\Debug\TargetTool.Properties.Resources.resources
+C:\Archiv\Gits\Lokalomat\TargetTool\obj\Debug\TargetTool.csproj.GenerateResource.cache
+C:\Archiv\Gits\Lokalomat\TargetTool\obj\Debug\TargetTool.exe.licenses
+C:\Archiv\Gits\Lokalomat\TargetTool\obj\Debug\TargetTool.csproj.CoreCompileInputs.cache
+C:\Users\Manni\Desktop\Build\TargetTool.exe.config
+C:\Users\Manni\Desktop\Build\TargetTool.exe
+C:\Users\Manni\Desktop\Build\TargetTool.pdb
+C:\Archiv\Gits\Lokalomat\TargetTool\obj\Debug\TargetTool.csproj.CopyComplete
+C:\Archiv\Gits\Lokalomat\TargetTool\obj\Debug\TargetTool.exe
+C:\Archiv\Gits\Lokalomat\TargetTool\obj\Debug\TargetTool.pdb

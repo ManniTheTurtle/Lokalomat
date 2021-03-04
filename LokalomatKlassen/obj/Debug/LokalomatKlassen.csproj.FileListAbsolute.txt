@@ -177,3 +177,10 @@ C:\Users\Manio\Desktop\Gits\Lokalomat\LokalomatKlassen\obj\Debug\LokalomatKlasse
 C:\Users\Manio\Desktop\Gits\Lokalomat\LokalomatKlassen\obj\Debug\LokalomatKlassen.csproj.CopyComplete
 C:\Users\Manio\Desktop\Gits\Lokalomat\LokalomatKlassen\obj\Debug\LokalomatKlassen.dll
 C:\Users\Manio\Desktop\Gits\Lokalomat\LokalomatKlassen\obj\Debug\LokalomatKlassen.pdb
+C:\Archiv\Gits\Lokalomat\LokalomatKlassen\obj\Debug\LokalomatKlassen.csproj.CoreCompileInputs.cache
+C:\Archiv\Gits\Lokalomat\LokalomatKlassen\obj\Debug\LokalomatKlassen.csprojAssemblyReference.cache
+C:\Users\Manni\Desktop\Build\LokalomatKlassen.dll
+C:\Users\Manni\Desktop\Build\LokalomatKlassen.pdb
+C:\Archiv\Gits\Lokalomat\LokalomatKlassen\obj\Debug\LokalomatKlassen.csproj.CopyComplete
+C:\Archiv\Gits\Lokalomat\LokalomatKlassen\obj\Debug\LokalomatKlassen.dll
+C:\Archiv\Gits\Lokalomat\LokalomatKlassen\obj\Debug\LokalomatKlassen.pdb

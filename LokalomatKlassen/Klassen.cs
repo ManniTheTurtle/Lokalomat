@@ -29,7 +29,7 @@ namespace EigeneKlassen
             NavBarControl, NavBarItem, NavBarGroup, RichEditControl, CheckedComboBoxEdit, LabelControl
         }
 
-        public enum Language { English, Italian, French }
+        public enum Language { German, English, Italian, French }
 
         public ClassName ItemClassName { get; set; }
         public Language ItemLanguage { get; set; }

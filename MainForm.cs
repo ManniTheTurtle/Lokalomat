@@ -42,8 +42,8 @@ namespace Lokalomat
         public static Dictionary<Object, Object> dictionary = new Dictionary<Object, Object>();
 
         public string AssemblyFilePath;
-
-        public string SerializationFilePath = @"C:\k3tfs\Programm\bin\Debug\de\LokalisierungsTest";
+        // @"C:\k3tfs\Programm\bin\Debug\de\LokalisierungsTest"
+        public string SerializationFilePath = @"C:\Users\Manni\Desktop\Build\de"; 
 
         public string DeserializationFilePath;
 
@@ -1302,7 +1302,7 @@ namespace Lokalomat
         // Verzeichnis automatisch auswählen zum Serialisieren
         private void autoVerzeichnisToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            SerializationFilePath = @"C:\k3tfs\Programm\bin\Debug\de\LokalisierungsTest";
+            SerializationFilePath = @"C:\Users\Manni\Desktop\Build\de";
 
             serialisiereAlleneuenControls();
         }
@@ -1328,7 +1328,7 @@ namespace Lokalomat
         // Verzeichnis automatisch auswählen zum Deserialisieren
         private void autoVerzeichnisToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            DeserializationFilePath = @"C:\Users\Manni\Desktop\Objekte\";
+            DeserializationFilePath = @"C:\Users\Manni\Desktop\Build\de";
 
             deserialisiereDateien();
         }
