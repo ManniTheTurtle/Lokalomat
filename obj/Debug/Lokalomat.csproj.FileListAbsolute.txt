@@ -107,6 +107,9 @@ C:\Users\Manio\Desktop\Gits\Lokalomat\Lokalomat2021\Lokalomat2021\obj\Debug\Loka
 C:\Users\Manio\Desktop\Gits\Lokalomat\Lokalomat2021\Lokalomat2021\obj\Debug\Lokalomat.csproj.CopyComplete
 C:\Users\Manio\Desktop\Gits\Lokalomat\Lokalomat2021\Lokalomat2021\obj\Debug\LokalisierungsAutomat.exe
 C:\Users\Manio\Desktop\Gits\Lokalomat\Lokalomat2021\Lokalomat2021\obj\Debug\LokalisierungsAutomat.pdb
+C:\k3tfs\Programm\bin\Debug\LokalisierungsAutomat.exe.config
+C:\k3tfs\Programm\bin\Debug\LokalisierungsAutomat.exe
+C:\k3tfs\Programm\bin\Debug\LokalisierungsAutomat.pdb
 C:\Users\Manio\Desktop\Gits\Lokalomat\obj\Debug\Lokalomat.csprojAssemblyReference.cache
 C:\Users\Manio\Desktop\Gits\Lokalomat\obj\Debug\Lokalomat.MainForm.resources
 C:\Users\Manio\Desktop\Gits\Lokalomat\obj\Debug\Lokalomat.Properties.Resources.resources
@@ -116,6 +119,3 @@ C:\Users\Manio\Desktop\Gits\Lokalomat\obj\Debug\Lokalomat.csproj.CoreCompileInpu
 C:\Users\Manio\Desktop\Gits\Lokalomat\obj\Debug\Lokalomat.csproj.CopyComplete
 C:\Users\Manio\Desktop\Gits\Lokalomat\obj\Debug\LokalisierungsAutomat.exe
 C:\Users\Manio\Desktop\Gits\Lokalomat\obj\Debug\LokalisierungsAutomat.pdb
-C:\k3tfs\Programm\bin\Debug\LokalisierungsAutomat.exe.config
-C:\k3tfs\Programm\bin\Debug\LokalisierungsAutomat.exe
-C:\k3tfs\Programm\bin\Debug\LokalisierungsAutomat.pdb

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Lokalomat
+namespace TargetTool
 {
     static class Program
     {
@@ -13,7 +13,7 @@ namespace Lokalomat
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new XtraDoc1());
         }
     }
 }

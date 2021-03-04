@@ -1,6 +1,20 @@
-﻿using DevExpress.XtraEditors;
-using DevExpress.XtraLayout;
+﻿using DevExpress.XtraBars;
+using DevExpress.XtraBars.Navigation;
+using DevExpress.XtraDataLayout;
+using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraLayout;
+using DevExpress.XtraNavBar;
+using DevExpress.XtraRichEdit;
+using DevExpress.XtraTab;
+using DevExpress.XtraTreeList;
+using EigeneKlassen;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,17 +23,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.XtraGrid.Columns;
-using DevExpress.XtraGrid.Views.Base;
-using DevExpress.XtraDataLayout;
-using DevExpress.XtraTab;
-using Newtonsoft.Json;
-using EigeneKlassen;
-using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraRichEdit;
-using DevExpress.XtraBars.Navigation;
-using DevExpress.XtraNavBar;
 using TargetTool;
 
 namespace Lokalomat
@@ -31,7 +34,7 @@ namespace Lokalomat
             InitializeComponent();
             WindowState = FormWindowState.Maximized;
         }
-        
+
         public XtraForm xtraForm = new XtraForm();
 
         public MyXtraDocument xtra_Document = new MyXtraDocument();
@@ -93,14 +96,12 @@ namespace Lokalomat
         public List<RichEditControl> richEditControlslist = new List<RichEditControl>();
         public List<ComboBoxEdit> comboBoxEditslist = new List<ComboBoxEdit>();
         public List<CheckedComboBoxEdit> checkedComboBoxEditslist = new List<CheckedComboBoxEdit>();
-        public List<ImageComboBoxEdit> imageComboBoxEditslist = new List<ImageComboBoxEdit>();
         public List<LabelControl> labelControlslist = new List<LabelControl>();
         public List<ImageEdit> imageEditslist = new List<ImageEdit>();
         public List<DateEdit> dateEditslist = new List<DateEdit>();
         public List<ButtonEdit> buttonEditslist = new List<ButtonEdit>();
         public List<DropDownButton> dropDownButtonslist = new List<DropDownButton>();
         public List<CheckedListBoxControl> checkedListBoxControlslist = new List<CheckedListBoxControl>();
-        public List<PictureEdit> pictureEditslist = new List<PictureEdit>();
         public List<ListBoxControl> listBoxControlslist = new List<ListBoxControl>();
         public List<TileControl> tileControlslist = new List<TileControl>();
         public List<TileGroup> tileGroupslist = new List<TileGroup>();
@@ -113,7 +114,28 @@ namespace Lokalomat
         public List<NavBarControl> navBarControlslist = new List<NavBarControl>();
         public List<NavBarGroup> navBarGroupslist = new List<NavBarGroup>();
         public List<NavBarItem> navBarItemslist = new List<NavBarItem>();
+        public List<PopupMenu> popupMenuslist = new List<PopupMenu>();
+        public List<RadioGroup> radioGroupslist = new List<RadioGroup>();
+        public List<BarManager> barManagerslist = new List<BarManager>();
+        public List<BarButtonGroup> barButtonGroupslist = new List<BarButtonGroup>();
+        public List<BarButtonItem> barButtonItemslist = new List<BarButtonItem>();
+        public List<LookUpEdit> lookUpEditslist = new List<LookUpEdit>();
+        public List<LookUpColumnInfo> lookUpColumnInfoslist = new List<LookUpColumnInfo>();
+        public List<RepositoryItemLookUpEdit> repositoryItemLookUpEditslist = new List<RepositoryItemLookUpEdit>();     // bisher das einzige Control, das als RepositoryItem Text hat
+        public List<SearchControl> searchControlslist = new List<SearchControl>();                                      // hat Nulltext
+        public List<TreeList> treeListslist = new List<TreeList>();
 
+        public List<LayoutViewColumn> layoutViewColumnslist = new List<LayoutViewColumn>();     // wie herausfinden, welcher columntyp benutzt wird?    // Caption = .LayOutviewField
+        public List<TileViewColumn> tileViewColumns = new List<TileViewColumn>();
+
+        // bisher im K3 gefundene Forms Controls:
+        public List<GroupBox> groupBoxeslist = new List<GroupBox>();
+        public List<CheckBox> checkBoxeslist = new List<CheckBox>();
+        public List<Button> buttonslist = new List<Button>();
+        public List<Label> labelslist = new List<Label>();
+        public List<PictureBox> pictureBoxeslist = new List<PictureBox>();
+        public List<ToolStripMenuItem> toolStripMenuItemslist = new List<ToolStripMenuItem>();
+        public List<ContextMenuStrip> contextMenuStripslist = new List<ContextMenuStrip>();
 
 
         //------------------------------------------------------------------------------------|
@@ -177,7 +199,7 @@ namespace Lokalomat
                             }
                         }
 
-                        DocumentName = AssemblyFileName+"_"+item.Name;
+                        DocumentName = AssemblyFileName + "_" + item.Name;
 
                         dictionary.Clear();
                         ListeAlleErgebnisse();
@@ -312,7 +334,7 @@ namespace Lokalomat
                         case TabbedGroup lc when typeof(TabbedGroup).IsAssignableFrom(item.GetType()):
                             tabbedGroupslist.Add(lc);
 
-                            if (lc.TabPages.Count > 0) 
+                            if (lc.TabPages.Count > 0)
                             {
                                 foreach (var i in lc.TabPages)
                                 {
@@ -337,7 +359,7 @@ namespace Lokalomat
                             layoutControlGroupslist.Add(lc);
 
                             SucheUndUnterscheideKindElemente(lc.ParentTabbedGroup);
-                            
+
                             if (lc.Items.Count > 0)
                             {
                                 foreach (var i in lc.Items)
@@ -349,8 +371,8 @@ namespace Lokalomat
 
                         case LayoutControlItem lc when typeof(LayoutControlItem).IsAssignableFrom(lc.GetType()):
                             layoutControlItemslist.Add(lc);
-                            
-                            SucheUndUnterscheideKindElemente(lc.Control); 
+
+                            SucheUndUnterscheideKindElemente(lc.Control);
 
                             break;
 
@@ -436,10 +458,6 @@ namespace Lokalomat
                             imageEditslist.Add(i);
                             break;
 
-                        case ImageComboBoxEdit i when typeof(ImageComboBoxEdit).IsAssignableFrom(item.GetType()):
-                            imageComboBoxEditslist.Add(i);
-                            break;
-
                         case ComboBoxEdit i when typeof(ComboBoxEdit).IsAssignableFrom(item.GetType()):
                             comboBoxEditslist.Add(i);
                             break;
@@ -450,10 +468,6 @@ namespace Lokalomat
 
                         case CheckedListBoxControl i when typeof(CheckedListBoxControl).IsAssignableFrom(item.GetType()):
                             checkedListBoxControlslist.Add(i);
-                            break;
-
-                        case PictureEdit i when typeof(PictureEdit).IsAssignableFrom(item.GetType()):
-                            pictureEditslist.Add(i);
                             break;
 
                         case ListBoxControl i when typeof(ListBoxControl).IsAssignableFrom(item.GetType()):
@@ -482,7 +496,7 @@ namespace Lokalomat
 
                         case NavBarControl i when typeof(NavBarControl).IsAssignableFrom(item.GetType()):
                             navBarControlslist.Add(i);
-                            
+
                             if (i.HasChildren)
                             {
                                 foreach (var j in i.Groups)
@@ -531,8 +545,8 @@ namespace Lokalomat
 
                         case AccordionControlElement i when typeof(AccordionControlElement).IsAssignableFrom(item.GetType()):
                             accordionControlElementslist.Add(i);
-                            
-                            if(i.Elements.Count > 0)
+
+                            if (i.Elements.Count > 0)
                             {
                                 foreach (var j in i.Elements)
                                 {
@@ -543,7 +557,7 @@ namespace Lokalomat
 
                         case TileControl i when typeof(TileControl).IsAssignableFrom(item.GetType()):
                             tileControlslist.Add(i);
-                            
+
                             if (i.Groups.Count > 0)
                             {
                                 foreach (var j in i.Groups)
@@ -624,289 +638,402 @@ namespace Lokalomat
                     }
                     dictionary.Add(item, item);
                 }
-            }  
+            }
         }
 
         // --> List<MyUiElement> füllen
         public void ListeAlleErgebnisse()
         {
             MyUiElementslist.Clear();
-            
+
             foreach (var item in xtraFormslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.XtraForm, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.XtraForm,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
                 });
             }
             foreach (var item in gridControlslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.GridControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.GridControl,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
                 });
             }
             foreach (var item in gridColumnslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.GridColumn, Name = item.Name, Text = item.Caption, XtraDokument = DocumentName, 
-                    Other = item.FieldName, Parent = item.Container == null ? "nicht verfügbar" : item.Container.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.GridColumn,
+                    Name = item.Name,
+                    Caption = item.Caption,
+                    XtraDokument = DocumentName
                 });
             }
             foreach (var item in textEditslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TextEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.TextEdit,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
             foreach (var item in simpleButtonslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.SimpleButton, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.SimpleButton,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
             foreach (var item in checkEditslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.CheckEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.CheckEdit,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
             foreach (var item in comboBoxEditslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.ComboBoxEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.ComboBoxEdit,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
             foreach (var item in layoutControlItemslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.LayoutControlItem, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, OwnedControl = item.Control == null ? "nicht verfügbar" : item.Control.Name
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.LayoutControlItem,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
                 });
             }
             foreach (var item in layoutControlGroupslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.LayoutControlGroup, Name = item.Name, Text = item.Text, XtraDokument = DocumentName,
-                    Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name});
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.LayoutControlGroup,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
+                });
             }
             foreach (var item in tabbedControlGroupslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TabbedControlGroup, Name = item.Name, Text = item.Text, XtraDokument = DocumentName,
-                    Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name });
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.TabbedControlGroup,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
+                });
             }
             foreach (var item in dataLayoutControlslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.DataLayoutControl, Name = item.Name, XtraDokument = DocumentName, Text = item.Text, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.DataLayoutControl,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
                 });
             }
             foreach (var item in layoutGroupslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.LayoutGroup, Name = item.Name, Text = item.Text, XtraDokument = DocumentName,
-                    Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name 
-                }); 
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.LayoutGroup,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
+                });
             }
             foreach (var item in layoutControlslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.LayoutControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.LayoutControl,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
                 });
             }
             foreach (var item in xtraTabPageslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.XtraTabPage, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.XtraTabPage,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
                 });
             }
             foreach (var item in buttonEditslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.ButtonEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.ButtonEdit,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
             foreach (var item in imageEditslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.ImageEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.ImageEdit,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
             foreach (var item in groupControlslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.GroupControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name 
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.GroupControl,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
                 });
             }
             foreach (var item in dateEditslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.DateEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.DateEdit,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
             foreach (var item in dropDownButtonslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.DropDownButton, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.DropDownButton,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
             foreach (var item in gridLookUpEditslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.GridLookUpEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name,
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.GridLookUpEdit,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
             foreach (var item in gridColumnsViewlist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.GridColumnView, Name = item.Name, Other = item.ViewCaption, XtraDokument = DocumentName, 
-                    Parent = item.Container == null ? "nicht verfügbar" : item.Container.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.GridColumnView,
+                    Name = item.Name,
+                    Other = item.ViewCaption,
+                    XtraDokument = DocumentName
                 });
             }
             foreach (var item in checkedListBoxControlslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.CheckedListBoxControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
-                });
-            }
-            foreach (var item in pictureEditslist)
-            {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.PictureEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.CheckedListBoxControl,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
             foreach (var item in listBoxControlslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.ListBoxControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
-                });
-            }
-            foreach (var item in imageComboBoxEditslist)
-            {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.ImageComboboxEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.ListBoxControl,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
             foreach (var item in tileControlslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TileControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
-                    Other = item.Container == null ? "nicht verfügbar" : item.Container.ToString() 
-                });;
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.TileControl,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
+                }); ;
             }
             foreach (var item in tileGroupslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TileGroup, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.Site == null ? "nicht verfügbar" : item.Site.Name, Parent = item.Container == null ? "nicht verfügbar" : item.Container.ToString(), 
-                    OwnedControl = item.Control == null ? "nicht verfügbar" : item.Control.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.TileGroup,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
                 });
             }
             foreach (var item in tileItemslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TileItem, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    Other = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString(), Parent = item.Group == null ? "nicht verfügbar" : item.Group.Name,
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.TileItem,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
             foreach (var item in tileItemElementslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TileItemElement, Text = item.Text, XtraDokument = DocumentName, 
-                    Other = item.ColumnIndex.ToString() + "  " + item.RowIndex.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.TileItemElement,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
                 });
             }
             foreach (var item in tileBarslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TileBar, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
-                    Other = item.Container == null ? "nicht verfügbar" : item.Container.ToString() 
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.TileBar,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
                 });
             }
             foreach (var item in tileBarGroupslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.TileBarGroup, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.Site == null ? "nicht verfügbar" : item.Site.Name, Parent = item.Container == null ? "nicht verfügbar" : item.Container.ToString(), 
-                    OwnedControl = item.Control == null ? "nicht verfügbar" : item.Control.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.TileBarGroup,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
                 });
             }
             foreach (var item in accordionControlslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.AccordionControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.AccordionControl,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
             foreach (var item in accordionControlElementslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.AccordionControlElement, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.Container == null ? "nicht verfügbar" : item.Container.ToString(), Parent = item.AccordionControl == null ? "nicht verfügbar" : item.AccordionControl.Name, 
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString(), Other = item.Hint == null ? "nicht verfügbar" : item.Hint
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.AccordionControlElement,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString(),
+                    Hint = item.Hint == null ? "" : item.Hint
                 });
             }
             foreach (var item in labelControlslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.LabelControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.LabelControl,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
             foreach (var item in navBarControlslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.NavBarControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
-                    Other = item.ContextMenu == null ? "nicht verfügbar" : item.ContextMenu.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.NavBarControl,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
                 });
             }
             foreach (var item in navBarGroupslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.NavBarGroup, Name = item.Name, Text = item.Caption, XtraDokument = DocumentName, 
-                    TopLevelControl = item.Container == null ? "nicht verfügbar" : item.Container.ToString(), Parent = item.NavBar == null ? "nicht verfügbar" : item.NavBar.Name, 
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString(), Other = item.Hint == null ? "nicht verfügbar" : item.Hint
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.NavBarGroup,
+                    Name = item.Name,
+                    Text = item.Caption,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString(),
+                    Hint = item.Hint == null ? "" : item.Hint
                 });
             }
             foreach (var item in navBarItemslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.NavBarItem, Name = item.Name, Text = item.Caption, XtraDokument = DocumentName, 
-                    TopLevelControl = item.Container == null ? "nicht verfügbar" : item.Container.ToString(), Parent = item.NavBar == null ? "nicht verfügbar" : item.NavBar.Name, 
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString(), Other = item.Hint == null ? "nicht verfügbar" : item.Hint
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.NavBarItem,
+                    Name = item.Name,
+                    Caption = item.Caption,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString(),
+                    Hint = item.Hint == null ? "" : item.Hint
                 });
             }
             foreach (var item in richEditControlslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.RichEditControl, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
-                    Other = item.Container == null ? "nicht verfügbar" : item.Container.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.RichEditControl,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
                 });
             }
             foreach (var item in checkedComboBoxEditslist)
             {
-                MyUiElementslist.Add(new MyUiElement { ObjektTyp = MyUiElement.Klasse.CheckedComboBoxEdit, Name = item.Name, Text = item.Text, XtraDokument = DocumentName, 
-                    TopLevelControl = item.TopLevelControl == null ? "nicht verfügbar" : item.TopLevelControl.Name, Parent = item.Parent == null ? "nicht verfügbar" : item.Parent.Name, 
-                    Stylecontroller = item.StyleController == null ? "nicht verfügbar" : item.StyleController.ToString(),
-                    ToolTip = item.SuperTip == null ? "nicht verfügbar" : item.SuperTip.ToString()
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.CheckedComboBoxEdit,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
 
@@ -926,9 +1053,7 @@ namespace Lokalomat
             tileItemElementslist.Clear();
             tileBarslist.Clear();
             checkedListBoxControlslist.Clear();
-            pictureEditslist.Clear();
             listBoxControlslist.Clear();
-            imageComboBoxEditslist.Clear();
             gridColumnsViewlist.Clear();
             dropDownButtonslist.Clear();
             gridLookUpEditslist.Clear();
@@ -1308,7 +1433,7 @@ namespace Lokalomat
                     }
                 }
             }
-            
+
         }
 
         //------------------------------------------------------------------------------------|
@@ -1355,7 +1480,7 @@ namespace Lokalomat
         // Show all unpicked Controls
         private void zeigeUnsortierteControlsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
             if (otherControlTypes != null && otherControlTypes.Count > 0)
             {
                 List<Control> showableControls = new List<Control>();
