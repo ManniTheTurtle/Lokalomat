@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EigeneKlassen
+namespace LokalomatKlassen
 {
     [Serializable]
     public class MyXtraDocument
@@ -22,11 +22,12 @@ namespace EigeneKlassen
     {
         public enum ClassName
         {
-            XtraForm, GridColumn, GridView, GridControl, SimpleButton, TextEdit, CheckEdit, ComboBoxEdit, TabbedControlGroup, LayoutControlGroup,
-            LayoutControlItem, DataLayoutControl, LayoutGroup, XtraTabPage, LayoutControl, ButtonEdit, ImageEdit, GroupControl, DateEdit,
-            DropDownButton, GridLookUpEdit, GridColumnView, ImageComboboxEdit, ListBoxControl, PictureEdit, CheckedListBoxControl,
+            Other, XtraForm, FluentDesignForm, GridColumn, GridView, GridControl, SimpleButton, TextEdit, CheckEdit, ComboBoxEdit, TabbedControlGroup, 
+            LayoutControlGroup, LayoutControlItem, DataLayoutControl, LayoutGroup, XtraTabPage, LayoutControl, ButtonEdit, ImageEdit, GroupControl, 
+            DateEdit, DropDownButton, GridLookUpEdit, GridColumnView, ImageComboboxEdit, ListBoxControl, PictureEdit, CheckedListBoxControl,
             TileControl, TileGroup, TileBar, TileItem, TileItemElement, TileBarGroup, AccordionControl, AccordionControlElement,
-            NavBarControl, NavBarItem, NavBarGroup, RichEditControl, CheckedComboBoxEdit, LabelControl
+            NavBarControl, NavBarItem, NavBarGroup, RichEditControl, CheckedComboBoxEdit, LabelControl, LookUpColumnInfo, LookUpEdit, 
+            BarButtonItem, BarButtonGroup, RadioGroup, BarItemLink, BarItem, earchControl, TreeList
         }
 
         public enum Language { German, English, Italian, French }

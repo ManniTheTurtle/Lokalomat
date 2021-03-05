@@ -13,7 +13,6 @@ using DevExpress.XtraNavBar;
 using DevExpress.XtraRichEdit;
 using DevExpress.XtraTab;
 using DevExpress.XtraTreeList;
-using EigeneKlassen;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -24,17 +23,17 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using TargetTool;
+using LokalomatKlassen;
+using DevExpress.XtraGrid.Views.BandedGrid;
+using DevExpress.XtraGrid.Views.Tile;
+using DevExpress.XtraGrid.Views.Layout;
+using DevExpress.XtraGrid.Views.Card;
+using DevExpress.XtraBars.FluentDesignSystem;
 
 namespace Lokalomat
 {
     public partial class MainForm : DevExpress.XtraEditors.XtraForm
     {
-        public MainForm()
-        {
-            InitializeComponent();
-            WindowState = FormWindowState.Maximized;
-        }
-
         public XtraForm xtraForm = new XtraForm();
 
         public MyXtraDocument xtra_Document = new MyXtraDocument();
@@ -42,10 +41,10 @@ namespace Lokalomat
         public static Dictionary<Object, Object> dictionary = new Dictionary<Object, Object>();
 
         public string AssemblyFilePath;
-        // @"C:\k3tfs\Programm\bin\Debug\de\LokalisierungsTest"
-        public string SerializationFilePath = @"C:\Users\Manni\Desktop\Build\de"; 
 
-        public string DeserializationFilePath;
+        public string FilePathForSerialization;
+
+        public string FilePathForDeserialization;
 
         public string DocumentName = "leer";
 
@@ -72,10 +71,12 @@ namespace Lokalomat
         public List<Type> TypesList = new List<Type>();
         public List<XtraForm> ContainerListOfXtraForms = new List<XtraForm>();
         public List<XtraUserControl> ContainerListOfXtraUserControls = new List<XtraUserControl>();
+        public List<FluentDesignForm> ContainerListOFFluentDesignForm = new List<FluentDesignForm>();
 
         // finale Listen:
         public List<object> otherControlTypes = new List<object>();
         public List<XtraForm> xtraFormslist = new List<XtraForm>();
+        public List<FluentDesignForm> fluentDesignFormslist = new List<FluentDesignForm>();
         public List<GroupControl> groupControlslist = new List<GroupControl>();
         public List<LayoutControl> layoutControlslist = new List<LayoutControl>();
         public List<DataLayoutControl> dataLayoutControlslist = new List<DataLayoutControl>();
@@ -87,7 +88,6 @@ namespace Lokalomat
         public List<GridControl> gridControlslist = new List<GridControl>();
         public List<GridLookUpEdit> gridLookUpEditslist = new List<GridLookUpEdit>();
         public List<GridColumn> gridColumnslist = new List<GridColumn>();
-        public List<ColumnView> gridColumnsViewlist = new List<ColumnView>();
         public List<SimpleButton> simpleButtonslist = new List<SimpleButton>();
         public List<CheckEdit> checkEditslist = new List<CheckEdit>();
         public List<XtraTabControl> xtraTabControlslist = new List<XtraTabControl>();
@@ -101,8 +101,14 @@ namespace Lokalomat
         public List<DateEdit> dateEditslist = new List<DateEdit>();
         public List<ButtonEdit> buttonEditslist = new List<ButtonEdit>();
         public List<DropDownButton> dropDownButtonslist = new List<DropDownButton>();
+        public List<RadioGroup> radioGroupslist = new List<RadioGroup>();
         public List<CheckedListBoxControl> checkedListBoxControlslist = new List<CheckedListBoxControl>();
         public List<ListBoxControl> listBoxControlslist = new List<ListBoxControl>();
+        public List<LookUpEdit> lookUpEditslist = new List<LookUpEdit>();
+        public List<LookUpColumnInfo> lookUpColumnInfoslist = new List<LookUpColumnInfo>();
+        public List<PopupMenu> popupMenuslist = new List<PopupMenu>();
+        public List<BarItemLink> barItemLinkslist = new List<BarItemLink>();
+        public List<BarItem> barItemslist = new List<BarItem>();
         public List<TileControl> tileControlslist = new List<TileControl>();
         public List<TileGroup> tileGroupslist = new List<TileGroup>();
         public List<TileItem> tileItemslist = new List<TileItem>();
@@ -114,19 +120,11 @@ namespace Lokalomat
         public List<NavBarControl> navBarControlslist = new List<NavBarControl>();
         public List<NavBarGroup> navBarGroupslist = new List<NavBarGroup>();
         public List<NavBarItem> navBarItemslist = new List<NavBarItem>();
-        public List<PopupMenu> popupMenuslist = new List<PopupMenu>();
-        public List<RadioGroup> radioGroupslist = new List<RadioGroup>();
         public List<BarManager> barManagerslist = new List<BarManager>();
         public List<BarButtonGroup> barButtonGroupslist = new List<BarButtonGroup>();
         public List<BarButtonItem> barButtonItemslist = new List<BarButtonItem>();
-        public List<LookUpEdit> lookUpEditslist = new List<LookUpEdit>();
-        public List<LookUpColumnInfo> lookUpColumnInfoslist = new List<LookUpColumnInfo>();
-        public List<RepositoryItemLookUpEdit> repositoryItemLookUpEditslist = new List<RepositoryItemLookUpEdit>();     // bisher das einzige Control, das als RepositoryItem Text hat
-        public List<SearchControl> searchControlslist = new List<SearchControl>();                                      // hat Nulltext
+        public List<SearchControl> searchControlslist = new List<SearchControl>();               // hat Nulltext
         public List<TreeList> treeListslist = new List<TreeList>();
-
-        public List<LayoutViewColumn> layoutViewColumnslist = new List<LayoutViewColumn>();     // wie herausfinden, welcher columntyp benutzt wird?    // Caption = .LayOutviewField
-        public List<TileViewColumn> tileViewColumns = new List<TileViewColumn>();
 
         // bisher im K3 gefundene Forms Controls:
         public List<GroupBox> groupBoxeslist = new List<GroupBox>();
@@ -137,6 +135,15 @@ namespace Lokalomat
         public List<ToolStripMenuItem> toolStripMenuItemslist = new List<ToolStripMenuItem>();
         public List<ContextMenuStrip> contextMenuStripslist = new List<ContextMenuStrip>();
 
+        public MainForm()
+        {
+            InitializeComponent();
+            WindowState = FormWindowState.Maximized;
+
+            FilePathForDeserialization = Lager.FilePathForDeserialization;
+
+            FilePathForSerialization = Lager.FilePathForSerialization;
+        }
 
         //------------------------------------------------------------------------------------|
 
@@ -206,7 +213,7 @@ namespace Lokalomat
 
                         xtra_Document.MyUiElementsList.AddRange(MyUiElementslist);
 
-                        xtra_Document.Filename = SerializationFilePath + "\\" + AssemblyFileName + "_" + xtra_Document.ObjektTyp + "_" + xtra_Document.Name + ".json";
+                        xtra_Document.Filename = FilePathForSerialization + "\\" + AssemblyFileName + "_" + xtra_Document.ObjektTyp + "_" + xtra_Document.Name + ".json";
 
                         XtraDocumentsList.Add(xtra_Document);
 
@@ -251,7 +258,7 @@ namespace Lokalomat
 
                         xtra_Document.MyUiElementsList.AddRange(MyUiElementslist);
 
-                        xtra_Document.Filename = SerializationFilePath + "\\" + AssemblyFileName + "_" + xtra_Document.ObjektTyp + "_" + xtra_Document.Name + ".json";
+                        xtra_Document.Filename = FilePathForSerialization + "\\" + AssemblyFileName + "_" + xtra_Document.ObjektTyp + "_" + xtra_Document.Name + ".json";
 
                         XtraDocumentsList.Add(xtra_Document);
 
@@ -288,6 +295,10 @@ namespace Lokalomat
                             xtraFormslist.Add(i);
                             break;
 
+                        case FluentDesignForm i when typeof(FluentDesignForm).IsAssignableFrom(item.GetType()):
+                            fluentDesignFormslist.Add(i);
+                            break;
+                            
                         case DataLayoutControl lc when typeof(DataLayoutControl).IsAssignableFrom(item.GetType()):
                             dataLayoutControlslist.Add(lc);
 
@@ -391,23 +402,67 @@ namespace Lokalomat
                         case GridControl i when typeof(GridControl).IsAssignableFrom(item.GetType()):
                             gridControlslist.Add(i);
 
-                            GridView y = i.DefaultView as GridView;
+                            GridLevelNodeCollection nodes = i.LevelTree.Nodes;
 
-                            if (y.Columns.Count > 0)
+                            foreach (GridLevelNode node in nodes)
                             {
-                                foreach (var j in y.Columns)
+                                BaseView baseview = node.LevelTemplate;        // LevelTemplate/BaseView kann auch eine ViewCaption haben
+
+                                if (baseview is BandedGridView)
                                 {
-                                    SucheUndUnterscheideKindElemente(j);
+                                    BandedGridView bandengridview = baseview as BandedGridView;
+                                    GridColumnCollection viewcolumns = bandengridview.Columns;
+                                    foreach (GridColumn j in viewcolumns)
+                                    {
+                                        SucheUndUnterscheideKindElemente(j);
+                                    }
+                                }
+                                if (baseview is GridView)   // fängt auch BandedGridColumn
+                                {
+                                    GridView gridview = baseview as GridView;
+                                    GridColumnCollection viewcolumns = gridview.Columns;
+                                    foreach (GridColumn j in viewcolumns) 
+                                    {
+                                        SucheUndUnterscheideKindElemente(j);
+                                    }
+                                }
+                                if (baseview is TileView)       //TileViewColumn hat die richtigen Captions, wozu noch TileViewItemElement = ?
+                                {
+                                    TileView tileview = baseview as TileView;
+                                    GridColumnCollection viewcolumns = tileview.Columns;   
+                                    foreach (GridColumn j in viewcolumns)
+                                    {
+                                        SucheUndUnterscheideKindElemente(j);
+                                    }
+                                }
+                                if (baseview is LayoutView)
+                                {
+                                    LayoutView layoutview = baseview as LayoutView;
+                                    GridColumnCollection viewcolumns = layoutview.Columns;
+                                    foreach (GridColumn j in viewcolumns)
+                                    {
+                                        SucheUndUnterscheideKindElemente(j);
+                                    }
+                                }
+                                if (baseview is CardView)
+                                {
+                                    CardView cardview = baseview as CardView;
+                                    GridColumnCollection viewcolumns = cardview.Columns;
+                                    foreach (GridColumn j in viewcolumns)
+                                    {
+                                        SucheUndUnterscheideKindElemente(j);
+                                    }
                                 }
                             }
                             break;
 
-                        case GridLookUpEdit i when typeof(GridLookUpEdit).IsAssignableFrom(item.GetType()):
+                        case GridLookUpEdit i when typeof(GridLookUpEdit).IsAssignableFrom(item.GetType()):     // hat nur ein Level und die GridColumns können ohne cast aus dem BaseView gelesen werden
                             gridLookUpEditslist.Add(i);
 
-                            if (i.Properties.PopupView.Columns.Count > 0)
+                            if (i.Properties.View.Columns.Count > 0)
                             {
-                                foreach (var j in i.Properties.PopupView.Columns)
+                                GridColumnCollection viewcolumns = i.Properties.View.Columns;
+                                foreach (GridColumn j in viewcolumns)
                                 {
                                     SucheUndUnterscheideKindElemente(j);
                                 }
@@ -416,10 +471,11 @@ namespace Lokalomat
 
                         case GridColumn i when typeof(GridColumn).IsAssignableFrom(item.GetType()):
                             gridColumnslist.Add(i);
-                            break;
 
-                        case ColumnView i when typeof(ColumnView).IsAssignableFrom(item.GetType()):
-                            gridColumnsViewlist.Add(i);
+                            if (i.ColumnEdit is RepositoryItemLookUpEdit)
+                            {
+                                SucheUndUnterscheideKindElemente(i);
+                            }
                             break;
 
                         case XtraTabControl i when typeof(XtraTabControl).IsAssignableFrom(item.GetType()):
@@ -440,6 +496,74 @@ namespace Lokalomat
 
                         case XtraTabPage i when typeof(XtraTabPage).IsAssignableFrom(item.GetType()):
                             xtraTabPageslist.Add(i);
+                            break;
+
+                        case RepositoryItemLookUpEdit i when typeof(RepositoryItemLookUpEdit).IsAssignableFrom(item.GetType()):
+
+                            LookUpColumnInfoCollection lookupcolumns = i.Columns;
+                            foreach (LookUpColumnInfo j in lookupcolumns)
+                            {
+                                SucheUndUnterscheideKindElemente(j);
+                            }
+                            break;
+
+                        case LookUpEdit i when typeof(LookUpEdit).IsAssignableFrom(item.GetType()):
+                            lookUpEditslist.Add(i);
+
+                            lookupcolumns = i.Properties.Columns;
+                            foreach (LookUpColumnInfo j in lookupcolumns)
+                            {
+                                SucheUndUnterscheideKindElemente(j);
+                            }
+                            break;
+
+                        case LookUpColumnInfo i when typeof(LookUpColumnInfo).IsAssignableFrom(item.GetType()):
+                            lookUpColumnInfoslist.Add(i);
+                            break;
+
+                        case PopupMenu i when typeof(PopupMenu).IsAssignableFrom(item.GetType()):
+                            popupMenuslist.Add(i);
+
+                            foreach (BarItemLink j in i.ItemLinks)
+                            {
+                                
+                                SucheUndUnterscheideKindElemente(j);
+                            }
+                            break;
+
+                        case BarItemLink i when typeof(BarItemLink).IsAssignableFrom(item.GetType()):
+                            barItemLinkslist.Add(i);
+
+                            BarItem bi = i.Item;
+                            SucheUndUnterscheideKindElemente(i);
+                            break;
+
+                        case BarItem i when typeof(BarItem).IsAssignableFrom(item.GetType()):
+                            barItemslist.Add(i);
+                            break;
+
+                        case SearchControl i when typeof(SearchControl).IsAssignableFrom(item.GetType()):
+                            searchControlslist.Add(i);
+                            break;
+
+                        case TreeList i when typeof(TreeList).IsAssignableFrom(item.GetType()):
+                            treeListslist.Add(i);
+                            break;
+
+                        case RadioGroup i when typeof(RadioGroup).IsAssignableFrom(item.GetType()):
+                            radioGroupslist.Add(i);
+                            break;
+
+                        case BarManager i when typeof(BarManager).IsAssignableFrom(item.GetType()):
+                            barManagerslist.Add(i);
+                            break;
+
+                        case BarButtonGroup i when typeof(BarButtonGroup).IsAssignableFrom(item.GetType()):
+                            barButtonGroupslist.Add(i);
+                            break;
+
+                        case BarButtonItem i when typeof(BarButtonItem).IsAssignableFrom(item.GetType()):
+                            barButtonItemslist.Add(i);
                             break;
 
                         case CheckEdit i when typeof(CheckEdit).IsAssignableFrom(item.GetType()):
@@ -656,6 +780,16 @@ namespace Lokalomat
                     XtraDokument = DocumentName
                 });
             }
+            foreach (var item in fluentDesignFormslist)
+            {
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.FluentDesignForm,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
+                });
+            }
             foreach (var item in gridControlslist)
             {
                 MyUiElementslist.Add(new MyUiElement
@@ -855,16 +989,6 @@ namespace Lokalomat
                     SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
-            foreach (var item in gridColumnsViewlist)
-            {
-                MyUiElementslist.Add(new MyUiElement
-                {
-                    ItemClassName = MyUiElement.ClassName.GridColumnView,
-                    Name = item.Name,
-                    Other = item.ViewCaption,
-                    XtraDokument = DocumentName
-                });
-            }
             foreach (var item in checkedListBoxControlslist)
             {
                 MyUiElementslist.Add(new MyUiElement
@@ -1036,7 +1160,114 @@ namespace Lokalomat
                     SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
                 });
             }
+            foreach (var item in lookUpColumnInfoslist)
+            {
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.LookUpColumnInfo,
+                    Other = item.FieldName, //hat keine Name Eigenschaft
+                    Caption = item.Caption,
+                    XtraDokument = DocumentName
+                });
+            }
+            foreach (var item in lookUpEditslist)
+            {
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.LookUpEdit,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                });
+            }
+            foreach (var item in radioGroupslist)
+            {
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.RadioGroup,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                });
+            }
+            foreach (var item in barButtonGroupslist)
+            {
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.BarButtonGroup,
+                    Name = item.Name,
+                    Caption = item.Caption,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                });
+            }
+            foreach (var item in barButtonItemslist)
+            {
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.BarButtonItem,
+                    Name = item.Name,
+                    Caption = item.Caption,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                });
+            }
+            foreach (var item in barItemLinkslist)
+            {
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.BarItemLink,
+                    Other = item.Item.Name,
+                    Caption = item.Caption,
+                    XtraDokument = DocumentName
+                });
+            }
+            foreach (var item in barItemslist)
+            {
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.BarItem,
+                    Name = item.Name,
+                    Caption = item.Caption,
+                    XtraDokument = DocumentName
+                });
+            }
+            foreach (var item in searchControlslist)
+            {
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.RadioGroup,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName,
+                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                });
+            }
+            foreach (var item in treeListslist)
+            {
+                MyUiElementslist.Add(new MyUiElement
+                {
+                    ItemClassName = MyUiElement.ClassName.RadioGroup,
+                    Name = item.Name,
+                    Text = item.Text,
+                    XtraDokument = DocumentName
+                });
+            }
 
+
+
+            barItemslist.Clear();
+            barItemLinkslist.Clear();
+            searchControlslist.Clear();
+            treeListslist.Clear();
+            barButtonItemslist.Clear();
+            barButtonGroupslist.Clear();
+            radioGroupslist.Clear();
+            lookUpColumnInfoslist.Clear();
+            lookUpEditslist.Clear();
+            fluentDesignFormslist.Clear();
             xtraFormslist.Clear();
             accordionControlElementslist.Clear();
             labelControlslist.Clear();
@@ -1054,7 +1285,6 @@ namespace Lokalomat
             tileBarslist.Clear();
             checkedListBoxControlslist.Clear();
             listBoxControlslist.Clear();
-            gridColumnsViewlist.Clear();
             dropDownButtonslist.Clear();
             gridLookUpEditslist.Clear();
             layoutControlslist.Clear();
@@ -1081,7 +1311,7 @@ namespace Lokalomat
         {
             int count = 0;
 
-            DeserializedXtraDocsList = NutzeMethode.DeserializeAllFilesFromActiveFolder(SerializationFilePath);
+            DeserializedXtraDocsList = NutzeMethode.DeserializeAllFilesFromFolder(FilePathForSerialization);    // zuerst wird deserialisiert
 
             listBox1.Items.Add("XtraDokumente deserialisiert Count: " + DeserializedXtraDocsList.Count);
 
@@ -1089,7 +1319,7 @@ namespace Lokalomat
             DeserializedXtraDocsDict = DeserializedXtraDocsList.ToDictionary(x => x.Name, x => x);
 
             // Comparer 1
-            foreach (var item in XtraDocumentsDict)
+            foreach (var item in XtraDocumentsDict)                                                             // dann verglichen
             {
                 if (!DeserializedXtraDocsDict.ContainsKey(item.Key))
                 {
@@ -1124,7 +1354,7 @@ namespace Lokalomat
 
             DeserializedXtraDocsList = DeserializedXtraDocsDict.Values.ToList();
 
-            foreach (var item in DeserializedXtraDocsList)
+            foreach (var item in DeserializedXtraDocsList)                                                  // zuletzt wird serialisiert, was neu ist 
             {
                 if (!File.Exists(item.Filename))
                 {
@@ -1153,7 +1383,7 @@ namespace Lokalomat
         // --> Deserialisiere Json Dateien
         private void deserialisiereDateien()
         {
-            DeserializedXtraDocsList = NutzeMethode.DeserializeAllFilesFromActiveFolder(DeserializationFilePath);
+            DeserializedXtraDocsList = NutzeMethode.DeserializeAllFilesFromFolder(FilePathForDeserialization);
 
             listBox1.Items.Add("XtraDokumente deserialisiert Count: " + DeserializedXtraDocsList.Count);
 
@@ -1244,13 +1474,18 @@ namespace Lokalomat
             gridControl1.DataSource = null;
         }
 
+        // Show
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            gridView1.Columns.Clear();
+            gridControl1.DataSource = null;
+        }
+
+        // öffne Instanz von TargetTool
+        private void öffneXtraDoc1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             XtraDoc1 xtraDoc1 = new XtraDoc1();
             xtraDoc1.Show();
-
-            gridView1.Columns.Clear();
-            gridControl1.DataSource = null;
         }
 
         //------------------------------------------------------------------------------------|
@@ -1292,7 +1527,7 @@ namespace Lokalomat
                 {
                     string[] files = Directory.GetFiles(fbd.SelectedPath);
 
-                    SerializationFilePath = fbd.SelectedPath;
+                    FilePathForSerialization = fbd.SelectedPath;
                 }
             }
 
@@ -1302,7 +1537,7 @@ namespace Lokalomat
         // Verzeichnis automatisch auswählen zum Serialisieren
         private void autoVerzeichnisToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            SerializationFilePath = @"C:\Users\Manni\Desktop\Build\de";
+            FilePathForSerialization = Lager.FilePathForSerialization;
 
             serialisiereAlleneuenControls();
         }
@@ -1318,7 +1553,7 @@ namespace Lokalomat
                 {
                     string[] files = Directory.GetFiles(fbd.SelectedPath);
 
-                    DeserializationFilePath = fbd.SelectedPath;
+                    FilePathForDeserialization = fbd.SelectedPath;
                 }
             }
 
@@ -1328,7 +1563,7 @@ namespace Lokalomat
         // Verzeichnis automatisch auswählen zum Deserialisieren
         private void autoVerzeichnisToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            DeserializationFilePath = @"C:\Users\Manni\Desktop\Build\de";
+            FilePathForDeserialization = Lager.FilePathForDeserialization;
 
             deserialisiereDateien();
         }
@@ -1483,19 +1718,21 @@ namespace Lokalomat
 
             if (otherControlTypes != null && otherControlTypes.Count > 0)
             {
-                List<Control> showableControls = new List<Control>();
+                //List<Control> showableControls = new List<Control>();
+                List<string> showableTypeNames = new List<string>();
 
                 foreach (var item in otherControlTypes)
                 {
                     if (item != null && typeof(Control).IsAssignableFrom(item.GetType()))
                     {
-                        showableControls.Add((Control)item);
+                        //showableControls.Add((Control)item);
+                        showableTypeNames.Add(item.GetType().Name);
                     }
                 }
 
                 gridView1.Columns.Clear();
                 gridControl1.DataSource = null;
-                gridControl1.DataSource = showableControls;
+                gridControl1.DataSource = showableTypeNames;
             }
         }
 

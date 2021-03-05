@@ -2,11 +2,14 @@
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraLayout;
-using EigeneKlassen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using LokalomatKlassen;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.BandedGrid;
+using DevExpress.XtraGrid.Views.Tile;
 
 namespace TargetTool
 {
@@ -23,11 +26,15 @@ namespace TargetTool
 
         public MyUiElement ControlValue = new MyUiElement();
 
+        public LayoutControl thisDocsLayoutControl = new LayoutControl();
+
         public XtraDoc1()
         {
             InitializeComponent();
 
-            ListOutOfDeserializedLanguageFiles = neueMethode.DeserializeAllFilesFromActiveFolder(@"C:\Users\Manni\Desktop\Build\de");
+            var filepath = Lager.FilePathForDeserialization;
+
+            ListOutOfDeserializedLanguageFiles = neueMethode.DeserializeAllFilesFromFolder(filepath);
 
             foreach (var item in ListOutOfDeserializedLanguageFiles)
             {
@@ -69,7 +76,7 @@ namespace TargetTool
 
                 if (Item.GetType() == typeof(LayoutControl))
                 {
-                    var thisDocsLayoutControl = Item as LayoutControl;
+                    thisDocsLayoutControl = Item as LayoutControl;
 
                     foreach (BaseLayoutItem bli in thisDocsLayoutControl.Items)
                     {
@@ -179,9 +186,16 @@ namespace TargetTool
             }
         }
 
-
-        private void XtraDoc1_FormClosing(object sender, FormClosingEventArgs e)
+        private void simpleButton1_Click(object sender, EventArgs e)
         {
+            List<Control> test = new List<Control>();
+
+            foreach (Control item in thisDocsLayoutControl.Controls)
+            {
+                test.Add(item);
+            }
+
+            gridControl1.DataSource = test;
 
         }
     }

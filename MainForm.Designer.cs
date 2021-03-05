@@ -54,7 +54,6 @@ namespace Lokalomat
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testeLINQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sucheToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -62,6 +61,7 @@ namespace Lokalomat
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.öffneXtraDoc1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit2.Properties)).BeginInit();
@@ -301,7 +301,7 @@ namespace Lokalomat
             this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.testeLINQToolStripMenuItem,
             this.showToolStripMenuItem,
-            this.sucheToolStripMenuItem});
+            this.öffneXtraDoc1ToolStripMenuItem});
             this.testToolStripMenuItem.Margin = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(88, 31);
@@ -310,22 +310,16 @@ namespace Lokalomat
             // testeLINQToolStripMenuItem
             // 
             this.testeLINQToolStripMenuItem.Name = "testeLINQToolStripMenuItem";
-            this.testeLINQToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.testeLINQToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.testeLINQToolStripMenuItem.Text = "Teste LINQ";
             this.testeLINQToolStripMenuItem.Click += new System.EventHandler(this.testeLINQToolStripMenuItem_Click);
             // 
             // showToolStripMenuItem
             // 
             this.showToolStripMenuItem.Name = "showToolStripMenuItem";
-            this.showToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.showToolStripMenuItem.Text = "Show";
             this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
-            // 
-            // sucheToolStripMenuItem
-            // 
-            this.sucheToolStripMenuItem.Name = "sucheToolStripMenuItem";
-            this.sucheToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
-            this.sucheToolStripMenuItem.Text = "Suche";
             // 
             // Root
             // 
@@ -398,6 +392,13 @@ namespace Lokalomat
             this.layoutControlItem5.Text = "Wähle Xtra Dokument:";
             this.layoutControlItem5.TextSize = new System.Drawing.Size(108, 13);
             // 
+            // öffneXtraDoc1ToolStripMenuItem
+            // 
+            this.öffneXtraDoc1ToolStripMenuItem.Name = "öffneXtraDoc1ToolStripMenuItem";
+            this.öffneXtraDoc1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.öffneXtraDoc1ToolStripMenuItem.Text = "öffne XtraDoc1";
+            this.öffneXtraDoc1ToolStripMenuItem.Click += new System.EventHandler(this.öffneXtraDoc1ToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.Appearance.BackColor = System.Drawing.Color.LightSkyBlue;
@@ -453,7 +454,6 @@ namespace Lokalomat
         private System.Windows.Forms.ToolStripMenuItem verzeichnisWählenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem autoVerzeichnisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lokalisierungToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sucheToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem speicherLeerenToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem wähleVerzeichnisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem wähleVerzeichnisToolStripMenuItem1;
@@ -463,6 +463,7 @@ namespace Lokalomat
         private System.Windows.Forms.ToolStripMenuItem autoVerzeichnisToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem zeigeUnsortierteControlsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zeigeUnsortierteControlsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem öffneXtraDoc1ToolStripMenuItem;
     }
 }
 
