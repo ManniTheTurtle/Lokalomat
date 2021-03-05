@@ -291,12 +291,12 @@ namespace Lokalomat
                 {
                     switch (item)
                     {
-                        case XtraForm i when typeof(XtraForm).IsAssignableFrom(item.GetType()):
-                            xtraFormslist.Add(i);
-                            break;
-
                         case FluentDesignForm i when typeof(FluentDesignForm).IsAssignableFrom(item.GetType()):
                             fluentDesignFormslist.Add(i);
+                            break;
+
+                        case XtraForm i when typeof(XtraForm).IsAssignableFrom(item.GetType()):
+                            xtraFormslist.Add(i);
                             break;
                             
                         case DataLayoutControl lc when typeof(DataLayoutControl).IsAssignableFrom(item.GetType()):
