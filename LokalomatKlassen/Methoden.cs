@@ -1,4 +1,24 @@
-﻿using DevExpress.XtraEditors;
+﻿using DevExpress.Utils;
+using DevExpress.XtraBars;
+using DevExpress.XtraBars.FluentDesignSystem;
+using DevExpress.XtraBars.Navigation;
+using DevExpress.XtraDataLayout;
+using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.BandedGrid;
+using DevExpress.XtraGrid.Views.Base;
+using DevExpress.XtraGrid.Views.Card;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraGrid.Views.Layout;
+using DevExpress.XtraGrid.Views.Tile;
+using DevExpress.XtraLayout;
+using DevExpress.XtraNavBar;
+using DevExpress.XtraRichEdit;
+using DevExpress.XtraTab;
+using DevExpress.XtraTreeList;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,8 +31,7 @@ namespace LokalomatKlassen
 {
     public class Methoden
     {
-
-        public static Dictionary<Object, string> dictionary = new Dictionary<object, string>();
+        public MyUiElement ControlValue;
 
         // Assemblysuche
         public List<Assembly> LadeAssemblies(string Verzeichnis)
@@ -107,5 +126,909 @@ namespace LokalomatKlassen
 
             return DeserializedXtraDocsList;
         }
+
+        // Finde passende Json Datei und fülle Dictionary<MyUiElement>
+        public void FillDictionaryToCompare(string thisactivedocumentsname)
+        {
+            var filepath = Lager.FilePathForDeserialization;
+
+            Lager.DictOfUiElementsToCompare = new Dictionary<string, MyUiElement>();
+
+            Lager.ListOutOfDeserializedLanguageFiles = DeserializeAllFilesFromFolder(filepath);
+
+            foreach (var item in Lager.ListOutOfDeserializedLanguageFiles)
+            {
+                if (item.Name.Contains(thisactivedocumentsname))
+                {
+                    Lager.DictOfUiElementsToCompare = item.MyUiElementsList.Distinct().ToDictionary(x => string.Format(x.Name), x => x);
+                }
+            }
+        }
+
+        // Ersetze Texte
+        public void ChangeLanguage(object item)
+        {
+            if (item != null && Lager.DictOfUiElementsToCompare != null)
+            {
+                if (!Lager.ObjectsDictionary.ContainsKey(item))
+                {
+                    switch (item)
+                    {
+                        case FluentDesignForm i when typeof(FluentDesignForm).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case XtraForm i when typeof(XtraForm).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case DataLayoutControl lc when typeof(DataLayoutControl).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(lc.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    lc.Text = ControlValue.Text;
+                                }
+                            }
+
+                            if (lc.HasChildren)
+                            {
+                                foreach (var lc_item in lc.Items)
+                                {
+                                    ChangeLanguage(lc_item);
+                                }
+                                foreach (var lc_control in lc.Controls)
+                                {
+                                    ChangeLanguage(lc_control);
+                                }
+                            }
+                            break;
+
+                        case LayoutControl lc when typeof(LayoutControl).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(lc.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    lc.Text = ControlValue.Text;
+                                }
+                            }
+
+                            if (lc.HasChildren)
+                            {
+                                foreach (var lc_item in lc.Items)
+                                {
+                                    ChangeLanguage(lc_item);
+                                }
+                                foreach (var lc_control in lc.Controls)
+                                {
+                                    ChangeLanguage(lc_control);
+                                }
+                            }
+                            break;
+
+                        case LayoutGroup lc when typeof(LayoutGroup).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(lc.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    lc.Text = ControlValue.Text;
+                                }
+                            }
+
+                            if (lc.Items.Count > 0)
+                            {
+                                foreach (var lc_item in lc.Items)
+                                {
+                                    ChangeLanguage(lc_item);
+                                }
+                            }
+                            break;
+
+                        case TabbedGroup lc when typeof(TabbedGroup).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(lc.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    lc.Text = ControlValue.Text;
+                                }
+                            }
+
+                            if (lc.TabPages.Count > 0)
+                            {
+                                foreach (var i in lc.TabPages)
+                                {
+                                    ChangeLanguage(i);
+                                }
+                            }
+                            break;
+
+                        case TabbedControlGroup lc when typeof(TabbedControlGroup).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(lc.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    lc.Text = ControlValue.Text;
+                                }
+                            }
+
+                            if (lc.TabPages.Count > 0)  // diese .TabPages sind nicht XtraTabPage sondern LayoutControlGroup!
+                            {
+                                foreach (var i in lc.TabPages)
+                                {
+                                    ChangeLanguage(i);
+                                }
+                            }
+                            break;
+
+                        case LayoutControlGroup lc when typeof(LayoutControlGroup).IsAssignableFrom(lc.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(lc.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    lc.Text = ControlValue.Text;
+                                }
+                            }
+
+                            ChangeLanguage(lc.ParentTabbedGroup);
+
+                            if (lc.Items.Count > 0)
+                            {
+                                foreach (var i in lc.Items)
+                                {
+                                    ChangeLanguage(i);
+                                }
+                            }
+                            break;
+
+                        case LayoutControlItem lc when typeof(LayoutControlItem).IsAssignableFrom(lc.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(lc.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    lc.Text = ControlValue.Text;
+                                }
+                            }
+
+                            ChangeLanguage(lc.Control);
+
+                            break;
+
+                        case GroupControl lc when typeof(GroupControl).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(lc.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    lc.Text = ControlValue.Text;
+                                }
+                            }
+
+                            if (lc.Controls.Count > 0)
+                            {
+                                foreach (var lc_control in lc.Controls)
+                                {
+                                    ChangeLanguage(lc_control);
+                                }
+                            }
+                            break;
+
+                        case GridControl i when typeof(GridControl).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+
+                            BaseView bv = i.MainView;           // BaseView kann auch eine ViewCaption haben
+
+                            ChangeLanguage(bv);
+
+                            GridLevelNodeCollection nodes = i.LevelTree.Nodes;
+
+                            foreach (GridLevelNode node in nodes)
+                            {
+                                ChangeLanguage(node.LevelTemplate);       // BaseView kann auch eine ViewCaption haben
+                            }
+                            break;
+
+                        case BandedGridView i when typeof(BandedGridView).IsAssignableFrom(item.GetType()):     //BaseView kann nicht nach .Columns durchsucht werden, darum Unterteilung nötig
+
+                            foreach (var j in i.Columns)
+                            {
+                                ChangeLanguage(j);
+                            }
+                            break;
+
+                        case GridView i when typeof(GridView).IsAssignableFrom(item.GetType()):
+
+                            foreach (var j in i.Columns)
+                            {
+                                ChangeLanguage(j);
+                            }
+                            break;
+
+                        case TileView i when typeof(TileView).IsAssignableFrom(item.GetType()):
+                            foreach (var j in i.Columns)
+                            {
+                                ChangeLanguage(j);
+                            }
+                            break;
+
+                        case LayoutView i when typeof(LayoutView).IsAssignableFrom(item.GetType()):
+                            foreach (var j in i.Columns)
+                            {
+                                ChangeLanguage(j);
+                            }
+                            break;
+
+                        case CardView i when typeof(CardView).IsAssignableFrom(item.GetType()):
+                            foreach (var j in i.Columns)
+                            {
+                                ChangeLanguage(j);
+                            }
+                            break;
+
+                        case GridLookUpEdit i when typeof(GridLookUpEdit).IsAssignableFrom(item.GetType()):     // hat nur ein Level und die GridColumns können ohne cast aus dem BaseView gelesen werden
+                           
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (i.Properties.View.Columns.Count > 0)
+                            {
+                                GridColumnCollection viewcolumns = i.Properties.View.Columns;
+                                foreach (GridColumn j in viewcolumns)
+                                {
+                                    ChangeLanguage(j);
+                                }
+                            }
+                            break;
+
+                        case GridColumn i when typeof(GridColumn).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.Caption))
+                                {
+                                    i.Caption = ControlValue.Caption;
+                                }
+                            }
+
+                            if (i.ColumnEdit is RepositoryItemLookUpEdit)
+                            {
+                                ChangeLanguage(i);
+                            }
+                            break;
+
+                        case XtraTabControl i when typeof(XtraTabControl).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+
+                            if (i.HasChildren)
+                            {
+                                foreach (var i_item in i.TabPages)
+                                {
+                                    ChangeLanguage(i_item);
+                                }
+                                foreach (var i_control in i.Controls)
+                                {
+                                    ChangeLanguage(i_control);
+                                }
+                            }
+                            break;
+
+                        case XtraTabPage i when typeof(XtraTabPage).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case RepositoryItemLookUpEdit i when typeof(RepositoryItemLookUpEdit).IsAssignableFrom(item.GetType()):
+
+                            LookUpColumnInfoCollection lookupcolumns = i.Columns;
+                            foreach (LookUpColumnInfo j in lookupcolumns)
+                            {
+                                ChangeLanguage(j);
+                            }
+                            break;
+
+                        case LookUpEdit i when typeof(LookUpEdit).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+
+                            lookupcolumns = i.Properties.Columns;
+                            foreach (LookUpColumnInfo j in lookupcolumns)
+                            {
+                                ChangeLanguage(j);
+                            }
+                            break;
+
+                        case LookUpColumnInfo i when typeof(LookUpColumnInfo).IsAssignableFrom(item.GetType()):
+                            break;
+
+                        case PopupMenu i when typeof(PopupMenu).IsAssignableFrom(item.GetType()):
+
+                            foreach (BarItemLink j in i.ItemLinks)
+                            {
+
+                                ChangeLanguage(j);
+                            }
+                            break;
+
+                        case BarItemLink i when typeof(BarItemLink).IsAssignableFrom(item.GetType()):
+
+                            BarItem bi = i.Item;
+                            ChangeLanguage(i);
+                            break;
+
+                        case BarItem i when typeof(BarItem).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Caption = ControlValue.Caption;
+                                }
+                            }
+                            break;
+
+                        case SearchControl i when typeof(SearchControl).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case TreeList i when typeof(TreeList).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case RadioGroup i when typeof(RadioGroup).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case BarManager i when typeof(BarManager).IsAssignableFrom(item.GetType()):
+
+                            break;
+
+                        case BarButtonGroup i when typeof(BarButtonGroup).IsAssignableFrom(item.GetType()):
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Caption = ControlValue.Caption;
+                                }
+                            }
+                            break;
+
+                        case BarButtonItem i when typeof(BarButtonItem).IsAssignableFrom(item.GetType()):
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Caption = ControlValue.Caption;
+                                }
+                            }
+                            break;
+
+                        case CheckEdit i when typeof(CheckEdit).IsAssignableFrom(item.GetType()):
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case DropDownButton i when typeof(DropDownButton).IsAssignableFrom(item.GetType()):
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case DateEdit i when typeof(DateEdit).IsAssignableFrom(item.GetType()):
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case ImageEdit i when typeof(ImageEdit).IsAssignableFrom(item.GetType()):
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case ComboBoxEdit i when typeof(ComboBoxEdit).IsAssignableFrom(item.GetType()):
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case TextEdit i when typeof(TextEdit).IsAssignableFrom(item.GetType()):
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+
+                        case CheckedListBoxControl i when typeof(CheckedListBoxControl).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case ListBoxControl i when typeof(ListBoxControl).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case ButtonEdit i when typeof(ButtonEdit).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+
+                        case SimpleButton i when typeof(SimpleButton).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+
+                        case LabelControl i when typeof(LabelControl).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case RichEditControl i when typeof(RichEditControl).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case CheckedComboBoxEdit i when typeof(CheckedComboBoxEdit).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+                            break;
+
+                        case NavBarControl i when typeof(NavBarControl).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+
+                            if (i.HasChildren)
+                            {
+                                foreach (var j in i.Groups)
+                                {
+                                    ChangeLanguage(j);
+                                }
+                                foreach (var j in i.Controls)
+                                {
+                                    ChangeLanguage(j);
+                                }
+                                foreach (var j in i.Items)
+                                {
+                                    ChangeLanguage(j);
+                                }
+                            }
+                            break;
+
+                        case NavBarGroup i when typeof(NavBarGroup).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Caption = ControlValue.Caption;
+                                }
+                            }
+
+                            foreach (NavBarItemLink j in i.ItemLinks)   // NavBarItem == NavBarItemLink(Item)
+                            {
+                                ChangeLanguage(j.Item);
+                            }
+                            break;
+
+                        case NavBarItem i when typeof(NavBarItem).IsAssignableFrom(item.GetType()):
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Caption = ControlValue.Caption;
+                                }
+                            }
+                            break;
+
+                        case AccordionControl i when typeof(AccordionControl).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+
+                            if (i.HasChildren)
+                            {
+                                foreach (var j in i.Controls)
+                                {
+                                    ChangeLanguage(j);
+                                }
+                                foreach (var j in i.Elements)
+                                {
+                                    ChangeLanguage(j);
+                                }
+                            }
+                            break;
+
+                        case AccordionControlElement i when typeof(AccordionControlElement).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+
+                            if (i.Elements.Count > 0)
+                            {
+                                foreach (var j in i.Elements)
+                                {
+                                    ChangeLanguage(j);
+                                }
+                            }
+                            break;
+
+                        case TileControl i when typeof(TileControl).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+
+                            if (i.Groups.Count > 0)
+                            {
+                                foreach (var j in i.Groups)
+                                {
+                                    ChangeLanguage(j);
+                                }
+                            }
+                            if (i.Controls.Count > 0)
+                            {
+                                foreach (var j in i.Controls)
+                                {
+                                    ChangeLanguage(j);
+                                }
+                            }
+                            break;
+
+                        case TileGroup i when typeof(TileGroup).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+
+                            if (i.Items.Count > 0)
+                            {
+                                foreach (var j in i.Items)
+                                {
+                                    ChangeLanguage(j);
+                                }
+                            }
+                            break;
+
+                        case TileBarGroup i when typeof(TileBarGroup).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+
+                            ChangeLanguage(i.Control);
+
+                            if (i.Items.Count > 0)
+                            {
+                                foreach (var j in i.Items)
+                                {
+                                    ChangeLanguage(j);
+                                }
+                            }
+                            break;
+
+                        case TileBar i when typeof(TileBar).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+
+                            if (i.HasChildren)
+                            {
+                                foreach (var j in i.Controls)
+                                {
+                                    ChangeLanguage(j);
+                                }
+                                foreach (var j in i.Groups)
+                                {
+                                    ChangeLanguage(j);
+                                }
+                            }
+                            break;
+
+                        case TileItem i when typeof(TileItem).IsAssignableFrom(item.GetType()):
+
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                            }
+
+                            if (i.Elements.Count > 0)
+                            {
+                                foreach (var j in i.Elements)
+                                {
+                                    ChangeLanguage(j);
+                                }
+                            }
+                            break;
+
+                        case TileItemElement i when typeof(TileItemElement).IsAssignableFrom(item.GetType()):
+                            break;
+
+                        default:
+                            Lager.UnknownObjects.Add(item);
+                            break;
+                    }
+                    Lager.ObjectsDictionary.Add(item, item);
+                }
+            }
+        }
+
     }
 }

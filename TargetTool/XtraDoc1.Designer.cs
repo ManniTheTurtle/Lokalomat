@@ -34,7 +34,18 @@ namespace TargetTool
             DevExpress.XtraGrid.GridLevelNode gridLevelNode3 = new DevExpress.XtraGrid.GridLevelNode();
             DevExpress.XtraGrid.GridLevelNode gridLevelNode4 = new DevExpress.XtraGrid.GridLevelNode();
             DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem1 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipSeparatorItem toolTipSeparatorItem1 = new DevExpress.Utils.ToolTipSeparatorItem();
             DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem2 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem3 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.ToolTipTitleItem toolTipTitleItem4 = new DevExpress.Utils.ToolTipTitleItem();
+            DevExpress.Utils.ToolTipSeparatorItem toolTipSeparatorItem2 = new DevExpress.Utils.ToolTipSeparatorItem();
+            DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
             this.layoutView1 = new DevExpress.XtraGrid.Views.Layout.LayoutView();
             this.layoutViewColumn1 = new DevExpress.XtraGrid.Columns.LayoutViewColumn();
             this.layoutViewField_layoutViewColumn1 = new DevExpress.XtraGrid.Views.Layout.LayoutViewField();
@@ -107,17 +118,17 @@ namespace TargetTool
             this.accordionControlElement4 = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.tabbedControlGroup_left = new DevExpress.XtraLayout.TabbedControlGroup();
-            this.layoutControlGroupTAB3 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem_tileControl1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem_accordionControl1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlGroupTAB1 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem_gridControl1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlGroupTAB2 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem_simpleButton1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.layoutControlItem_textEdit1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem_checkEdit1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem_radioGroup1 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlGroupTAB1 = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItem_gridControl1 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlGroupTAB3 = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItem_tileControl1 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem_accordionControl1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem_groupControl1 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutViewField_layoutViewColumn1)).BeginInit();
@@ -167,17 +178,17 @@ namespace TargetTool
             ((System.ComponentModel.ISupportInitialize)(this.accordionControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroup_left)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupTAB3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_tileControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_accordionControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupTAB1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupTAB2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_simpleButton1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_textEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_checkEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_radioGroup1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupTAB1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_gridControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupTAB3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_tileControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_accordionControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_groupControl1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -194,6 +205,7 @@ namespace TargetTool
             // layoutViewColumn1
             // 
             this.layoutViewColumn1.Caption = "layoutViewColumn1";
+            this.layoutViewColumn1.FieldName = "Start";
             this.layoutViewColumn1.LayoutViewField = this.layoutViewField_layoutViewColumn1;
             this.layoutViewColumn1.Name = "layoutViewColumn1";
             // 
@@ -216,7 +228,7 @@ namespace TargetTool
             this.layoutViewField_layoutViewColumn2.EditorPreferredWidth = 10;
             this.layoutViewField_layoutViewColumn2.Location = new System.Drawing.Point(0, 20);
             this.layoutViewField_layoutViewColumn2.Name = "layoutViewField_layoutViewColumn2";
-            this.layoutViewField_layoutViewColumn2.Size = new System.Drawing.Size(123, 20);
+            this.layoutViewField_layoutViewColumn2.Size = new System.Drawing.Size(123, 24);
             this.layoutViewField_layoutViewColumn2.TextSize = new System.Drawing.Size(97, 13);
             // 
             // layoutViewColumn3
@@ -228,9 +240,9 @@ namespace TargetTool
             // layoutViewField_layoutViewColumn3
             // 
             this.layoutViewField_layoutViewColumn3.EditorPreferredWidth = 10;
-            this.layoutViewField_layoutViewColumn3.Location = new System.Drawing.Point(0, 40);
+            this.layoutViewField_layoutViewColumn3.Location = new System.Drawing.Point(0, 44);
             this.layoutViewField_layoutViewColumn3.Name = "layoutViewField_layoutViewColumn3";
-            this.layoutViewField_layoutViewColumn3.Size = new System.Drawing.Size(123, 20);
+            this.layoutViewField_layoutViewColumn3.Size = new System.Drawing.Size(123, 24);
             this.layoutViewField_layoutViewColumn3.TextSize = new System.Drawing.Size(97, 13);
             // 
             // gridControl1
@@ -274,6 +286,7 @@ namespace TargetTool
             // tileViewColumn1
             // 
             this.tileViewColumn1.Caption = "tileViewColumn1";
+            this.tileViewColumn1.FieldName = "Start";
             this.tileViewColumn1.Name = "tileViewColumn1";
             this.tileViewColumn1.Visible = true;
             this.tileViewColumn1.VisibleIndex = 0;
@@ -318,6 +331,7 @@ namespace TargetTool
             // gridColumn4
             // 
             this.gridColumn4.Caption = "gridColumn4";
+            this.gridColumn4.FieldName = "Start";
             this.gridColumn4.Name = "gridColumn4";
             this.gridColumn4.Visible = true;
             this.gridColumn4.VisibleIndex = 0;
@@ -356,6 +370,7 @@ namespace TargetTool
             // bandedGridColumn1
             // 
             this.bandedGridColumn1.Caption = "bandedGridColumn1";
+            this.bandedGridColumn1.FieldName = "Start";
             this.bandedGridColumn1.Name = "bandedGridColumn1";
             this.bandedGridColumn1.Visible = true;
             // 
@@ -383,6 +398,7 @@ namespace TargetTool
             // gridColumn1
             // 
             this.gridColumn1.Caption = "gridColumn1";
+            this.gridColumn1.FieldName = "Start";
             this.gridColumn1.Name = "gridColumn1";
             this.gridColumn1.Visible = true;
             this.gridColumn1.VisibleIndex = 0;
@@ -732,7 +748,18 @@ namespace TargetTool
             this.textEdit1.Name = "textEdit1";
             this.textEdit1.Size = new System.Drawing.Size(429, 20);
             this.textEdit1.StyleController = this.layoutControl1;
+            toolTipTitleItem1.Text = "tt";
+            toolTipItem1.Text = "cc";
+            toolTipItem2.Text = "cc";
+            toolTipTitleItem2.Text = "tt";
+            superToolTip1.Items.Add(toolTipTitleItem1);
+            superToolTip1.Items.Add(toolTipSeparatorItem1);
+            superToolTip1.Items.Add(toolTipItem1);
+            superToolTip1.Items.Add(toolTipItem2);
+            superToolTip1.Items.Add(toolTipTitleItem2);
+            this.textEdit1.SuperTip = superToolTip1;
             this.textEdit1.TabIndex = 6;
+            this.textEdit1.ToolTip = "jjj";
             // 
             // simpleButton1
             // 
@@ -740,11 +767,20 @@ namespace TargetTool
             this.simpleButton1.Name = "simpleButton1";
             this.simpleButton1.Size = new System.Drawing.Size(593, 22);
             this.simpleButton1.StyleController = this.layoutControl1;
-            toolTipItem1.Text = "supertooltipitemtext";
-            superToolTip1.Items.Add(toolTipItem1);
-            this.simpleButton1.SuperTip = superToolTip1;
+            toolTipTitleItem3.Text = "ichbinTitleItem";
+            toolTipItem3.Text = "Content1";
+            toolTipTitleItem4.Text = "ichbinTiltle2";
+            toolTipItem4.Text = "content2";
+            toolTipItem5.Text = "content3";
+            superToolTip2.Items.Add(toolTipTitleItem3);
+            superToolTip2.Items.Add(toolTipItem3);
+            superToolTip2.Items.Add(toolTipTitleItem4);
+            superToolTip2.Items.Add(toolTipSeparatorItem2);
+            superToolTip2.Items.Add(toolTipItem4);
+            superToolTip2.Items.Add(toolTipItem5);
+            this.simpleButton1.SuperTip = superToolTip2;
             this.simpleButton1.TabIndex = 5;
-            this.simpleButton1.Text = "simpleButton1";
+            this.simpleButton1.Text = "SuperTipButton";
             this.simpleButton1.ToolTip = "simpleButton1.Tooltip";
             this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
             // 
@@ -801,55 +837,12 @@ namespace TargetTool
             // 
             this.tabbedControlGroup_left.Location = new System.Drawing.Point(0, 0);
             this.tabbedControlGroup_left.Name = "tabbedControlGroup_left";
-            this.tabbedControlGroup_left.SelectedTabPage = this.layoutControlGroupTAB3;
+            this.tabbedControlGroup_left.SelectedTabPage = this.layoutControlGroupTAB1;
             this.tabbedControlGroup_left.Size = new System.Drawing.Size(621, 258);
             this.tabbedControlGroup_left.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlGroupTAB1,
             this.layoutControlGroupTAB2,
             this.layoutControlGroupTAB3});
-            // 
-            // layoutControlGroupTAB3
-            // 
-            this.layoutControlGroupTAB3.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem_tileControl1,
-            this.layoutControlItem_accordionControl1});
-            this.layoutControlGroupTAB3.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlGroupTAB3.Name = "layoutControlGroupTAB3";
-            this.layoutControlGroupTAB3.Size = new System.Drawing.Size(597, 211);
-            // 
-            // layoutControlItem_tileControl1
-            // 
-            this.layoutControlItem_tileControl1.Control = this.tileControl1;
-            this.layoutControlItem_tileControl1.Location = new System.Drawing.Point(0, 20);
-            this.layoutControlItem_tileControl1.Name = "layoutControlItem_tileControl1";
-            this.layoutControlItem_tileControl1.Size = new System.Drawing.Size(597, 191);
-            this.layoutControlItem_tileControl1.TextSize = new System.Drawing.Size(152, 13);
-            // 
-            // layoutControlItem_accordionControl1
-            // 
-            this.layoutControlItem_accordionControl1.Control = this.accordionControl1;
-            this.layoutControlItem_accordionControl1.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem_accordionControl1.Name = "layoutControlItem_accordionControl1";
-            this.layoutControlItem_accordionControl1.Size = new System.Drawing.Size(597, 20);
-            this.layoutControlItem_accordionControl1.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem_accordionControl1.TextVisible = false;
-            // 
-            // layoutControlGroupTAB1
-            // 
-            this.layoutControlGroupTAB1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem_gridControl1});
-            this.layoutControlGroupTAB1.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlGroupTAB1.Name = "layoutControlGroupTAB1";
-            this.layoutControlGroupTAB1.Size = new System.Drawing.Size(597, 211);
-            // 
-            // layoutControlItem_gridControl1
-            // 
-            this.layoutControlItem_gridControl1.Control = this.gridControl1;
-            this.layoutControlItem_gridControl1.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem_gridControl1.Name = "layoutControlItem_gridControl1";
-            this.layoutControlItem_gridControl1.Size = new System.Drawing.Size(597, 211);
-            this.layoutControlItem_gridControl1.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem_gridControl1.TextVisible = false;
             // 
             // layoutControlGroupTAB2
             // 
@@ -905,6 +898,49 @@ namespace TargetTool
             this.layoutControlItem_radioGroup1.Size = new System.Drawing.Size(597, 17);
             this.layoutControlItem_radioGroup1.TextSize = new System.Drawing.Size(152, 13);
             // 
+            // layoutControlGroupTAB1
+            // 
+            this.layoutControlGroupTAB1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem_gridControl1});
+            this.layoutControlGroupTAB1.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroupTAB1.Name = "layoutControlGroupTAB1";
+            this.layoutControlGroupTAB1.Size = new System.Drawing.Size(597, 211);
+            // 
+            // layoutControlItem_gridControl1
+            // 
+            this.layoutControlItem_gridControl1.Control = this.gridControl1;
+            this.layoutControlItem_gridControl1.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItem_gridControl1.Name = "layoutControlItem_gridControl1";
+            this.layoutControlItem_gridControl1.Size = new System.Drawing.Size(597, 211);
+            this.layoutControlItem_gridControl1.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem_gridControl1.TextVisible = false;
+            // 
+            // layoutControlGroupTAB3
+            // 
+            this.layoutControlGroupTAB3.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem_tileControl1,
+            this.layoutControlItem_accordionControl1});
+            this.layoutControlGroupTAB3.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlGroupTAB3.Name = "layoutControlGroupTAB3";
+            this.layoutControlGroupTAB3.Size = new System.Drawing.Size(597, 211);
+            // 
+            // layoutControlItem_tileControl1
+            // 
+            this.layoutControlItem_tileControl1.Control = this.tileControl1;
+            this.layoutControlItem_tileControl1.Location = new System.Drawing.Point(0, 20);
+            this.layoutControlItem_tileControl1.Name = "layoutControlItem_tileControl1";
+            this.layoutControlItem_tileControl1.Size = new System.Drawing.Size(597, 191);
+            this.layoutControlItem_tileControl1.TextSize = new System.Drawing.Size(152, 13);
+            // 
+            // layoutControlItem_accordionControl1
+            // 
+            this.layoutControlItem_accordionControl1.Control = this.accordionControl1;
+            this.layoutControlItem_accordionControl1.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItem_accordionControl1.Name = "layoutControlItem_accordionControl1";
+            this.layoutControlItem_accordionControl1.Size = new System.Drawing.Size(597, 20);
+            this.layoutControlItem_accordionControl1.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem_accordionControl1.TextVisible = false;
+            // 
             // layoutControlItem_groupControl1
             // 
             this.layoutControlItem_groupControl1.Control = this.groupControl1;
@@ -922,7 +958,6 @@ namespace TargetTool
             this.Controls.Add(this.layoutControl1);
             this.Name = "XtraDoc1";
             this.Text = "XtraForm_Text";
-            this.Load += new System.EventHandler(this.XtraDoc1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.layoutView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutViewField_layoutViewColumn1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutViewField_layoutViewColumn2)).EndInit();
@@ -971,17 +1006,17 @@ namespace TargetTool
             ((System.ComponentModel.ISupportInitialize)(this.accordionControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabbedControlGroup_left)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupTAB3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_tileControl1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_accordionControl1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupTAB1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupTAB2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_simpleButton1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_textEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_checkEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_radioGroup1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupTAB1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_gridControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroupTAB3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_tileControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_accordionControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem_groupControl1)).EndInit();
             this.ResumeLayout(false);
 

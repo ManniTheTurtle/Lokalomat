@@ -29,6 +29,7 @@ using DevExpress.XtraGrid.Views.Tile;
 using DevExpress.XtraGrid.Views.Layout;
 using DevExpress.XtraGrid.Views.Card;
 using DevExpress.XtraBars.FluentDesignSystem;
+using DevExpress.Utils;
 
 namespace Lokalomat
 {
@@ -402,57 +403,52 @@ namespace Lokalomat
                         case GridControl i when typeof(GridControl).IsAssignableFrom(item.GetType()):
                             gridControlslist.Add(i);
 
+                            BaseView bv = i.MainView;           // BaseView kann auch eine ViewCaption haben
+
+                            SucheUndUnterscheideKindElemente(bv);
+
                             GridLevelNodeCollection nodes = i.LevelTree.Nodes;
 
                             foreach (GridLevelNode node in nodes)
-                            {
-                                BaseView baseview = node.LevelTemplate;        // LevelTemplate/BaseView kann auch eine ViewCaption haben
+                            {       
+                                SucheUndUnterscheideKindElemente(node.LevelTemplate);       // BaseView kann auch eine ViewCaption haben
+                            }
+                            break;
 
-                                if (baseview is BandedGridView)
-                                {
-                                    BandedGridView bandengridview = baseview as BandedGridView;
-                                    GridColumnCollection viewcolumns = bandengridview.Columns;
-                                    foreach (GridColumn j in viewcolumns)
-                                    {
-                                        SucheUndUnterscheideKindElemente(j);
-                                    }
-                                }
-                                if (baseview is GridView)   // fängt auch BandedGridColumn
-                                {
-                                    GridView gridview = baseview as GridView;
-                                    GridColumnCollection viewcolumns = gridview.Columns;
-                                    foreach (GridColumn j in viewcolumns) 
-                                    {
-                                        SucheUndUnterscheideKindElemente(j);
-                                    }
-                                }
-                                if (baseview is TileView)       //TileViewColumn hat die richtigen Captions, wozu noch TileViewItemElement = ?
-                                {
-                                    TileView tileview = baseview as TileView;
-                                    GridColumnCollection viewcolumns = tileview.Columns;   
-                                    foreach (GridColumn j in viewcolumns)
-                                    {
-                                        SucheUndUnterscheideKindElemente(j);
-                                    }
-                                }
-                                if (baseview is LayoutView)
-                                {
-                                    LayoutView layoutview = baseview as LayoutView;
-                                    GridColumnCollection viewcolumns = layoutview.Columns;
-                                    foreach (GridColumn j in viewcolumns)
-                                    {
-                                        SucheUndUnterscheideKindElemente(j);
-                                    }
-                                }
-                                if (baseview is CardView)
-                                {
-                                    CardView cardview = baseview as CardView;
-                                    GridColumnCollection viewcolumns = cardview.Columns;
-                                    foreach (GridColumn j in viewcolumns)
-                                    {
-                                        SucheUndUnterscheideKindElemente(j);
-                                    }
-                                }
+                        case BandedGridView i when typeof(BandedGridView).IsAssignableFrom(item.GetType()):     //BaseView kann nicht nach .Columns durchsucht werden, darum Unterteilung nötig
+
+                            foreach (var j in i.Columns)
+                            {
+                                SucheUndUnterscheideKindElemente(j);
+                            }
+                            break;
+
+                        case GridView i when typeof(GridView).IsAssignableFrom(item.GetType()):
+
+                            foreach (var j in i.Columns)
+                            {
+                                SucheUndUnterscheideKindElemente(j);
+                            }
+                            break;
+
+                        case TileView i when typeof(TileView).IsAssignableFrom(item.GetType()):
+                            foreach (var j in i.Columns)
+                            {
+                                SucheUndUnterscheideKindElemente(j);
+                            }
+                            break;
+
+                        case LayoutView i when typeof(LayoutView).IsAssignableFrom(item.GetType()):
+                            foreach (var j in i.Columns)
+                            {
+                                SucheUndUnterscheideKindElemente(j);
+                            }
+                            break;
+
+                        case CardView i when typeof(CardView).IsAssignableFrom(item.GetType()):
+                            foreach (var j in i.Columns)
+                            {
+                                SucheUndUnterscheideKindElemente(j);
                             }
                             break;
 
@@ -770,6 +766,9 @@ namespace Lokalomat
         {
             MyUiElementslist.Clear();
 
+            List<string> SuperTipTitlesStringList = new List<string>();
+            List<string> SuperTipContentsStringList = new List<string>();
+
             foreach (var item in xtraFormslist)
             {
                 MyUiElementslist.Add(new MyUiElement
@@ -812,46 +811,129 @@ namespace Lokalomat
             }
             foreach (var item in textEditslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
+
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.TextEdit,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
-                });
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
+                }) ;
             }
+
             foreach (var item in simpleButtonslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.SimpleButton,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in checkEditslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
+                
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.CheckEdit,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in comboBoxEditslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.ComboBoxEdit,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in layoutControlItemslist)
@@ -926,24 +1008,64 @@ namespace Lokalomat
             }
             foreach (var item in buttonEditslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.ButtonEdit,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in imageEditslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.ImageEdit,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in groupControlslist)
@@ -958,57 +1080,157 @@ namespace Lokalomat
             }
             foreach (var item in dateEditslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.DateEdit,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in dropDownButtonslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.DropDownButton,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in gridLookUpEditslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.GridLookUpEdit,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in checkedListBoxControlslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.CheckedListBoxControl,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in listBoxControlslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.ListBoxControl,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in tileControlslist)
@@ -1033,13 +1255,33 @@ namespace Lokalomat
             }
             foreach (var item in tileItemslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.TileItem,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in tileItemElementslist)
@@ -1073,36 +1315,96 @@ namespace Lokalomat
             }
             foreach (var item in accordionControlslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.AccordionControl,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in accordionControlElementslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.AccordionControlElement,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString(),
-                    Hint = item.Hint == null ? "" : item.Hint
+                    Hint = item.Hint == null ? "" : item.Hint,
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in labelControlslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.LabelControl,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in navBarControlslist)
@@ -1117,26 +1419,66 @@ namespace Lokalomat
             }
             foreach (var item in navBarGroupslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.NavBarGroup,
                     Name = item.Name,
-                    Text = item.Caption,
+                    Caption = item.Caption,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString(),
-                    Hint = item.Hint == null ? "" : item.Hint
+                    Hint = item.Hint == null ? "" : item.Hint,
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in navBarItemslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.NavBarItem,
                     Name = item.Name,
                     Caption = item.Caption,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString(),
-                    Hint = item.Hint == null ? "" : item.Hint
+                    Hint = item.Hint == null ? "" : item.Hint,
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in richEditControlslist)
@@ -1151,13 +1493,33 @@ namespace Lokalomat
             }
             foreach (var item in checkedComboBoxEditslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.CheckedComboBoxEdit,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in lookUpColumnInfoslist)
@@ -1172,46 +1534,126 @@ namespace Lokalomat
             }
             foreach (var item in lookUpEditslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.LookUpEdit,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in radioGroupslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.RadioGroup,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in barButtonGroupslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.BarButtonGroup,
                     Name = item.Name,
                     Caption = item.Caption,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in barButtonItemslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.BarButtonItem,
                     Name = item.Name,
                     Caption = item.Caption,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in barItemLinkslist)
@@ -1236,13 +1678,33 @@ namespace Lokalomat
             }
             foreach (var item in searchControlslist)
             {
+                SuperTipTitlesStringList = new List<string>();
+                SuperTipContentsStringList = new List<string>();
+
+                if (item.SuperTip != null && item.SuperTip.Items.Count > 0)
+                {
+                    foreach (var supertipitem in item.SuperTip.Items)
+                    {
+                        if (supertipitem is ToolTipTitleItem)
+                        {
+                            var casteditem = supertipitem as ToolTipTitleItem;
+                            SuperTipTitlesStringList.Add(casteditem.Text);
+                        }
+                        else if (supertipitem is ToolTipItem)
+                        {
+                            var casteditem = supertipitem as ToolTipItem;
+                            SuperTipContentsStringList.Add(casteditem.Text);
+                        }
+                    }
+                }
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.RadioGroup,
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
-                    SuperTip = item.SuperTip == null ? "" : item.SuperTip.Items.Count.ToString()
+                    SuperTipTitlesList = SuperTipTitlesStringList,
+                    SuperTipContentsList = SuperTipContentsStringList
                 });
             }
             foreach (var item in treeListslist)

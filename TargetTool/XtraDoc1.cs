@@ -10,18 +10,17 @@ using LokalomatKlassen;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.BandedGrid;
 using DevExpress.XtraGrid.Views.Tile;
+using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraTab;
+using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Views.Layout;
+using DevExpress.Utils;
+using System.Reflection;
 
 namespace TargetTool
 {
     public partial class XtraDoc1 : DevExpress.XtraEditors.XtraForm
     {
-
-        public List<MyXtraDocument> ListOutOfDeserializedLanguageFiles = new List<MyXtraDocument>();
-
-        public Dictionary<string, MyUiElement> DictOfUiElementsToCompare = new Dictionary<string, MyUiElement>();
-
-        public Dictionary<string, Object> dictionary = new Dictionary<string, Object>();
-
         public Methoden neueMethode = new Methoden();
 
         public MyUiElement ControlValue = new MyUiElement();
@@ -31,172 +30,49 @@ namespace TargetTool
         public XtraDoc1()
         {
             InitializeComponent();
+        }
 
-            var filepath = Lager.FilePathForDeserialization;
-
-            ListOutOfDeserializedLanguageFiles = neueMethode.DeserializeAllFilesFromFolder(filepath);
-
-            foreach (var item in ListOutOfDeserializedLanguageFiles)
+        // Testbutton
+        private void simpleButton1_Click(object sender, EventArgs e)
+        {
+            var sdfds = this as Control;
+            foreach (object item in this.Controls)
             {
-                if (item.Name.Contains(this.Name))
+                Type z = item.GetType();
+                var xy = z.GetRuntimeProperties();
+                foreach (PropertyInfo prop in xy)
                 {
-                    DictOfUiElementsToCompare = item.MyUiElementsList.Distinct().ToDictionary(x => string.Format(x.Name), x => x);
+                    if (prop.Name == "Name")
+                    {
+                        var a = prop.Attributes;
+                        var proptype = prop.PropertyType;
+                    }
+                    if (prop.PropertyType.Name == "Name")
+                    {
+                        var a = prop.Attributes;
+                    }
+
                 }
             }
 
-            foreach (var item in DictOfUiElementsToCompare)
-            {
-                item.Value.Text = "!NewLanguage!";
-                item.Value.ToolTip = "!NewLanguage!";
-                item.Value.SuperTip = "!NewLanguage!";
-                item.Value.Hint = "!NewLanguage!";
-                item.Value.NullText = "!NewLanguage!";
-                item.Value.Caption = "!NewLanguage!";
-                item.Value.Other = "!NewLanguage!";
-            }
-        }
+            // Texte verändern:
+            neueMethode.FillDictionaryToCompare(this.Name);
 
-        private void XtraDoc1_Load(object sender, EventArgs e)
-        {
+            if (Lager.ObjectsDictionary == null)
+            {
+                Lager.ObjectsDictionary = new Dictionary<object, object>();
+            }
+            Lager.ObjectsDictionary.Clear();
+
+
+            neueMethode.ChangeLanguage(this);
             foreach (Control item in this.Controls)
             {
                 if (item != null)
                 {
-                    SwitchLabeling(item);
+                    neueMethode.ChangeLanguage(item);
                 }
             }
-        }
-
-        // Texte Verändern Methode:
-        private void SwitchLabeling(Control Item)
-        {
-            if (Item != null && !string.IsNullOrEmpty(Item.Name) && !dictionary.ContainsKey(Item.Name))
-            {
-                dictionary.Add(Item.Name, Item);
-
-                if (Item.GetType() == typeof(LayoutControl))
-                {
-                    thisDocsLayoutControl = Item as LayoutControl;
-
-                    foreach (BaseLayoutItem bli in thisDocsLayoutControl.Items)
-                    {
-                        if (bli is LayoutControlItem)
-                        {
-                            var lci = bli as LayoutControlItem;
-
-                            if (DictOfUiElementsToCompare.TryGetValue(Item.Name, out var ControlValue))
-                            {
-                                if (!string.IsNullOrEmpty(ControlValue.Text))
-                                {
-                                    lci.Text = ControlValue.Text;
-                                }
-                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
-                                {
-                                    lci.OptionsToolTip.ToolTip = ControlValue.ToolTip;
-                                }
-
-                            }
-                        }
-                        else if (bli is LayoutControlGroup)
-                        {
-                            var lcg = bli as LayoutControlGroup;
-
-                            if (DictOfUiElementsToCompare.TryGetValue(Item.Name, out ControlValue))
-                            {
-                                if (!string.IsNullOrEmpty(ControlValue.Text))
-                                {
-                                    lcg.Text = ControlValue.Text;
-                                }
-                            }
-                        }
-                        else if (bli is TabbedControlGroup)
-                        {
-                            //.TabPages = LayoutControlGroups
-                        }
-                    }
-
-                    foreach (Control con in thisDocsLayoutControl.Controls)
-                    {
-                        SwitchLabeling(con);
-                    }
-                }
-
-                if (Item.Controls != null && Item.Controls.Count > 0)
-                {
-                    foreach (Control con in Item.Controls)
-                    {
-                        SwitchLabeling(con);
-                    }
-                }
-
-
-
-                if (Item.GetType() == typeof(GridControl))
-                {
-                    var gc = Item as GridControl;
-
-                    GridView gv = gc.DefaultView as GridView;
-
-                    if (gv.Columns != null && gv.Columns.Count > 0)
-                    {
-                        foreach (GridColumn column in gv.Columns)
-                        {
-                            if (DictOfUiElementsToCompare.TryGetValue(column.Name, out ControlValue))
-                            {
-                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
-                                {
-                                    column.ToolTip = ControlValue.ToolTip;
-                                }
-                                if (!string.IsNullOrEmpty(ControlValue.Caption))
-                                {
-                                    column.Caption = ControlValue.Caption;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (DictOfUiElementsToCompare.TryGetValue(Item.Name, out ControlValue))
-                {
-                    if (!string.IsNullOrEmpty(ControlValue.Text))
-                    {
-                        Item.Text = ControlValue.Text;
-                    }
-                    if (!string.IsNullOrEmpty(ControlValue.ToolTip))
-                    {
-                        // Item. = ControlValue.ToolTip;
-                    }
-                    if (!string.IsNullOrEmpty(ControlValue.SuperTip))
-                    {
-                        // Item.SuperTip = ControlValue.SuperTip;
-                    }
-                    if (!string.IsNullOrEmpty(ControlValue.Hint))
-                    {
-                        // Item.Hint = ControlValue.Hint;
-                    }
-                    if (!string.IsNullOrEmpty(ControlValue.NullText))
-                    {
-                        // Item.NullText = ControlValue.NullText;
-                    }
-                    if (!string.IsNullOrEmpty(ControlValue.Caption))
-                    {
-                        // Item.Caption = ControlValue.Caption;
-                    }
-                }
-            }
-        }
-
-        private void simpleButton1_Click(object sender, EventArgs e)
-        {
-            List<Control> test = new List<Control>();
-
-            foreach (Control item in thisDocsLayoutControl.Controls)
-            {
-                test.Add(item);
-            }
-
-            gridControl1.DataSource = test;
-
         }
     }
 }
