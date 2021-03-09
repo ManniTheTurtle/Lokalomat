@@ -31,11 +31,10 @@ namespace LokalomatKlassen
         }
 
         public enum Language { German, English, Italian, French }
-
+        public string Name { get; set; }
         public ClassName ItemClassName { get; set; }
         public Language ItemLanguage { get; set; }
-        public string Name { get; set; }
-        public bool TranslateYesOrNo { get; set; }      // z.B. für BarButtonItems, von denen die Meisten bereits von DevExpress selbst lokalisiert werden
+        public bool TranslateYesOrNo { get; set; }
         public string XtraDokument { get; set; }
         public string Text { get; set; }
         public string ToolTip { get; set; }
@@ -48,10 +47,10 @@ namespace LokalomatKlassen
 
         public string Hint { get; set; }
         public string NullText { get; set; }
+        public string NullValuePrompt { get; set; }
+        public string AdvancedModeOptionsLabel { get; set; }
         public string Caption { get; set; }
         public string Other { get; set; }
-
-        public string OriginalText { get; set; }    // was wenn sich die Texte ändern? bisher wird das nicht bemerkt
     }
 
 }

@@ -21,6 +21,7 @@ namespace TargetTool
 {
     public partial class XtraDoc1 : DevExpress.XtraEditors.XtraForm
     {
+
         public Methoden neueMethode = new Methoden();
 
         public MyUiElement ControlValue = new MyUiElement();
@@ -32,8 +33,14 @@ namespace TargetTool
             InitializeComponent();
         }
 
-        // Testbutton
-        private void simpleButton1_Click(object sender, EventArgs e)
+        // Test K3 Zeugs
+        private void k3versuche()
+        {
+            
+        }
+
+        // Test object PropertyInfo
+        private void findeNameEigenschaft()
         {
             var sdfds = this as Control;
             foreach (object item in this.Controls)
@@ -51,10 +58,13 @@ namespace TargetTool
                     {
                         var a = prop.Attributes;
                     }
-
                 }
             }
+        }
 
+        // Testbutton
+        private void simpleButton1_Click(object sender, EventArgs e)
+        {
             // Texte verändern:
             neueMethode.FillDictionaryToCompare(this.Name);
 

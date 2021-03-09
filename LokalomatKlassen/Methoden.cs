@@ -85,7 +85,21 @@ namespace LokalomatKlassen
                     {
                         if (typeof(XtraForm).IsAssignableFrom(item))
                         {
-                            xtraFormList.Add((XtraForm)Activator.CreateInstance(item));
+                            // xtraFormList.Add((XtraForm)Activator.CreateInstance(item));
+
+                            List<object> alldeclaredcontrolmemebers = new List<object>();
+
+                            TypeInfo ti = item.GetTypeInfo();
+                            IEnumerable<MemberInfo>  dm = ti.DeclaredMembers;
+                            foreach (var member in dm)
+                            {
+                                if (member.MemberType == MemberTypes.Field)
+                                {
+                                    object control = member as object;
+                                    alldeclaredcontrolmemebers.Add(control);
+                                }
+                            }
+                            var x = alldeclaredcontrolmemebers;
                         }
                         else if (typeof(XtraUserControl).IsAssignableFrom(item))
                         {
@@ -94,9 +108,8 @@ namespace LokalomatKlassen
                     }
                     catch (Exception)
                     {
+                        Console.WriteLine("Fehler in Dokument Name: "+item.Name);
                     }
-
-
                 }
             }
             return (xtraFormList, xtraUserControlList);
@@ -404,6 +417,14 @@ namespace LokalomatKlassen
                                 {
                                     i.ToolTip = ControlValue.ToolTip;
                                 }
+                                if (!string.IsNullOrEmpty(ControlValue.NullText))
+                                {
+                                    i.Properties.NullText = ControlValue.NullText;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullValuePrompt))
+                                {
+                                    i.Properties.NullValuePrompt = ControlValue.NullValuePrompt;
+                                }
                                 if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
                                 {
                                     int titles = 0;
@@ -488,6 +509,27 @@ namespace LokalomatKlassen
                                 {
                                     i.Text = ControlValue.Text;
                                 }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
                             }
                             break;
 
@@ -508,6 +550,39 @@ namespace LokalomatKlassen
                                 {
                                     i.Text = ControlValue.Text;
                                 }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullText))
+                                {
+                                    i.Properties.NullText = ControlValue.NullText;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullValuePrompt))
+                                {
+                                    i.Properties.NullValuePrompt = ControlValue.NullValuePrompt;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
                             }
 
                             lookupcolumns = i.Properties.Columns;
@@ -518,13 +593,17 @@ namespace LokalomatKlassen
                             break;
 
                         case LookUpColumnInfo i when typeof(LookUpColumnInfo).IsAssignableFrom(item.GetType()):
+                            
+                            if (!string.IsNullOrEmpty(ControlValue.Caption))
+                            {
+                                i.Caption = ControlValue.Caption;
+                            }
                             break;
 
                         case PopupMenu i when typeof(PopupMenu).IsAssignableFrom(item.GetType()):
 
                             foreach (BarItemLink j in i.ItemLinks)
                             {
-
                                 ChangeLanguage(j);
                             }
                             break;
@@ -543,6 +622,31 @@ namespace LokalomatKlassen
                                 {
                                     i.Caption = ControlValue.Caption;
                                 }
+                                if (!string.IsNullOrEmpty(ControlValue.Hint))
+                                {
+                                    i.Hint = ControlValue.Hint;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
                             }
                             break;
 
@@ -553,6 +657,39 @@ namespace LokalomatKlassen
                                 if (!string.IsNullOrEmpty(ControlValue.Text))
                                 {
                                     i.Text = ControlValue.Text;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullText))
+                                {
+                                    i.Properties.NullText = ControlValue.NullText;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullValuePrompt))
+                                {
+                                    i.Properties.NullValuePrompt = ControlValue.NullValuePrompt;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
                                 }
                             }
                             break;
@@ -565,6 +702,10 @@ namespace LokalomatKlassen
                                 {
                                     i.Text = ControlValue.Text;
                                 }
+                                if (!string.IsNullOrEmpty(ControlValue.Caption))
+                                {
+                                    i.Caption = ControlValue.Caption;
+                                }
                             }
                             break;
 
@@ -575,6 +716,35 @@ namespace LokalomatKlassen
                                 if (!string.IsNullOrEmpty(ControlValue.Text))
                                 {
                                     i.Text = ControlValue.Text;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullText))
+                                {
+                                    i.Properties.NullText = ControlValue.NullText;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
                                 }
                             }
                             break;
@@ -590,6 +760,31 @@ namespace LokalomatKlassen
                                 {
                                     i.Caption = ControlValue.Caption;
                                 }
+                                if (!string.IsNullOrEmpty(ControlValue.Hint))
+                                {
+                                    i.Hint = ControlValue.Hint;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
                             }
                             break;
 
@@ -599,6 +794,31 @@ namespace LokalomatKlassen
                                 if (!string.IsNullOrEmpty(ControlValue.Text))
                                 {
                                     i.Caption = ControlValue.Caption;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.Hint))
+                                {
+                                    i.Hint = ControlValue.Hint;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
                                 }
                             }
                             break;
@@ -610,50 +830,39 @@ namespace LokalomatKlassen
                                 {
                                     i.Text = ControlValue.Text;
                                 }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullText))
+                                {
+                                    i.Properties.NullText = ControlValue.NullText;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
                             }
                             break;
 
                         case DropDownButton i when typeof(DropDownButton).IsAssignableFrom(item.GetType()):
-                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
-                            {
-                                if (!string.IsNullOrEmpty(ControlValue.Text))
-                                {
-                                    i.Text = ControlValue.Text;
-                                }
-                            }
-                            break;
-
-                        case DateEdit i when typeof(DateEdit).IsAssignableFrom(item.GetType()):
-                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
-                            {
-                                if (!string.IsNullOrEmpty(ControlValue.Text))
-                                {
-                                    i.Text = ControlValue.Text;
-                                }
-                            }
-                            break;
-
-                        case ImageEdit i when typeof(ImageEdit).IsAssignableFrom(item.GetType()):
-                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
-                            {
-                                if (!string.IsNullOrEmpty(ControlValue.Text))
-                                {
-                                    i.Text = ControlValue.Text;
-                                }
-                            }
-                            break;
-
-                        case ComboBoxEdit i when typeof(ComboBoxEdit).IsAssignableFrom(item.GetType()):
-                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
-                            {
-                                if (!string.IsNullOrEmpty(ControlValue.Text))
-                                {
-                                    i.Text = ControlValue.Text;
-                                }
-                            }
-                            break;
-
-                        case TextEdit i when typeof(TextEdit).IsAssignableFrom(item.GetType()):
                             if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
                             {
                                 if (!string.IsNullOrEmpty(ControlValue.Text))
@@ -688,6 +897,182 @@ namespace LokalomatKlassen
                             }
                             break;
 
+                        case DateEdit i when typeof(DateEdit).IsAssignableFrom(item.GetType()):
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullText))
+                                {
+                                    i.Properties.NullText = ControlValue.NullText;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullValuePrompt))
+                                {
+                                    i.Properties.NullValuePrompt = ControlValue.NullValuePrompt;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+
+                        case ImageEdit i when typeof(ImageEdit).IsAssignableFrom(item.GetType()):
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullText))
+                                {
+                                    i.Properties.NullText = ControlValue.NullText;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullValuePrompt))
+                                {
+                                    i.Properties.NullValuePrompt = ControlValue.NullValuePrompt;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+
+                        case ComboBoxEdit i when typeof(ComboBoxEdit).IsAssignableFrom(item.GetType()):
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullText))
+                                {
+                                    i.Properties.NullText = ControlValue.NullText;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullValuePrompt))
+                                {
+                                    i.Properties.NullValuePrompt = ControlValue.NullValuePrompt;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+
+                        case TextEdit i when typeof(TextEdit).IsAssignableFrom(item.GetType()):
+                            if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
+                            {
+                                if (!string.IsNullOrEmpty(ControlValue.Text))
+                                {
+                                    i.Text = ControlValue.Text;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullText))
+                                {
+                                    i.Properties.NullText = ControlValue.NullText;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullValuePrompt))
+                                {
+                                    i.Properties.NullValuePrompt = ControlValue.NullValuePrompt;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.AdvancedModeOptionsLabel))
+                                {
+                                    i.Properties.AdvancedModeOptions.Label = ControlValue.AdvancedModeOptionsLabel;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+
                         case CheckedListBoxControl i when typeof(CheckedListBoxControl).IsAssignableFrom(item.GetType()):
 
                             if (Lager.DictOfUiElementsToCompare.TryGetValue(i.Name, out ControlValue))
@@ -695,6 +1080,31 @@ namespace LokalomatKlassen
                                 if (!string.IsNullOrEmpty(ControlValue.Text))
                                 {
                                     i.Text = ControlValue.Text;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
                                 }
                             }
                             break;
@@ -706,6 +1116,31 @@ namespace LokalomatKlassen
                                 if (!string.IsNullOrEmpty(ControlValue.Text))
                                 {
                                     i.Text = ControlValue.Text;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
                                 }
                             }
                             break;
@@ -721,6 +1156,14 @@ namespace LokalomatKlassen
                                 if (!string.IsNullOrEmpty(ControlValue.ToolTip))
                                 {
                                     i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullText))
+                                {
+                                    i.Properties.NullText = ControlValue.NullText;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullValuePrompt))
+                                {
+                                    i.Properties.NullValuePrompt = ControlValue.NullValuePrompt;
                                 }
                                 if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
                                 {
@@ -790,6 +1233,31 @@ namespace LokalomatKlassen
                                 {
                                     i.Text = ControlValue.Text;
                                 }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
                             }
                             break;
 
@@ -811,6 +1279,39 @@ namespace LokalomatKlassen
                                 if (!string.IsNullOrEmpty(ControlValue.Text))
                                 {
                                     i.Text = ControlValue.Text;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullText))
+                                {
+                                    i.Properties.NullText = ControlValue.NullText;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.NullValuePrompt))
+                                {
+                                    i.Properties.NullValuePrompt = ControlValue.NullValuePrompt;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
                                 }
                             }
                             break;
@@ -850,6 +1351,31 @@ namespace LokalomatKlassen
                                 {
                                     i.Caption = ControlValue.Caption;
                                 }
+                                if (!string.IsNullOrEmpty(ControlValue.Hint))
+                                {
+                                    i.Hint = ControlValue.Hint;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
                             }
 
                             foreach (NavBarItemLink j in i.ItemLinks)   // NavBarItem == NavBarItemLink(Item)
@@ -865,6 +1391,31 @@ namespace LokalomatKlassen
                                 {
                                     i.Caption = ControlValue.Caption;
                                 }
+                                if (!string.IsNullOrEmpty(ControlValue.Hint))
+                                {
+                                    i.Hint = ControlValue.Hint;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
+                                }
                             }
                             break;
 
@@ -875,6 +1426,31 @@ namespace LokalomatKlassen
                                 if (!string.IsNullOrEmpty(ControlValue.Text))
                                 {
                                     i.Text = ControlValue.Text;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.ToolTip))
+                                {
+                                    i.ToolTip = ControlValue.ToolTip;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
                                 }
                             }
 
@@ -898,6 +1474,31 @@ namespace LokalomatKlassen
                                 if (!string.IsNullOrEmpty(ControlValue.Text))
                                 {
                                     i.Text = ControlValue.Text;
+                                }
+                                if (!string.IsNullOrEmpty(ControlValue.Hint))
+                                {
+                                    i.Hint = ControlValue.Hint;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
                                 }
                             }
 
@@ -1006,6 +1607,27 @@ namespace LokalomatKlassen
                                 if (!string.IsNullOrEmpty(ControlValue.Text))
                                 {
                                     i.Text = ControlValue.Text;
+                                }
+                                if (ControlValue.SuperTipTitlesList.Count() > 0 || ControlValue.SuperTipContentsList.Count() > 0)
+                                {
+                                    int titles = 0;
+                                    int contents = 0;
+
+                                    foreach (var supertip in i.SuperTip.Items)
+                                    {
+                                        if (supertip is ToolTipTitleItem)
+                                        {
+                                            var casteditem = supertip as ToolTipTitleItem;
+                                            casteditem.Text = ControlValue.SuperTipTitlesList[titles];
+                                            titles++;
+                                        }
+                                        else if (supertip is ToolTipItem)
+                                        {
+                                            var casteditem = supertip as ToolTipItem;
+                                            casteditem.Text = ControlValue.SuperTipContentsList[contents];
+                                            contents++;
+                                        }
+                                    }
                                 }
                             }
 

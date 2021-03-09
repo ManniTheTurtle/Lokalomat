@@ -43,10 +43,6 @@ namespace Lokalomat
 
         public string AssemblyFilePath;
 
-        public string FilePathForSerialization;
-
-        public string FilePathForDeserialization;
-
         public string DocumentName = "leer";
 
         public string AssemblyFileName = "leer";
@@ -141,9 +137,7 @@ namespace Lokalomat
             InitializeComponent();
             WindowState = FormWindowState.Maximized;
 
-            FilePathForDeserialization = Lager.FilePathForDeserialization;
-
-            FilePathForSerialization = Lager.FilePathForSerialization;
+            comboBoxEdit1.Properties.DropDownRows = 40;
         }
 
         //------------------------------------------------------------------------------------|
@@ -214,7 +208,7 @@ namespace Lokalomat
 
                         xtra_Document.MyUiElementsList.AddRange(MyUiElementslist);
 
-                        xtra_Document.Filename = FilePathForSerialization + "\\" + AssemblyFileName + "_" + xtra_Document.ObjektTyp + "_" + xtra_Document.Name + ".json";
+                        xtra_Document.Filename = Lager.FilePathForSerialization + "\\" + AssemblyFileName + "_" + xtra_Document.ObjektTyp + "_" + xtra_Document.Name + ".json";
 
                         XtraDocumentsList.Add(xtra_Document);
 
@@ -259,7 +253,7 @@ namespace Lokalomat
 
                         xtra_Document.MyUiElementsList.AddRange(MyUiElementslist);
 
-                        xtra_Document.Filename = FilePathForSerialization + "\\" + AssemblyFileName + "_" + xtra_Document.ObjektTyp + "_" + xtra_Document.Name + ".json";
+                        xtra_Document.Filename = Lager.FilePathForSerialization + "\\" + AssemblyFileName + "_" + xtra_Document.ObjektTyp + "_" + xtra_Document.Name + ".json";
 
                         XtraDocumentsList.Add(xtra_Document);
 
@@ -806,7 +800,8 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.GridColumn,
                     Name = item.Name,
                     Caption = item.Caption,
-                    XtraDokument = DocumentName
+                    XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip
                 });
             }
             foreach (var item in textEditslist)
@@ -837,6 +832,10 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
+                    NullText = item.Properties.NullText,
+                    NullValuePrompt = item.Properties.NullValuePrompt,
+                    AdvancedModeOptionsLabel = item.Properties.AdvancedModeOptions.Label,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 }) ;
@@ -869,6 +868,7 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -901,6 +901,8 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
+                    NullText = item.Properties.NullText,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -932,6 +934,9 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
+                    NullText = item.Properties.NullText,
+                    NullValuePrompt = item.Properties.NullValuePrompt,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1033,6 +1038,9 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
+                    NullText = item.Properties.NullText,
+                    NullValuePrompt = item.Properties.NullValuePrompt,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1064,6 +1072,9 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
+                    NullText = item.Properties.NullText,
+                    NullValuePrompt = item.Properties.NullValuePrompt,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1105,6 +1116,9 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
+                    NullText = item.Properties.NullText,
+                    NullValuePrompt = item.Properties.NullValuePrompt,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1136,6 +1150,7 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1167,6 +1182,9 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
+                    NullText = item.Properties.NullText,
+                    NullValuePrompt = item.Properties.NullValuePrompt,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1198,6 +1216,7 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1229,6 +1248,7 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1340,6 +1360,7 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1403,6 +1424,7 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1518,6 +1540,9 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
+                    NullText = item.Properties.NullText,
+                    NullValuePrompt = item.Properties.NullValuePrompt,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1559,6 +1584,9 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
+                    NullText = item.Properties.NullText,
+                    NullValuePrompt = item.Properties.NullValuePrompt,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1590,6 +1618,8 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
+                    NullText = item.Properties.NullText,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1621,6 +1651,7 @@ namespace Lokalomat
                     Name = item.Name,
                     Caption = item.Caption,
                     XtraDokument = DocumentName,
+                    Hint = item.Hint == null ? "" : item.Hint,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1652,6 +1683,7 @@ namespace Lokalomat
                     Name = item.Name,
                     Caption = item.Caption,
                     XtraDokument = DocumentName,
+                    Hint = item.Hint == null ? "" : item.Hint,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1673,7 +1705,8 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.BarItem,
                     Name = item.Name,
                     Caption = item.Caption,
-                    XtraDokument = DocumentName
+                    XtraDokument = DocumentName,
+                    Hint = item.Hint == null ? "" : item.Hint,
                 });
             }
             foreach (var item in searchControlslist)
@@ -1703,6 +1736,9 @@ namespace Lokalomat
                     Name = item.Name,
                     Text = item.Text,
                     XtraDokument = DocumentName,
+                    ToolTip = item.ToolTip,
+                    NullText = item.Properties.NullText,
+                    NullValuePrompt = item.Properties.NullValuePrompt,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1714,7 +1750,8 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.RadioGroup,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = DocumentName,
+                    Caption = item.Caption
                 });
             }
 
@@ -1773,7 +1810,7 @@ namespace Lokalomat
         {
             int count = 0;
 
-            DeserializedXtraDocsList = NutzeMethode.DeserializeAllFilesFromFolder(FilePathForSerialization);    // zuerst wird deserialisiert
+            DeserializedXtraDocsList = NutzeMethode.DeserializeAllFilesFromFolder(Lager.FilePathForSerialization);    // zuerst wird deserialisiert
 
             listBox1.Items.Add("XtraDokumente deserialisiert Count: " + DeserializedXtraDocsList.Count);
 
@@ -1845,7 +1882,7 @@ namespace Lokalomat
         // --> Deserialisiere Json Dateien
         private void deserialisiereDateien()
         {
-            DeserializedXtraDocsList = NutzeMethode.DeserializeAllFilesFromFolder(FilePathForDeserialization);
+            DeserializedXtraDocsList = NutzeMethode.DeserializeAllFilesFromFolder(Lager.FilePathForDeserialization);
 
             listBox1.Items.Add("XtraDokumente deserialisiert Count: " + DeserializedXtraDocsList.Count);
 
@@ -1989,18 +2026,15 @@ namespace Lokalomat
                 {
                     string[] files = Directory.GetFiles(fbd.SelectedPath);
 
-                    FilePathForSerialization = fbd.SelectedPath;
+                    Lager.FilePathForSerialization = fbd.SelectedPath;
                 }
             }
-
             serialisiereAlleneuenControls();
         }
 
         // Verzeichnis automatisch auswählen zum Serialisieren
         private void autoVerzeichnisToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            FilePathForSerialization = Lager.FilePathForSerialization;
-
             serialisiereAlleneuenControls();
         }
 
@@ -2015,7 +2049,7 @@ namespace Lokalomat
                 {
                     string[] files = Directory.GetFiles(fbd.SelectedPath);
 
-                    FilePathForDeserialization = fbd.SelectedPath;
+                    Lager.FilePathForDeserialization = fbd.SelectedPath;
                 }
             }
 
@@ -2025,8 +2059,6 @@ namespace Lokalomat
         // Verzeichnis automatisch auswählen zum Deserialisieren
         private void autoVerzeichnisToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            FilePathForDeserialization = Lager.FilePathForDeserialization;
-
             deserialisiereDateien();
         }
 

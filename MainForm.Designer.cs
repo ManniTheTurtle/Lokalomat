@@ -54,6 +54,7 @@ namespace Lokalomat
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testeLINQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.öffneXtraDoc1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -61,7 +62,6 @@ namespace Lokalomat
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.öffneXtraDoc1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit2.Properties)).BeginInit();
@@ -113,6 +113,7 @@ namespace Lokalomat
             // 
             // comboBoxEdit2
             // 
+            this.comboBoxEdit2.EditValue = "Bitte wählen";
             this.comboBoxEdit2.Location = new System.Drawing.Point(583, 51);
             this.comboBoxEdit2.Name = "comboBoxEdit2";
             this.comboBoxEdit2.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -124,6 +125,7 @@ namespace Lokalomat
             // 
             // comboBoxEdit1
             // 
+            this.comboBoxEdit1.EditValue = "Bitte wählen";
             this.comboBoxEdit1.Location = new System.Drawing.Point(162, 51);
             this.comboBoxEdit1.Name = "comboBoxEdit1";
             this.comboBoxEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -310,16 +312,23 @@ namespace Lokalomat
             // testeLINQToolStripMenuItem
             // 
             this.testeLINQToolStripMenuItem.Name = "testeLINQToolStripMenuItem";
-            this.testeLINQToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testeLINQToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.testeLINQToolStripMenuItem.Text = "Teste LINQ";
             this.testeLINQToolStripMenuItem.Click += new System.EventHandler(this.testeLINQToolStripMenuItem_Click);
             // 
             // showToolStripMenuItem
             // 
             this.showToolStripMenuItem.Name = "showToolStripMenuItem";
-            this.showToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.showToolStripMenuItem.Text = "Show";
             this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
+            // 
+            // öffneXtraDoc1ToolStripMenuItem
+            // 
+            this.öffneXtraDoc1ToolStripMenuItem.Name = "öffneXtraDoc1ToolStripMenuItem";
+            this.öffneXtraDoc1ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.öffneXtraDoc1ToolStripMenuItem.Text = "öffne XtraDoc1";
+            this.öffneXtraDoc1ToolStripMenuItem.Click += new System.EventHandler(this.öffneXtraDoc1ToolStripMenuItem_Click);
             // 
             // Root
             // 
@@ -391,13 +400,6 @@ namespace Lokalomat
             this.layoutControlItem5.Spacing = new DevExpress.XtraLayout.Utils.Padding(30, 0, 0, 0);
             this.layoutControlItem5.Text = "Wähle Xtra Dokument:";
             this.layoutControlItem5.TextSize = new System.Drawing.Size(108, 13);
-            // 
-            // öffneXtraDoc1ToolStripMenuItem
-            // 
-            this.öffneXtraDoc1ToolStripMenuItem.Name = "öffneXtraDoc1ToolStripMenuItem";
-            this.öffneXtraDoc1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.öffneXtraDoc1ToolStripMenuItem.Text = "öffne XtraDoc1";
-            this.öffneXtraDoc1ToolStripMenuItem.Click += new System.EventHandler(this.öffneXtraDoc1ToolStripMenuItem_Click);
             // 
             // MainForm
             // 
