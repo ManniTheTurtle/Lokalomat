@@ -77,39 +77,40 @@ namespace LokalomatKlassen
         // Types unterscheiden und Xtra Forms von abstract zu concrete konvertieren
         public (List<XtraForm>, List<XtraUserControl>) SortiereTypes(List<Type> TypesList, List<XtraForm> xtraFormList, List<XtraUserControl> xtraUserControlList)
         {
+            int counter = 0;
             foreach (var item in TypesList)      // --> Types sortieren
             {
-                if (item != null)
+                counter++;
+                if (item != null && counter >= 0)
                 {
                     try
                     {
-                        if (typeof(XtraForm).IsAssignableFrom(item))
+                        if (typeof(XtraForm).IsAssignableFrom(item) && item.Name.Contains("AnwesenheitsListe") || item.Name.Contains("Anwesenheitsliste"))
                         {
-                            // xtraFormList.Add((XtraForm)Activator.CreateInstance(item));
-
-                            List<object> alldeclaredcontrolmemebers = new List<object>();
-
-                            TypeInfo ti = item.GetTypeInfo();
-                            IEnumerable<MemberInfo>  dm = ti.DeclaredMembers;
-                            foreach (var member in dm)
-                            {
-                                if (member.MemberType == MemberTypes.Field)
-                                {
-                                    object control = member as object;
-                                    alldeclaredcontrolmemebers.Add(control);
-                                }
-                            }
-                            var x = alldeclaredcontrolmemebers;
+                            var x = item;
                         }
-                        else if (typeof(XtraUserControl).IsAssignableFrom(item))
+                        else if(typeof(XtraForm).IsAssignableFrom(item) && item.Name.Contains("MainFrm"))
                         {
-                            xtraUserControlList.Add((XtraUserControl)Activator.CreateInstance(item));
+                            object[] ArgumentsArray = new object[1] { Lager.GlobalizationMode };
+                            xtraFormList.Add((XtraForm)Activator.CreateInstance(item, ArgumentsArray));
                         }
+                        else if (typeof(XtraForm).IsAssignableFrom(item))
+                        {
+                            xtraFormList.Add((XtraForm)Activator.CreateInstance(item));
+                        }
+                        //else if (typeof(XtraUserControl).IsAssignableFrom(item))
+                        //{
+                        //    xtraUserControlList.Add((XtraUserControl)Activator.CreateInstance(item));
+                        //}
                     }
                     catch (Exception)
                     {
                         Console.WriteLine("Fehler in Dokument Name: "+item.Name);
                     }
+                }
+                if (xtraFormList.Count >= 180)
+                {
+                    break;
                 }
             }
             return (xtraFormList, xtraUserControlList);

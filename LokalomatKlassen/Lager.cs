@@ -23,5 +23,6 @@ namespace LokalomatKlassen
         public static List<object> unknownobjects { get; set; }
         public static List<object> UnknownObjects { get { if (unknownobjects == null) UnknownObjects = new List<object>(); return unknownobjects; } set { unknownobjects = value; } }
 
+        public static bool GlobalizationMode = true;
     }
 }

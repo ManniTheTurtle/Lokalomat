@@ -21,16 +21,24 @@ namespace TargetTool
 {
     public partial class XtraDoc1 : DevExpress.XtraEditors.XtraForm
     {
-
         public Methoden neueMethode = new Methoden();
 
         public MyUiElement ControlValue = new MyUiElement();
 
         public LayoutControl thisDocsLayoutControl = new LayoutControl();
 
-        public XtraDoc1()
+        public XtraDoc1(bool GlobalizationMode)
         {
             InitializeComponent();
+
+            if (!GlobalizationMode == true)
+            {
+                Console.WriteLine("NormalerModus");
+            }
+            else
+            {
+                Console.WriteLine("LokalisierungsModus");
+            }
         }
 
         // Test K3 Zeugs

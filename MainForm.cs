@@ -175,7 +175,9 @@ namespace Lokalomat
                     if (item != null)
                     {
                         MyXtraDocument xtra_Document = new MyXtraDocument();
-                        xtra_Document.Name = item.Name;
+
+                        var itemtype = item.GetType();
+                        xtra_Document.Name = itemtype.Namespace + "_" + item.Name;
                         xtra_Document.ObjektTyp = MyXtraDocument.Klasse.XtraForm;
 
                         if (ChosenAssembly != null)
@@ -201,7 +203,7 @@ namespace Lokalomat
                             }
                         }
 
-                        DocumentName = AssemblyFileName + "_" + item.Name;
+                        DocumentName = AssemblyFileName + "_" + itemtype.Namespace + "_" + item.Name;
 
                         dictionary.Clear();
                         ListeAlleErgebnisse();
@@ -280,7 +282,7 @@ namespace Lokalomat
         // --> Switch Case Filter
         public void SucheUndUnterscheideKindElemente(Object item)
         {
-            if (item != null)
+            if (item != null && item != typeof(GridColumn))
             {
                 if (!dictionary.ContainsKey(item))
                 {
@@ -1814,6 +1816,7 @@ namespace Lokalomat
 
             listBox1.Items.Add("XtraDokumente deserialisiert Count: " + DeserializedXtraDocsList.Count);
 
+            XtraDocumentsDict.Clear();
             XtraDocumentsDict = XtraDocumentsList.ToDictionary(x => x.Name, x => x);
             DeserializedXtraDocsDict = DeserializedXtraDocsList.ToDictionary(x => x.Name, x => x);
 
@@ -1973,18 +1976,61 @@ namespace Lokalomat
             gridControl1.DataSource = null;
         }
 
-        // Show
+        // Show Controls
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            gridView1.Columns.Clear();
-            gridControl1.DataSource = null;
+            FindControlsByTypeInfo();
         }
 
         // öffne Instanz von TargetTool
         private void öffneXtraDoc1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            XtraDoc1 xtraDoc1 = new XtraDoc1();
-            xtraDoc1.Show();
+            //XtraDoc1 xtraDoc1 = new XtraDoc1();
+            //xtraDoc1.Show();
+
+            foreach (var item in TypesList)      // --> Types sortieren
+            {
+                if (item != null)
+                {
+                    if (typeof(XtraForm).IsAssignableFrom(item) && item.Name.Contains("1"))
+                    {
+                        object[] args = new object[1] { Lager.GlobalizationMode };
+                        var x = (XtraForm)Activator.CreateInstance(item, args);
+                    }
+                }
+            }
+
+        }
+
+        // alternative Controlsuche via DeclaredMembers
+        private void FindControlsByTypeInfo()
+        {
+            TypesList = NutzeMethode.LadeTypes(ChosenAssembly, TypesList);
+
+            MyUiElementslist.Clear();
+
+            foreach (var item in TypesList)
+            {
+                if (typeof(XtraForm).IsAssignableFrom(item))
+                {
+                    TypeInfo ti = item.GetTypeInfo();               // alle Versuche aus Kindern von TypeInfo wieder object zu machen ergibt object System.Reflection.RtFieldInfo und nicht object Control
+                    IEnumerable<MemberInfo> dm = ti.DeclaredMembers;
+                    foreach (MemberInfo member in dm)
+                    {
+                        if (member.MemberType == MemberTypes.Field && member.Name.Contains("Button"))
+                        {
+                            FieldInfo fi = member as FieldInfo;
+                            var x = fi.DeclaringType;
+                            SucheUndUnterscheideKindElemente(x);
+
+                            var casttestA = fi.GetType();
+                            object casttestAA = casttestA as object;
+                            SimpleButton casttestAAA = casttestAA as SimpleButton;
+                            var casttestB = casttestA.GetProperties();
+                        }
+                    }
+                }
+            }
         }
 
         //------------------------------------------------------------------------------------|
@@ -2122,6 +2168,7 @@ namespace Lokalomat
                         gridControl1.DataSource = null;
 
                         SucheUndErstelleDokumente();
+                        // FindControlsByTypeInfo();
                     }
                 }
             }
