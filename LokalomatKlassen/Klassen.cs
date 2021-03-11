@@ -13,8 +13,8 @@ namespace LokalomatKlassen
         public string Filename { get; set; }
         public string Projekt { get; set; }
 
-        private List<MyUiElement> MyUiElementsList_private;
-        public List<MyUiElement> MyUiElementsList { get { if (MyUiElementsList_private == null) MyUiElementsList = new List<MyUiElement>(); return MyUiElementsList_private; } set { MyUiElementsList_private = value; } }
+        private List<MyUiElement> myuielementslist;
+        public List<MyUiElement> MyUiElementsList { get { if (myuielementslist == null) myuielementslist = new List<MyUiElement>(); return myuielementslist; } set { myuielementslist = value; } }
     }
 
     [Serializable]
@@ -39,11 +39,11 @@ namespace LokalomatKlassen
         public string Text { get; set; }
         public string ToolTip { get; set; }
 
-        private List<string> supertiptitleslist_private;
-        public List<string> SuperTipTitlesList { get { if (supertiptitleslist_private == null) SuperTipTitlesList = new List<string>(); return supertiptitleslist_private; } set { supertiptitleslist_private = value; } }
+        private List<string> supertiptitleslist;
+        public List<string> SuperTipTitlesList { get { if (supertiptitleslist == null) supertiptitleslist = new List<string>(); return supertiptitleslist; } set { supertiptitleslist = value; } }
 
-        private List<string> supertipcontentslist_private;
-        public List<string> SuperTipContentsList { get { if (supertipcontentslist_private == null) SuperTipContentsList = new List<string>(); return supertipcontentslist_private; } set { supertipcontentslist_private = value; } }
+        private List<string> supertipcontentslist;
+        public List<string> SuperTipContentsList { get { if (supertipcontentslist == null) supertipcontentslist = new List<string>(); return supertipcontentslist; } set { supertipcontentslist = value; } }
 
         public string Hint { get; set; }
         public string NullText { get; set; }

@@ -282,7 +282,7 @@ namespace Lokalomat
         // --> Switch Case Filter
         public void SucheUndUnterscheideKindElemente(Object item)
         {
-            if (item != null && item != typeof(GridColumn))
+            if (item != null && item.GetType() != typeof(GridColumn))
             {
                 if (!dictionary.ContainsKey(item))
                 {
@@ -1086,7 +1086,7 @@ namespace Lokalomat
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.GroupControl,
-                    Name = item.Name,
+                    Name = item.Name+Guid.NewGuid().ToString("N").Substring(0, 15),
                     Text = item.Text,
                     XtraDokument = DocumentName
                 });
@@ -1311,6 +1311,7 @@ namespace Lokalomat
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.TileItemElement,
+                    Name = Guid.NewGuid().ToString("N").Substring(0, 15),
                     Text = item.Text,
                     XtraDokument = DocumentName
                 });
@@ -1554,10 +1555,11 @@ namespace Lokalomat
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.LookUpColumnInfo,
-                    Other = item.FieldName, //hat keine Name Eigenschaft
+                    Name = Guid.NewGuid().ToString("N").Substring(0, 15),
+                    Other = item.FieldName,
                     Caption = item.Caption,
                     XtraDokument = DocumentName
-                });
+                }) ;
             }
             foreach (var item in lookUpEditslist)
             {
@@ -1695,6 +1697,7 @@ namespace Lokalomat
                 MyUiElementslist.Add(new MyUiElement
                 {
                     ItemClassName = MyUiElement.ClassName.BarItemLink,
+                    Name = Guid.NewGuid().ToString("N").Substring(0, 15),
                     Other = item.Item.Name,
                     Caption = item.Caption,
                     XtraDokument = DocumentName

@@ -312,21 +312,21 @@ namespace Lokalomat
             // testeLINQToolStripMenuItem
             // 
             this.testeLINQToolStripMenuItem.Name = "testeLINQToolStripMenuItem";
-            this.testeLINQToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testeLINQToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.testeLINQToolStripMenuItem.Text = "Teste LINQ";
             this.testeLINQToolStripMenuItem.Click += new System.EventHandler(this.testeLINQToolStripMenuItem_Click);
             // 
             // showToolStripMenuItem
             // 
             this.showToolStripMenuItem.Name = "showToolStripMenuItem";
-            this.showToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.showToolStripMenuItem.Text = "Show Controls";
             this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
             // 
             // öffneXtraDoc1ToolStripMenuItem
             // 
             this.öffneXtraDoc1ToolStripMenuItem.Name = "öffneXtraDoc1ToolStripMenuItem";
-            this.öffneXtraDoc1ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.öffneXtraDoc1ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.öffneXtraDoc1ToolStripMenuItem.Text = "öffne XtraDoc1";
             this.öffneXtraDoc1ToolStripMenuItem.Click += new System.EventHandler(this.öffneXtraDoc1ToolStripMenuItem_Click);
             // 
@@ -411,7 +411,7 @@ namespace Lokalomat
             this.Controls.Add(this.layoutControl1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "Lokalomat 0.6";
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEdit2.Properties)).EndInit();

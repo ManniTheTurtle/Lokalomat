@@ -71,6 +71,15 @@ namespace LokalomatKlassen
                 {
                 }
             }
+            foreach (var item in TypesList)
+            {
+                if (!Lager.TypesDictionary.ContainsKey(item.AssemblyQualifiedName))
+                {
+                    Lager.TypesDictionary.Add(item.AssemblyQualifiedName, item);
+                }
+            }
+            TypesList.Clear();
+            TypesList.AddRange(Lager.TypesDictionary.Values);
             return TypesList;
         }
 
@@ -108,12 +117,10 @@ namespace LokalomatKlassen
                         Console.WriteLine("Fehler in Dokument Name: "+item.Name);
                     }
                 }
-                if (xtraFormList.Count >= 180)
-                {
-                    break;
-                }
             }
             return (xtraFormList, xtraUserControlList);
+
+
         }
 
         // Deserialisiere alles aus einem Verzeichnis

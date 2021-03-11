@@ -16,6 +16,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Layout;
 using DevExpress.Utils;
 using System.Reflection;
+using DevExpress.XtraBars.FluentDesignSystem;
 
 namespace TargetTool
 {
@@ -43,9 +44,7 @@ namespace TargetTool
 
         // Test K3 Zeugs
         private void k3versuche()
-        {
-            
-        }
+        { }
 
         // Test object PropertyInfo
         private void findeNameEigenschaft()

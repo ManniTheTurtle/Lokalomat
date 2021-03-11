@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.XtraEditors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,16 @@ namespace LokalomatKlassen
 
         public static Dictionary<object, object> ObjectsDictionary { get; set; }
 
-        public static List<object> unknownobjects { get; set; }
-        public static List<object> UnknownObjects { get { if (unknownobjects == null) UnknownObjects = new List<object>(); return unknownobjects; } set { unknownobjects = value; } }
+        private static List<object> unknownobjects;
+        public static List<object> UnknownObjects { get { if (unknownobjects == null) unknownobjects = new List<object>(); return unknownobjects; } set { unknownobjects = value; } }
 
         public static bool GlobalizationMode = true;
+
+        private static Dictionary<string, Type> typesdictionary;
+        public static Dictionary<string, Type> TypesDictionary { get { if (typesdictionary == null) typesdictionary = new Dictionary<string, Type>(); return typesdictionary; } set { typesdictionary = value; } }
+
+
+        private static Dictionary<string, XtraForm> xtraformsdictionary;
+        public static Dictionary<string, XtraForm> XtraFormsDictionary { get { if (xtraformsdictionary == null) xtraformsdictionary = new Dictionary<string, XtraForm>(); return xtraformsdictionary; } set { xtraformsdictionary = value; } }
     }
 }
