@@ -1,4 +1,5 @@
-﻿using DevExpress.XtraEditors;
+﻿using DevExpress.XtraBars.FluentDesignSystem;
+using DevExpress.XtraEditors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +27,16 @@ namespace LokalomatKlassen
 
         public static bool GlobalizationMode = true;
 
-        private static Dictionary<string, Type> typesdictionary;
-        public static Dictionary<string, Type> TypesDictionary { get { if (typesdictionary == null) typesdictionary = new Dictionary<string, Type>(); return typesdictionary; } set { typesdictionary = value; } }
-
+        private static Dictionary<string, FluentDesignForm> fluentdesignformsdictionary;
+        public static Dictionary<string, FluentDesignForm> FluentDesignFormsDictionary { get { if (fluentdesignformsdictionary == null) fluentdesignformsdictionary = new Dictionary<string, FluentDesignForm>(); return fluentdesignformsdictionary; } set { fluentdesignformsdictionary = value; } }
 
         private static Dictionary<string, XtraForm> xtraformsdictionary;
         public static Dictionary<string, XtraForm> XtraFormsDictionary { get { if (xtraformsdictionary == null) xtraformsdictionary = new Dictionary<string, XtraForm>(); return xtraformsdictionary; } set { xtraformsdictionary = value; } }
+
+        private static Dictionary<string, XtraUserControl> xtrausercontrolsdictionary;
+        public static Dictionary<string, XtraUserControl> XtraUserControlsDictionary { get { if (xtrausercontrolsdictionary == null) xtrausercontrolsdictionary = new Dictionary<string, XtraUserControl>(); return xtrausercontrolsdictionary; } set { xtrausercontrolsdictionary = value; } }
+
+        public static List<Type> FormsWithParameters { get; set; }
+
     }
 }

@@ -71,56 +71,77 @@ namespace LokalomatKlassen
                 {
                 }
             }
-            foreach (var item in TypesList)
-            {
-                if (!Lager.TypesDictionary.ContainsKey(item.AssemblyQualifiedName))
-                {
-                    Lager.TypesDictionary.Add(item.AssemblyQualifiedName, item);
-                }
-            }
-            TypesList.Clear();
-            TypesList.AddRange(Lager.TypesDictionary.Values);
             return TypesList;
         }
 
         // Types unterscheiden und Xtra Forms von abstract zu concrete konvertieren
-        public (List<XtraForm>, List<XtraUserControl>) SortiereTypes(List<Type> TypesList, List<XtraForm> xtraFormList, List<XtraUserControl> xtraUserControlList)
+        public void SortiereTypes(List<Type> TypesList)
         {
-            int counter = 0;
+            Lager.FormsWithParameters = new List<Type>();
+
             foreach (var item in TypesList)      // --> Types sortieren
             {
-                counter++;
-                if (item != null && counter >= 0)
+                if (item != null)
                 {
-                    try
+
+                    if (typeof(FluentDesignForm).IsAssignableFrom(item) && item.Name.Contains("MainFrm"))
                     {
-                        if (typeof(XtraForm).IsAssignableFrom(item) && item.Name.Contains("AnwesenheitsListe") || item.Name.Contains("Anwesenheitsliste"))
+                        object[] ArgumentsArray = new object[1] { Lager.GlobalizationMode };
+
+                        var Instance = (FluentDesignForm)Activator.CreateInstance(item, ArgumentsArray);
+
+                        if (!Lager.FluentDesignFormsDictionary.ContainsKey(Instance.Name))
                         {
-                            var x = item;
+                            Lager.FluentDesignFormsDictionary.Add(Instance.Name, Instance);
                         }
-                        else if(typeof(XtraForm).IsAssignableFrom(item) && item.Name.Contains("MainFrm"))
-                        {
-                            object[] ArgumentsArray = new object[1] { Lager.GlobalizationMode };
-                            xtraFormList.Add((XtraForm)Activator.CreateInstance(item, ArgumentsArray));
-                        }
-                        else if (typeof(XtraForm).IsAssignableFrom(item))
-                        {
-                            xtraFormList.Add((XtraForm)Activator.CreateInstance(item));
-                        }
-                        //else if (typeof(XtraUserControl).IsAssignableFrom(item))
-                        //{
-                        //    xtraUserControlList.Add((XtraUserControl)Activator.CreateInstance(item));
-                        //}
                     }
-                    catch (Exception)
+
+                    foreach (var constructor in item.GetConstructors())
                     {
-                        Console.WriteLine("Fehler in Dokument Name: "+item.Name);
+                        if (constructor.GetParameters() != null && constructor.GetParameters().Length > 0)
+                        {
+                            Lager.FormsWithParameters.Add(item);
+                        }
+                        else
+                        {
+                            try
+                            {
+                                if (typeof(FluentDesignForm).IsAssignableFrom(item))
+                                {
+                                    var Instance = (FluentDesignForm)Activator.CreateInstance(item);
+
+                                    if (!Lager.FluentDesignFormsDictionary.ContainsKey(Instance.Name))
+                                    {
+                                        Lager.FluentDesignFormsDictionary.Add(Instance.Name, Instance);
+                                    }
+                                }
+                                else if (typeof(XtraForm).IsAssignableFrom(item))
+                                {
+                                    var Instance = (XtraForm)Activator.CreateInstance(item);
+
+                                    if (!Lager.XtraFormsDictionary.ContainsKey(Instance.Name))
+                                    {
+                                        Lager.XtraFormsDictionary.Add(Instance.Name, Instance);
+                                    }
+                                }
+                                else if (typeof(XtraUserControl).IsAssignableFrom(item))
+                                {
+                                    var Instance = (XtraUserControl)Activator.CreateInstance(item);
+
+                                    if (!Lager.XtraUserControlsDictionary.ContainsKey(Instance.Name))
+                                    {
+                                        Lager.XtraUserControlsDictionary.Add(Instance.Name, Instance);
+                                    }
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Fehler in Dokument Name: " + item.Name);
+                            }
+                        }
                     }
                 }
             }
-            return (xtraFormList, xtraUserControlList);
-
-
         }
 
         // Deserialisiere alles aus einem Verzeichnis

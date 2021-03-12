@@ -28,18 +28,9 @@ namespace TargetTool
 
         public LayoutControl thisDocsLayoutControl = new LayoutControl();
 
-        public XtraDoc1(bool GlobalizationMode)
+        public XtraDoc1()
         {
             InitializeComponent();
-
-            if (!GlobalizationMode == true)
-            {
-                Console.WriteLine("NormalerModus");
-            }
-            else
-            {
-                Console.WriteLine("LokalisierungsModus");
-            }
         }
 
         // Test K3 Zeugs

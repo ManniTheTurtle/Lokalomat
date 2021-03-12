@@ -43,8 +43,6 @@ namespace Lokalomat
 
         public string AssemblyFilePath;
 
-        public string DocumentName = "leer";
-
         public string AssemblyFileName = "leer";
 
         public Methoden NutzeMethode = new Methoden();
@@ -66,9 +64,6 @@ namespace Lokalomat
         // Container Listen:
         public List<Assembly> AssemblyList = new List<Assembly>();
         public List<Type> TypesList = new List<Type>();
-        public List<XtraForm> ContainerListOfXtraForms = new List<XtraForm>();
-        public List<XtraUserControl> ContainerListOfXtraUserControls = new List<XtraUserControl>();
-        public List<FluentDesignForm> ContainerListOFFluentDesignForm = new List<FluentDesignForm>();
 
         // finale Listen:
         public List<object> otherControlTypes = new List<object>();
@@ -156,29 +151,26 @@ namespace Lokalomat
         }
 
         // --> Xtra Dokumente aus Assembly extrahieren und Controls hinzufügen
-        private void SucheUndErstelleDokumente()
+        private void ErzeugeMyXtraDocumentListe()
         {
             TypesList = NutzeMethode.LadeTypes(ChosenAssembly, TypesList);
 
             listBox1.Items.Add($"Types Count: {TypesList.Count}");
 
-            (ContainerListOfXtraForms, ContainerListOfXtraUserControls) = NutzeMethode.SortiereTypes(TypesList, ContainerListOfXtraForms, ContainerListOfXtraUserControls);
+            NutzeMethode.SortiereTypes(TypesList);
 
-            listBox1.Items.Add($"XtraForms Count: {ContainerListOfXtraForms.Count}");
-            listBox1.Items.Add($"XtraUserControls Count: {ContainerListOfXtraUserControls.Count}");
+            listBox1.Items.Add($"FluentDesignForms Count: {Lager.FluentDesignFormsDictionary.Count}");
+            listBox1.Items.Add($"XtraForms Count: {Lager.XtraFormsDictionary.Count}");
+            listBox1.Items.Add($"XtraUserControls Count: {Lager.XtraUserControlsDictionary.Count}");
 
-            // -------------------------------->>> XtraForms
-            if (ContainerListOfXtraForms != null && ContainerListOfXtraForms.Count > 0)
+            // ---------->>>------------------>>> FluentDesignForms --------->>>------------->>>
+            if (Lager.FluentDesignFormsDictionary != null && Lager.FluentDesignFormsDictionary.Count > 0)
             {
-                foreach (var item in ContainerListOfXtraForms)
+                foreach (var item in Lager.FluentDesignFormsDictionary.Values)
                 {
                     if (item != null)
                     {
                         MyXtraDocument xtra_Document = new MyXtraDocument();
-
-                        var itemtype = item.GetType();
-                        xtra_Document.Name = itemtype.Namespace + "_" + item.Name;
-                        xtra_Document.ObjektTyp = MyXtraDocument.Klasse.XtraForm;
 
                         if (ChosenAssembly != null)
                         {
@@ -189,13 +181,17 @@ namespace Lokalomat
                         {
                             AssemblyFileName = "leer";
                         }
+
                         xtra_Document.Assembly = AssemblyFileName;
 
-                        xtra_Document.Projekt = item.CompanyName;
+                        var itemtype = item.GetType();
+                        xtra_Document.ObjektTyp = MyXtraDocument.Klasse.FluentDesignForm;
+                        xtra_Document.Name = AssemblyFileName + "_" + itemtype.Namespace + "_" + xtra_Document.ObjektTyp + "_" + item.Name;
+
 
                         if (item.Controls != null && item.Controls.Count > 0)
                         {
-                            SucheUndUnterscheideKindElemente(item);     // nur XtraForm besitzt TitelText, XtraUserControl nicht
+                            SucheUndUnterscheideKindElemente(item);
 
                             foreach (var control in item.Controls)
                             {
@@ -203,14 +199,12 @@ namespace Lokalomat
                             }
                         }
 
-                        DocumentName = AssemblyFileName + "_" + itemtype.Namespace + "_" + item.Name;
-
                         dictionary.Clear();
                         ListeAlleErgebnisse();
 
                         xtra_Document.MyUiElementsList.AddRange(MyUiElementslist);
 
-                        xtra_Document.Filename = Lager.FilePathForSerialization + "\\" + AssemblyFileName + "_" + xtra_Document.ObjektTyp + "_" + xtra_Document.Name + ".json";
+                        xtra_Document.Filename = Lager.FilePathForSerialization + "\\" + xtra_Document.Name + ".json";
 
                         XtraDocumentsList.Add(xtra_Document);
 
@@ -219,16 +213,14 @@ namespace Lokalomat
                 }
             }
 
-            // -------------------------------->>> XtraUserControls
-            if (ContainerListOfXtraUserControls != null && ContainerListOfXtraUserControls.Count > 0)
+            // ---------->>>------------------>>> XtraForms --------->>>------------->>>
+            if (Lager.XtraFormsDictionary != null && Lager.XtraFormsDictionary.Count > 0)
             {
-                foreach (var item in ContainerListOfXtraUserControls)
+                foreach (var item in Lager.XtraFormsDictionary.Values)
                 {
                     if (item != null)
                     {
                         MyXtraDocument xtra_Document = new MyXtraDocument();
-                        xtra_Document.Name = item.Name;
-                        xtra_Document.ObjektTyp = MyXtraDocument.Klasse.XtraUserControl;
 
                         if (ChosenAssembly != null)
                         {
@@ -239,23 +231,30 @@ namespace Lokalomat
                         {
                             AssemblyFileName = "leer";
                         }
+
                         xtra_Document.Assembly = AssemblyFileName;
 
-                        xtra_Document.Projekt = item.CompanyName;
+                        var itemtype = item.GetType();
+                        xtra_Document.ObjektTyp = MyXtraDocument.Klasse.XtraForm;
+                        xtra_Document.Name = AssemblyFileName + "_" + itemtype.Namespace + "_" + xtra_Document.ObjektTyp + "_" + item.Name;
 
-                        foreach (var control in item.Controls)
+
+                        if (item.Controls != null && item.Controls.Count > 0)
                         {
-                            SucheUndUnterscheideKindElemente(control);
-                        }
+                            SucheUndUnterscheideKindElemente(item);
 
-                        DocumentName = item.Name;
+                            foreach (var control in item.Controls)
+                            {
+                                SucheUndUnterscheideKindElemente(control);
+                            }
+                        }
 
                         dictionary.Clear();
                         ListeAlleErgebnisse();
 
                         xtra_Document.MyUiElementsList.AddRange(MyUiElementslist);
 
-                        xtra_Document.Filename = Lager.FilePathForSerialization + "\\" + AssemblyFileName + "_" + xtra_Document.ObjektTyp + "_" + xtra_Document.Name + ".json";
+                        xtra_Document.Filename = Lager.FilePathForSerialization + "\\" + xtra_Document.Name + ".json";
 
                         XtraDocumentsList.Add(xtra_Document);
 
@@ -264,7 +263,56 @@ namespace Lokalomat
                 }
             }
 
-            listBox1.Items.Add($"XtraDocuments Count: {XtraDocumentsList.Count}");
+            // ---------->>>------------------>>> XtraUserControl --------->>>------------->>>
+            if (Lager.XtraUserControlsDictionary != null && Lager.XtraUserControlsDictionary.Count > 0)
+            {
+                foreach (var item in Lager.XtraUserControlsDictionary.Values)
+                {
+                    if (item != null)
+                    {
+                        MyXtraDocument xtra_Document = new MyXtraDocument();
+
+                        if (ChosenAssembly != null)
+                        {
+                            AssemblyFileName = ChosenAssembly.Location.Split('\\').Last();
+                            AssemblyFileName = AssemblyFileName.Split('.')[0];
+                        }
+                        else
+                        {
+                            AssemblyFileName = "leer";
+                        }
+
+                        xtra_Document.Assembly = AssemblyFileName;
+
+                        var itemtype = item.GetType();
+                        xtra_Document.ObjektTyp = MyXtraDocument.Klasse.XtraUserControl;
+                        xtra_Document.Name = AssemblyFileName + "_" + itemtype.Namespace + "_" + xtra_Document.ObjektTyp + "_" + item.Name;
+
+
+                        if (item.Controls != null && item.Controls.Count > 0)
+                        {
+                            foreach (var control in item.Controls)
+                            {
+                                SucheUndUnterscheideKindElemente(control);
+                            }
+                        }
+
+                        dictionary.Clear();
+                        ListeAlleErgebnisse();
+
+                        xtra_Document.MyUiElementsList.AddRange(MyUiElementslist);
+
+                        xtra_Document.Filename = Lager.FilePathForSerialization + "\\" + xtra_Document.Name + ".json";
+
+                        XtraDocumentsList.Add(xtra_Document);
+
+                        MyUiElementslist.Clear();
+                    }
+                }
+            }
+
+
+            listBox1.Items.Add($"MyXtraDocuments Count: {XtraDocumentsList.Count}");
 
             WhichComboBoxListIsActive = false;
             BefuelleComboBox2(XtraDocumentsList);
@@ -275,19 +323,25 @@ namespace Lokalomat
             gridControl1.DataSource = XtraDocumentsList;
 
             TypesList.Clear();
-            ContainerListOfXtraForms.Clear();
-            ContainerListOfXtraUserControls.Clear();
+            Lager.XtraFormsDictionary.Clear();
+            Lager.FluentDesignFormsDictionary.Clear();
+            Lager.XtraUserControlsDictionary.Clear();
+
+            var z = Lager.FormsWithParameters;
         }
 
         // --> Switch Case Filter
         public void SucheUndUnterscheideKindElemente(Object item)
         {
-            if (item != null && item.GetType() != typeof(GridColumn))
+            if (item != null)
             {
                 if (!dictionary.ContainsKey(item))
                 {
                     switch (item)
                     {
+                        case EmptySpaceItem i when typeof(EmptySpaceItem).IsAssignableFrom(item.GetType()):
+                            break;
+
                         case FluentDesignForm i when typeof(FluentDesignForm).IsAssignableFrom(item.GetType()):
                             fluentDesignFormslist.Add(i);
                             break;
@@ -313,7 +367,9 @@ namespace Lokalomat
                             break;
 
                         case LayoutControl lc when typeof(LayoutControl).IsAssignableFrom(item.GetType()):
-                            layoutControlslist.Add(lc);
+                                layoutControlslist.Add(lc);
+
+                            
                             if (lc.HasChildren)
                             {
                                 foreach (var lc_item in lc.Items)
@@ -323,18 +379,6 @@ namespace Lokalomat
                                 foreach (var lc_control in lc.Controls)
                                 {
                                     SucheUndUnterscheideKindElemente(lc_control);
-                                }
-                            }
-                            break;
-
-                        case LayoutGroup lc when typeof(LayoutGroup).IsAssignableFrom(item.GetType()):
-                            layoutGroupslist.Add(lc);
-
-                            if (lc.Items.Count > 0)
-                            {
-                                foreach (var lc_item in lc.Items)
-                                {
-                                    SucheUndUnterscheideKindElemente(lc_item);
                                 }
                             }
                             break;
@@ -364,15 +408,34 @@ namespace Lokalomat
                             break;
 
                         case LayoutControlGroup lc when typeof(LayoutControlGroup).IsAssignableFrom(lc.GetType()):
-                            layoutControlGroupslist.Add(lc);
+                            if (!lc.Name.Contains("Root"))
+                            {
+                                layoutControlGroupslist.Add(lc);
+                            }
 
-                            SucheUndUnterscheideKindElemente(lc.ParentTabbedGroup);
+                            //SucheUndUnterscheideKindElemente(lc.ParentTabbedGroup);
 
+                            //if (lc.Items.Count > 0)
+                            //{
+                            //    foreach (var i in lc.Items)
+                            //    {
+                            //        SucheUndUnterscheideKindElemente(i);
+                            //    }
+                            //}
+
+                            break;
+
+                        case LayoutGroup lc when typeof(LayoutGroup).IsAssignableFrom(item.GetType()):
+                            if (!lc.Name.Contains("Root"))
+                            {
+                                layoutGroupslist.Add(lc);
+                            }
+                            
                             if (lc.Items.Count > 0)
                             {
-                                foreach (var i in lc.Items)
+                                foreach (var lc_item in lc.Items)
                                 {
-                                    SucheUndUnterscheideKindElemente(i);
+                                    SucheUndUnterscheideKindElemente(lc_item);
                                 }
                             }
                             break;
@@ -464,10 +527,10 @@ namespace Lokalomat
                         case GridColumn i when typeof(GridColumn).IsAssignableFrom(item.GetType()):
                             gridColumnslist.Add(i);
 
-                            if (i.ColumnEdit is RepositoryItemLookUpEdit)
-                            {
-                                SucheUndUnterscheideKindElemente(i);
-                            }
+                            //if (i.ColumnEdit != null && i.ColumnEdit is RepositoryItemLookUpEdit)     // löst stackoverflow aus wenn Columnedit werte leer
+                            //{
+                            //    SucheUndUnterscheideKindElemente(i);
+                            //}
                             break;
 
                         case XtraTabControl i when typeof(XtraTabControl).IsAssignableFrom(item.GetType()):
@@ -772,7 +835,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.XtraForm,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in fluentDesignFormslist)
@@ -782,7 +845,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.FluentDesignForm,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in gridControlslist)
@@ -792,7 +855,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.GridControl,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in gridColumnslist)
@@ -802,7 +865,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.GridColumn,
                     Name = item.Name,
                     Caption = item.Caption,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip
                 });
             }
@@ -833,7 +896,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.TextEdit,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     NullText = item.Properties.NullText,
                     NullValuePrompt = item.Properties.NullValuePrompt,
@@ -869,7 +932,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.SimpleButton,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
@@ -902,7 +965,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.CheckEdit,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     NullText = item.Properties.NullText,
                     SuperTipTitlesList = SuperTipTitlesStringList,
@@ -935,7 +998,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.ComboBoxEdit,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     NullText = item.Properties.NullText,
                     NullValuePrompt = item.Properties.NullValuePrompt,
@@ -950,7 +1013,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.LayoutControlItem,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in layoutControlGroupslist)
@@ -960,7 +1023,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.LayoutControlGroup,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in tabbedControlGroupslist)
@@ -970,7 +1033,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.TabbedControlGroup,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in dataLayoutControlslist)
@@ -980,7 +1043,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.DataLayoutControl,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in layoutGroupslist)
@@ -990,7 +1053,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.LayoutGroup,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in layoutControlslist)
@@ -1000,7 +1063,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.LayoutControl,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in xtraTabPageslist)
@@ -1010,7 +1073,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.XtraTabPage,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in buttonEditslist)
@@ -1039,7 +1102,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.ButtonEdit,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     NullText = item.Properties.NullText,
                     NullValuePrompt = item.Properties.NullValuePrompt,
@@ -1073,7 +1136,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.ImageEdit,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     NullText = item.Properties.NullText,
                     NullValuePrompt = item.Properties.NullValuePrompt,
@@ -1088,7 +1151,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.GroupControl,
                     Name = item.Name+Guid.NewGuid().ToString("N").Substring(0, 15),
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in dateEditslist)
@@ -1117,7 +1180,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.DateEdit,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     NullText = item.Properties.NullText,
                     NullValuePrompt = item.Properties.NullValuePrompt,
@@ -1151,7 +1214,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.DropDownButton,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
@@ -1183,7 +1246,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.GridLookUpEdit,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     NullText = item.Properties.NullText,
                     NullValuePrompt = item.Properties.NullValuePrompt,
@@ -1217,7 +1280,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.CheckedListBoxControl,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
@@ -1249,7 +1312,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.ListBoxControl,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
@@ -1262,7 +1325,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.TileControl,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 }); ;
             }
             foreach (var item in tileGroupslist)
@@ -1272,7 +1335,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.TileGroup,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in tileItemslist)
@@ -1301,7 +1364,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.TileItem,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
                 });
@@ -1313,7 +1376,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.TileItemElement,
                     Name = Guid.NewGuid().ToString("N").Substring(0, 15),
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in tileBarslist)
@@ -1323,7 +1386,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.TileBar,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in tileBarGroupslist)
@@ -1333,7 +1396,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.TileBarGroup,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in accordionControlslist)
@@ -1362,7 +1425,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.AccordionControl,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
@@ -1394,7 +1457,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.AccordionControlElement,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     Hint = item.Hint == null ? "" : item.Hint,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
@@ -1426,7 +1489,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.LabelControl,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
@@ -1439,7 +1502,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.NavBarControl,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in navBarGroupslist)
@@ -1468,7 +1531,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.NavBarGroup,
                     Name = item.Name,
                     Caption = item.Caption,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     Hint = item.Hint == null ? "" : item.Hint,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
@@ -1500,7 +1563,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.NavBarItem,
                     Name = item.Name,
                     Caption = item.Caption,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     Hint = item.Hint == null ? "" : item.Hint,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
@@ -1513,7 +1576,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.RichEditControl,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in checkedComboBoxEditslist)
@@ -1542,7 +1605,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.CheckedComboBoxEdit,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     NullText = item.Properties.NullText,
                     NullValuePrompt = item.Properties.NullValuePrompt,
@@ -1558,7 +1621,7 @@ namespace Lokalomat
                     Name = Guid.NewGuid().ToString("N").Substring(0, 15),
                     Other = item.FieldName,
                     Caption = item.Caption,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 }) ;
             }
             foreach (var item in lookUpEditslist)
@@ -1587,7 +1650,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.LookUpEdit,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     NullText = item.Properties.NullText,
                     NullValuePrompt = item.Properties.NullValuePrompt,
@@ -1621,7 +1684,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.RadioGroup,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     NullText = item.Properties.NullText,
                     SuperTipTitlesList = SuperTipTitlesStringList,
@@ -1654,7 +1717,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.BarButtonGroup,
                     Name = item.Name,
                     Caption = item.Caption,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     Hint = item.Hint == null ? "" : item.Hint,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
@@ -1686,7 +1749,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.BarButtonItem,
                     Name = item.Name,
                     Caption = item.Caption,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     Hint = item.Hint == null ? "" : item.Hint,
                     SuperTipTitlesList = SuperTipTitlesStringList,
                     SuperTipContentsList = SuperTipContentsStringList
@@ -1700,7 +1763,7 @@ namespace Lokalomat
                     Name = Guid.NewGuid().ToString("N").Substring(0, 15),
                     Other = item.Item.Name,
                     Caption = item.Caption,
-                    XtraDokument = DocumentName
+                    XtraDokument = xtra_Document.Name
                 });
             }
             foreach (var item in barItemslist)
@@ -1710,7 +1773,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.BarItem,
                     Name = item.Name,
                     Caption = item.Caption,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     Hint = item.Hint == null ? "" : item.Hint,
                 });
             }
@@ -1740,7 +1803,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.RadioGroup,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     ToolTip = item.ToolTip,
                     NullText = item.Properties.NullText,
                     NullValuePrompt = item.Properties.NullValuePrompt,
@@ -1755,7 +1818,7 @@ namespace Lokalomat
                     ItemClassName = MyUiElement.ClassName.RadioGroup,
                     Name = item.Name,
                     Text = item.Text,
-                    XtraDokument = DocumentName,
+                    XtraDokument = xtra_Document.Name,
                     Caption = item.Caption
                 });
             }
@@ -1822,6 +1885,7 @@ namespace Lokalomat
             XtraDocumentsDict.Clear();
             XtraDocumentsDict = XtraDocumentsList.ToDictionary(x => x.Name, x => x);
             DeserializedXtraDocsDict = DeserializedXtraDocsList.ToDictionary(x => x.Name, x => x);
+
 
             // Comparer 1
             foreach (var item in XtraDocumentsDict)                                                             // dann verglichen
@@ -1949,7 +2013,7 @@ namespace Lokalomat
         // Testing
         private void testeLINQToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var ListOfEqualXtraDocuments = XtraDocumentsList.Where(x => DeserializedXtraDocsList.Any(y => y.Name == x.Name && y.Projekt == x.Projekt)).ToList();
+            var ListOfEqualXtraDocuments = XtraDocumentsList.Where(x => DeserializedXtraDocsList.Any(y => y.Name == x.Name)).ToList();
 
             var CollectionOfEqualXtraDocuments2 = XtraDocumentsList.Select(x => x.Name).Intersect(DeserializedXtraDocsList.Select(x => x.Name));
 
@@ -2170,7 +2234,7 @@ namespace Lokalomat
                         gridView1.Columns.Clear();
                         gridControl1.DataSource = null;
 
-                        SucheUndErstelleDokumente();
+                        ErzeugeMyXtraDocumentListe();
                         // FindControlsByTypeInfo();
                     }
                 }
@@ -2224,7 +2288,6 @@ namespace Lokalomat
             gridControl1.DataSource = null;
 
             AssemblyFileName = "leer";
-            DocumentName = "leer";
 
             AssemblyList.Clear();
 

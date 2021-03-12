@@ -6,12 +6,11 @@ namespace LokalomatKlassen
     [Serializable]
     public class MyXtraDocument
     {
-        public enum Klasse { XtraForm, XtraUserControl }
+        public enum Klasse { FluentDesignForm, XtraForm, XtraUserControl }
         public Klasse ObjektTyp { get; set; }
         public string Name { get; set; }
         public string Assembly { get; set; }
         public string Filename { get; set; }
-        public string Projekt { get; set; }
 
         private List<MyUiElement> myuielementslist;
         public List<MyUiElement> MyUiElementsList { get { if (myuielementslist == null) myuielementslist = new List<MyUiElement>(); return myuielementslist; } set { myuielementslist = value; } }

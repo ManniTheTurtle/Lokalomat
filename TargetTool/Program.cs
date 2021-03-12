@@ -14,7 +14,7 @@ namespace TargetTool
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new XtraDoc1(Lager.GlobalizationMode));
+            Application.Run(new XtraDoc1());
         }
     }
 }
